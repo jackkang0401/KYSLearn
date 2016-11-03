@@ -7,28 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		25295B1C1DC9F87E0096EC46 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 25295B1B1DC9F87E0096EC46 /* main.m */; };
-		25295B1F1DC9F87E0096EC46 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 25295B1E1DC9F87E0096EC46 /* AppDelegate.m */; };
-		25295B221DC9F87E0096EC46 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25295B211DC9F87E0096EC46 /* ViewController.mm */; };
-		25295B251DC9F87E0096EC46 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25295B231DC9F87E0096EC46 /* Main.storyboard */; };
-		25295B271DC9F87E0096EC46 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25295B261DC9F87E0096EC46 /* Assets.xcassets */; };
-		25295B2A1DC9F87E0096EC46 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25295B281DC9F87E0096EC46 /* LaunchScreen.storyboard */; };
-		25295B371DCA12420096EC46 /* KYSBinaryTreeTraverse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25295B351DCA12420096EC46 /* KYSBinaryTreeTraverse.cpp */; };
+		254703151DCAD87D00CB8DE4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 254703081DCAD87D00CB8DE4 /* AppDelegate.m */; };
+		254703161DCAD87D00CB8DE4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 254703091DCAD87D00CB8DE4 /* Assets.xcassets */; };
+		254703171DCAD87D00CB8DE4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2547030A1DCAD87D00CB8DE4 /* LaunchScreen.storyboard */; };
+		254703181DCAD87D00CB8DE4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2547030C1DCAD87D00CB8DE4 /* Main.storyboard */; };
+		254703191DCAD87D00CB8DE4 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2547030E1DCAD87D00CB8DE4 /* Info.plist */; };
+		2547031A1DCAD87D00CB8DE4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2547030F1DCAD87D00CB8DE4 /* main.m */; };
+		2547031B1DCAD87D00CB8DE4 /* KYSBinaryTreeTraverse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 254703111DCAD87D00CB8DE4 /* KYSBinaryTreeTraverse.cpp */; };
+		2547031C1DCAD87D00CB8DE4 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 254703141DCAD87D00CB8DE4 /* ViewController.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		25295B171DC9F87E0096EC46 /* KYSBinaryTreeTraverse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KYSBinaryTreeTraverse.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		25295B1B1DC9F87E0096EC46 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		25295B1D1DC9F87E0096EC46 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		25295B1E1DC9F87E0096EC46 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		25295B201DC9F87E0096EC46 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		25295B211DC9F87E0096EC46 /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
-		25295B241DC9F87E0096EC46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		25295B261DC9F87E0096EC46 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		25295B291DC9F87E0096EC46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		25295B2B1DC9F87E0096EC46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		25295B351DCA12420096EC46 /* KYSBinaryTreeTraverse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KYSBinaryTreeTraverse.cpp; sourceTree = "<group>"; };
-		25295B361DCA12420096EC46 /* KYSBinaryTreeTraverse.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = KYSBinaryTreeTraverse.hpp; sourceTree = "<group>"; };
+		254703071DCAD87D00CB8DE4 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		254703081DCAD87D00CB8DE4 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		254703091DCAD87D00CB8DE4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2547030B1DCAD87D00CB8DE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		2547030D1DCAD87D00CB8DE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		2547030E1DCAD87D00CB8DE4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2547030F1DCAD87D00CB8DE4 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		254703111DCAD87D00CB8DE4 /* KYSBinaryTreeTraverse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KYSBinaryTreeTraverse.cpp; sourceTree = "<group>"; };
+		254703121DCAD87D00CB8DE4 /* KYSBinaryTreeTraverse.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = KYSBinaryTreeTraverse.hpp; sourceTree = "<group>"; };
+		254703131DCAD87D00CB8DE4 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		254703141DCAD87D00CB8DE4 /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,7 +46,7 @@
 		25295B0E1DC9F87E0096EC46 = {
 			isa = PBXGroup;
 			children = (
-				25295B191DC9F87E0096EC46 /* KYSBinaryTreeTraverse */,
+				254703061DCAD87D00CB8DE4 /* KYSBinaryTreeTraverse */,
 				25295B181DC9F87E0096EC46 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -58,37 +59,28 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		25295B191DC9F87E0096EC46 /* KYSBinaryTreeTraverse */ = {
+		254703061DCAD87D00CB8DE4 /* KYSBinaryTreeTraverse */ = {
 			isa = PBXGroup;
 			children = (
-				25295B311DCA011B0096EC46 /* TreeTraverse */,
-				25295B1D1DC9F87E0096EC46 /* AppDelegate.h */,
-				25295B1E1DC9F87E0096EC46 /* AppDelegate.m */,
-				25295B201DC9F87E0096EC46 /* ViewController.h */,
-				25295B211DC9F87E0096EC46 /* ViewController.mm */,
-				25295B231DC9F87E0096EC46 /* Main.storyboard */,
-				25295B261DC9F87E0096EC46 /* Assets.xcassets */,
-				25295B281DC9F87E0096EC46 /* LaunchScreen.storyboard */,
-				25295B2B1DC9F87E0096EC46 /* Info.plist */,
-				25295B1A1DC9F87E0096EC46 /* Supporting Files */,
+				254703071DCAD87D00CB8DE4 /* AppDelegate.h */,
+				254703081DCAD87D00CB8DE4 /* AppDelegate.m */,
+				254703091DCAD87D00CB8DE4 /* Assets.xcassets */,
+				2547030A1DCAD87D00CB8DE4 /* LaunchScreen.storyboard */,
+				2547030C1DCAD87D00CB8DE4 /* Main.storyboard */,
+				2547030E1DCAD87D00CB8DE4 /* Info.plist */,
+				2547030F1DCAD87D00CB8DE4 /* main.m */,
+				254703101DCAD87D00CB8DE4 /* TreeTraverse */,
+				254703131DCAD87D00CB8DE4 /* ViewController.h */,
+				254703141DCAD87D00CB8DE4 /* ViewController.mm */,
 			);
-			name = KYSBinaryTreeTraverse;
-			path = KYSBitTreeTraverse;
+			path = KYSBinaryTreeTraverse;
 			sourceTree = "<group>";
 		};
-		25295B1A1DC9F87E0096EC46 /* Supporting Files */ = {
+		254703101DCAD87D00CB8DE4 /* TreeTraverse */ = {
 			isa = PBXGroup;
 			children = (
-				25295B1B1DC9F87E0096EC46 /* main.m */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		25295B311DCA011B0096EC46 /* TreeTraverse */ = {
-			isa = PBXGroup;
-			children = (
-				25295B361DCA12420096EC46 /* KYSBinaryTreeTraverse.hpp */,
-				25295B351DCA12420096EC46 /* KYSBinaryTreeTraverse.cpp */,
+				254703111DCAD87D00CB8DE4 /* KYSBinaryTreeTraverse.cpp */,
+				254703121DCAD87D00CB8DE4 /* KYSBinaryTreeTraverse.hpp */,
 			);
 			path = TreeTraverse;
 			sourceTree = "<group>";
@@ -151,9 +143,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25295B2A1DC9F87E0096EC46 /* LaunchScreen.storyboard in Resources */,
-				25295B271DC9F87E0096EC46 /* Assets.xcassets in Resources */,
-				25295B251DC9F87E0096EC46 /* Main.storyboard in Resources */,
+				254703191DCAD87D00CB8DE4 /* Info.plist in Resources */,
+				254703181DCAD87D00CB8DE4 /* Main.storyboard in Resources */,
+				254703161DCAD87D00CB8DE4 /* Assets.xcassets in Resources */,
+				254703171DCAD87D00CB8DE4 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,30 +157,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25295B221DC9F87E0096EC46 /* ViewController.mm in Sources */,
-				25295B1F1DC9F87E0096EC46 /* AppDelegate.m in Sources */,
-				25295B371DCA12420096EC46 /* KYSBinaryTreeTraverse.cpp in Sources */,
-				25295B1C1DC9F87E0096EC46 /* main.m in Sources */,
+				2547031C1DCAD87D00CB8DE4 /* ViewController.mm in Sources */,
+				2547031A1DCAD87D00CB8DE4 /* main.m in Sources */,
+				2547031B1DCAD87D00CB8DE4 /* KYSBinaryTreeTraverse.cpp in Sources */,
+				254703151DCAD87D00CB8DE4 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		25295B231DC9F87E0096EC46 /* Main.storyboard */ = {
+		2547030A1DCAD87D00CB8DE4 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				25295B241DC9F87E0096EC46 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		25295B281DC9F87E0096EC46 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				25295B291DC9F87E0096EC46 /* Base */,
+				2547030B1DCAD87D00CB8DE4 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		2547030C1DCAD87D00CB8DE4 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2547030D1DCAD87D00CB8DE4 /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -287,9 +280,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = KYSBitTreeTraverse/Info.plist;
+				INFOPLIST_FILE = KYSBinaryTreeTraverse/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = kys.KYSBitTreeTraverse;
+				PRODUCT_BUNDLE_IDENTIFIER = kys.KYSBinaryTreeTraverse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -298,9 +291,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = KYSBitTreeTraverse/Info.plist;
+				INFOPLIST_FILE = KYSBinaryTreeTraverse/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = kys.KYSBitTreeTraverse;
+				PRODUCT_BUNDLE_IDENTIFIER = kys.KYSBinaryTreeTraverse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
