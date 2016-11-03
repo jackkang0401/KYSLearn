@@ -27,15 +27,22 @@ int CreateBinaryTree(BinaryTree &T);
 //前序遍历
 //递归实现
 void PreorderRecursionTraversal(BinaryTree T);
+//非递归实现
+void PreorderTraversal(BinaryTree T);
+
 
 //中序遍历
 //递归实现
 void InorderRecursionTraversal(BinaryTree T);
+//非递归实现
+void InorderTraversal(BinaryTree T);
+
 
 //后序遍历
 //递归实现
 void PostorderRecursionTraversal(BinaryTree T);
-
+//非递归实现(完全想不到思路，参考网上的)
+void PostorderTraversal(BinaryTree T);
 
 
 

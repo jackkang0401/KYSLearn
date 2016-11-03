@@ -11,7 +11,7 @@
 //前序遍历创建二叉树,‘*’代表空结点
 int CreateBinaryTree(BinaryTree &T){
     char value;
-    scanf("%c",&value);
+    scanf("请输入前序字符：%c",&value);
     if (value<'0'||value>'9') {
         if ('*' != value) {
             printf("非法输入：%c\n",value);
@@ -39,6 +39,24 @@ void PreorderRecursionTraversal(BinaryTree T){
     }
 }
 
+//非递归实现
+void PreorderTraversal(BinaryTree T){
+    std::stack<BinaryTree> stack;
+    BinaryTree p=T;
+    while (NULL!=p || !stack.empty()) {
+        if (NULL != p) {
+            stack.push(p);
+            printf("%c ",p->value);
+            p=p->lChild;
+        }else{
+            p=stack.top();
+            stack.pop();
+            p=p->rChild;
+        }
+    }
+}
+
+
 //中序遍历
 //递归实现
 void InorderRecursionTraversal(BinaryTree T){
@@ -46,6 +64,23 @@ void InorderRecursionTraversal(BinaryTree T){
         InorderRecursionTraversal(T->lChild);
         printf("%c ",T->value);
         InorderRecursionTraversal(T->rChild);
+    }
+}
+
+//非递归实现
+void InorderTraversal(BinaryTree T){
+    std::stack<BinaryTree> stack;
+    BinaryTree p=T;
+    while (NULL!=p || !stack.empty()) {
+        if (NULL != p) {
+            stack.push(p);
+            p=p->lChild;
+        }else{
+            p=stack.top();
+            printf("%c ",p->value);
+            stack.pop();
+            p=p->rChild;
+        }
     }
 }
 
@@ -58,6 +93,45 @@ void PostorderRecursionTraversal(BinaryTree T){
         printf("%c ",T->value);
         
     }
+}
+
+//非递归实现(完全想不到思路，参考网上的)
+typedef struct BinaryAuxiliaryNode{
+    BinaryNode *node;
+    char flag;
+}BinaryAuxiliaryNode,*BinaryAuxiliaryTree;
+
+
+void PostorderTraversal(BinaryTree T){
+    std::stack<BinaryAuxiliaryTree> stack;
+    BinaryTree p=T;
+    BinaryAuxiliaryTree aTree;
+    while (NULL!=p || !stack.empty()) {
+        //遍历左子树
+        while (NULL != p) {
+            aTree=(BinaryAuxiliaryTree)malloc(sizeof(BinaryAuxiliaryNode));
+            aTree->node=p;
+            //访问过左子树
+            aTree->flag='L';
+            stack.push(aTree);
+            p=p->lChild;
+        }
+        //左右子树访问完毕，访问根结点
+        while (!stack.empty() && stack.top()->flag=='R') {
+            aTree=stack.top();
+            stack.pop();
+            printf("%c ",aTree->node->value);
+        }
+        //遍历右子树
+        if (!stack.empty()) {
+            aTree=stack.top();
+            //访问过右子树
+            aTree->flag='R';
+            p=aTree->node;
+            p=p->rChild;
+        }
+    }
+    
 }
 
 

@@ -7,9 +7,11 @@
 //
 
 #import "ViewController.h"
+
 #include "KYSBinaryTreeTraverse.hpp"
 
 @interface ViewController ()
+
 
 @end
 
@@ -22,10 +24,13 @@
     // Do any additional setup after loading the view, typically from a nib.
 }
 
+BinaryTree T;
+- (IBAction)createBtnAction:(id)sender {
+//    CreateBinaryTree(T);
+}
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (IBAction)traversalBtnAction:(id)sender {
+    
 }
 
 

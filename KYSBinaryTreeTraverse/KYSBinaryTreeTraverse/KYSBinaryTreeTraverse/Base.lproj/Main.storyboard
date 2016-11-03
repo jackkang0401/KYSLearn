@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,6 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BinaryTreeTraverse" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aiT-Is-7Rf">
+                                <rect key="frame" x="105" y="40" width="165" height="43"/>
                                 <color key="backgroundColor" red="0.21076043032941894" green="1" blue="0.11989781507960584" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="43" id="3lS-6W-Xrb"/>
@@ -28,11 +32,122 @@
                                 <color key="textColor" red="1" green="0.34252326692370239" blue="0.33798848241199864" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F0E-ei-JMi">
+                                <rect key="frame" x="105" y="99" width="165" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="DsN-kU-BZp"/>
+                                    <constraint firstAttribute="width" constant="165" id="pwA-jS-Wjc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="创建"/>
+                                <connections>
+                                    <action selector="createBtnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="g2S-S8-pF2"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zVR-Od-1sT">
+                                <rect key="frame" x="105" y="137" width="165" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Fhc-bV-8VF"/>
+                                    <constraint firstAttribute="width" constant="165" id="WFR-b3-KDO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="前序遍历-递归"/>
+                                <connections>
+                                    <action selector="createBtnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OxJ-J6-WrF"/>
+                                    <action selector="traversalBtnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="drV-Ly-WMB"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QdZ-Gb-EXh">
+                                <rect key="frame" x="105" y="175" width="165" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="XAG-Ma-OLg"/>
+                                    <constraint firstAttribute="width" constant="165" id="jiS-Ye-iba"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="前序遍历-非递归"/>
+                                <connections>
+                                    <action selector="createBtnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OqI-AQ-Vfa"/>
+                                    <action selector="traversalBtnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mgB-Ec-80Z"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JxI-Vv-hIj">
+                                <rect key="frame" x="105" y="213" width="165" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="165" id="6qw-P1-NBl"/>
+                                    <constraint firstAttribute="height" constant="30" id="mNE-09-UKr"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="中序遍历-递归"/>
+                                <connections>
+                                    <action selector="createBtnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gzs-Eq-5jk"/>
+                                    <action selector="traversalBtnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="s2B-5r-0DF"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iYu-Rk-bdU">
+                                <rect key="frame" x="105" y="251" width="165" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="K4G-xj-511"/>
+                                    <constraint firstAttribute="width" constant="165" id="aiN-k2-R37"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="中序遍历-非递归"/>
+                                <connections>
+                                    <action selector="createBtnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="X1h-Vh-Sqb"/>
+                                    <action selector="traversalBtnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="okj-eH-quk"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vgB-nn-0gJ">
+                                <rect key="frame" x="105" y="289" width="165" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="165" id="eTx-a5-4vz"/>
+                                    <constraint firstAttribute="height" constant="30" id="fs4-oQ-3uY"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="后序遍历-递归"/>
+                                <connections>
+                                    <action selector="createBtnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AJJ-xc-E6o"/>
+                                    <action selector="traversalBtnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bTu-5r-1GW"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uFe-qJ-33Y">
+                                <rect key="frame" x="105" y="327" width="165" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="165" id="BTT-0B-03d"/>
+                                    <constraint firstAttribute="height" constant="30" id="sb3-jJ-2Zm"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="后序遍历-非递归"/>
+                                <connections>
+                                    <action selector="createBtnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="byO-Nv-J4Q"/>
+                                    <action selector="traversalBtnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Bpe-T1-Ege"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="F0E-ei-JMi" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="03n-fu-y6B"/>
+                            <constraint firstItem="zVR-Od-1sT" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0cp-Ht-BjC"/>
                             <constraint firstItem="aiT-Is-7Rf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="C5o-os-VJd"/>
-                            <constraint firstItem="aiT-Is-7Rf" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="48" id="dn9-c2-80q"/>
+                            <constraint firstItem="iYu-Rk-bdU" firstAttribute="top" secondItem="JxI-Vv-hIj" secondAttribute="bottom" constant="8" id="Ehn-by-xXO"/>
+                            <constraint firstItem="QdZ-Gb-EXh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Jbc-nV-P7M"/>
+                            <constraint firstItem="vgB-nn-0gJ" firstAttribute="top" secondItem="iYu-Rk-bdU" secondAttribute="bottom" constant="8" id="O0m-rc-48x"/>
+                            <constraint firstItem="F0E-ei-JMi" firstAttribute="top" secondItem="aiT-Is-7Rf" secondAttribute="bottom" constant="16" id="Plq-UB-o76"/>
+                            <constraint firstItem="JxI-Vv-hIj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="RWh-cZ-br6"/>
+                            <constraint firstItem="uFe-qJ-33Y" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="afK-hP-v9Y"/>
+                            <constraint firstItem="JxI-Vv-hIj" firstAttribute="top" secondItem="QdZ-Gb-EXh" secondAttribute="bottom" constant="8" id="dYc-Mg-2xm"/>
+                            <constraint firstItem="aiT-Is-7Rf" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="dn9-c2-80q"/>
+                            <constraint firstItem="zVR-Od-1sT" firstAttribute="top" secondItem="F0E-ei-JMi" secondAttribute="bottom" constant="8" id="eMS-KL-4Sh"/>
+                            <constraint firstItem="vgB-nn-0gJ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="g4T-mE-4Se"/>
+                            <constraint firstItem="uFe-qJ-33Y" firstAttribute="top" secondItem="vgB-nn-0gJ" secondAttribute="bottom" constant="8" id="i7O-mV-u6a"/>
+                            <constraint firstItem="iYu-Rk-bdU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="v5U-ug-oCx"/>
+                            <constraint firstItem="QdZ-Gb-EXh" firstAttribute="top" secondItem="zVR-Od-1sT" secondAttribute="bottom" constant="8" id="vXJ-ve-lm6"/>
                         </constraints>
                     </view>
                 </viewController>

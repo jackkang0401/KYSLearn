@@ -62,16 +62,16 @@
 		254703061DCAD87D00CB8DE4 /* KYSBinaryTreeTraverse */ = {
 			isa = PBXGroup;
 			children = (
+				254703101DCAD87D00CB8DE4 /* TreeTraverse */,
 				254703071DCAD87D00CB8DE4 /* AppDelegate.h */,
 				254703081DCAD87D00CB8DE4 /* AppDelegate.m */,
-				254703091DCAD87D00CB8DE4 /* Assets.xcassets */,
-				2547030A1DCAD87D00CB8DE4 /* LaunchScreen.storyboard */,
-				2547030C1DCAD87D00CB8DE4 /* Main.storyboard */,
-				2547030E1DCAD87D00CB8DE4 /* Info.plist */,
-				2547030F1DCAD87D00CB8DE4 /* main.m */,
-				254703101DCAD87D00CB8DE4 /* TreeTraverse */,
 				254703131DCAD87D00CB8DE4 /* ViewController.h */,
 				254703141DCAD87D00CB8DE4 /* ViewController.mm */,
+				2547030C1DCAD87D00CB8DE4 /* Main.storyboard */,
+				254703091DCAD87D00CB8DE4 /* Assets.xcassets */,
+				2547030A1DCAD87D00CB8DE4 /* LaunchScreen.storyboard */,
+				2547030E1DCAD87D00CB8DE4 /* Info.plist */,
+				2547030F1DCAD87D00CB8DE4 /* main.m */,
 			);
 			path = KYSBinaryTreeTraverse;
 			sourceTree = "<group>";
@@ -79,8 +79,8 @@
 		254703101DCAD87D00CB8DE4 /* TreeTraverse */ = {
 			isa = PBXGroup;
 			children = (
-				254703111DCAD87D00CB8DE4 /* KYSBinaryTreeTraverse.cpp */,
 				254703121DCAD87D00CB8DE4 /* KYSBinaryTreeTraverse.hpp */,
+				254703111DCAD87D00CB8DE4 /* KYSBinaryTreeTraverse.cpp */,
 			);
 			path = TreeTraverse;
 			sourceTree = "<group>";
