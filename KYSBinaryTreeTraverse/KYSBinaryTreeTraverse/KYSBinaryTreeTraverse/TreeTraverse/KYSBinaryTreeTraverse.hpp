@@ -22,7 +22,7 @@ typedef struct BinaryNode{
 }BinaryNode,*BinaryTree;
 
 //前序遍历创建二叉树,‘*’代表空结点
-int CreateBinaryTree(BinaryTree &T);
+int CreateBinaryTree(BinaryTree &T, char *charArray, int *index, int length);
 
 //前序遍历
 //递归实现

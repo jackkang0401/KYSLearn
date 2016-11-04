@@ -9,22 +9,21 @@
 #include "KYSBinaryTreeTraverse.hpp"
 
 //前序遍历创建二叉树,‘*’代表空结点
-int CreateBinaryTree(BinaryTree &T){
-    char value;
-    scanf("请输入前序字符：%c",&value);
-    if (value<'0'||value>'9') {
-        if ('*' != value) {
-            printf("非法输入：%c\n",value);
-            return 0;
-        }
+int CreateBinaryTree(BinaryTree &T, char *charArray, int *index, int length){
+    if (*index>=length) {
+        return 0;
     }
+    char value =charArray[*index];
+    printf("%c",value);
     if ('*'==value) {
         T=NULL;
     }else{
         T=(BinaryTree)malloc(sizeof(BinaryNode));
         T->value=value;
-        CreateBinaryTree(T->lChild);
-        CreateBinaryTree(T->rChild);
+        *index=*index+1;
+        CreateBinaryTree(T->lChild, charArray, index, length);
+        *index=*index+1;
+        CreateBinaryTree(T->rChild, charArray, index, length);
     }
     return 1;
 }
