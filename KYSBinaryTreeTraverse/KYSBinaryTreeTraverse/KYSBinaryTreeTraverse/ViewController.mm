@@ -19,36 +19,27 @@
 
 @implementation ViewController
 
+BinaryTree T;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-}
-
-
-/*binary tree
- 
-                      A
-                     /
-                    B
-                   / \
-                  C   D
-                     / \
-                    E   G
-                     \
-                      F
- 
- */
-
-
-BinaryTree T;
-- (IBAction)createBtnAction:(id)sender {
-    //A B C * * D E * F * * G * * *
+    
+    /*
+             A
+            /
+           B
+          / \
+         C   D
+            / \
+           E   G
+            \
+             F
+     */
     int index=0;
     char array[]={'A','B','C','*','*','D','E','*','F','*','*','G','*','*','*'};
-    printf("\n创建二叉树：");
+    printf("前序序列 ABC**DE*F**G*** 创建二叉树");
     CreateBinaryTree(T, array, &index, 15);
 }
-
 - (IBAction)traversalBtnAction:(UIButton *)btn{
     NSInteger taq=btn.tag;
     printf("\n%ld",(long)taq);
@@ -71,7 +62,6 @@ BinaryTree T;
         printf("\n后序序列非递归：");
         PostorderTraversal(T);
     }
-    
 }
 
 

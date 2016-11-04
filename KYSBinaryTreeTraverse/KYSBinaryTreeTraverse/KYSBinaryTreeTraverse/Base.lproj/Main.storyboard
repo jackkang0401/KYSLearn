@@ -32,19 +32,6 @@
                                 <color key="textColor" red="1" green="0.34252326692370239" blue="0.33798848241199864" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F0E-ei-JMi">
-                                <rect key="frame" x="105" y="99" width="165" height="30"/>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="DsN-kU-BZp"/>
-                                    <constraint firstAttribute="width" constant="165" id="pwA-jS-Wjc"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="创建"/>
-                                <connections>
-                                    <action selector="createBtnAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="g2S-S8-pF2"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zVR-Od-1sT">
                                 <rect key="frame" x="105" y="137" width="165" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -126,18 +113,16 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="F0E-ei-JMi" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="03n-fu-y6B"/>
                             <constraint firstItem="zVR-Od-1sT" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0cp-Ht-BjC"/>
                             <constraint firstItem="aiT-Is-7Rf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="C5o-os-VJd"/>
                             <constraint firstItem="iYu-Rk-bdU" firstAttribute="top" secondItem="JxI-Vv-hIj" secondAttribute="bottom" constant="8" id="Ehn-by-xXO"/>
                             <constraint firstItem="QdZ-Gb-EXh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Jbc-nV-P7M"/>
                             <constraint firstItem="vgB-nn-0gJ" firstAttribute="top" secondItem="iYu-Rk-bdU" secondAttribute="bottom" constant="8" id="O0m-rc-48x"/>
-                            <constraint firstItem="F0E-ei-JMi" firstAttribute="top" secondItem="aiT-Is-7Rf" secondAttribute="bottom" constant="16" id="Plq-UB-o76"/>
                             <constraint firstItem="JxI-Vv-hIj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="RWh-cZ-br6"/>
+                            <constraint firstItem="zVR-Od-1sT" firstAttribute="top" secondItem="aiT-Is-7Rf" secondAttribute="bottom" constant="54" id="Wk1-rP-a7e"/>
                             <constraint firstItem="uFe-qJ-33Y" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="afK-hP-v9Y"/>
                             <constraint firstItem="JxI-Vv-hIj" firstAttribute="top" secondItem="QdZ-Gb-EXh" secondAttribute="bottom" constant="8" id="dYc-Mg-2xm"/>
                             <constraint firstItem="aiT-Is-7Rf" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="dn9-c2-80q"/>
-                            <constraint firstItem="zVR-Od-1sT" firstAttribute="top" secondItem="F0E-ei-JMi" secondAttribute="bottom" constant="8" id="eMS-KL-4Sh"/>
                             <constraint firstItem="vgB-nn-0gJ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="g4T-mE-4Se"/>
                             <constraint firstItem="uFe-qJ-33Y" firstAttribute="top" secondItem="vgB-nn-0gJ" secondAttribute="bottom" constant="8" id="i7O-mV-u6a"/>
                             <constraint firstItem="iYu-Rk-bdU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="v5U-ug-oCx"/>
