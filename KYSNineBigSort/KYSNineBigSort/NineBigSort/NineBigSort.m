@@ -208,7 +208,6 @@ void heapDownRecursiveAdjust(int array[],int i,int nLength)
 }
 
 //向上调整
-
 //非递归实现
 void heapUpAdjust(int *array, int index, int nLength){
     int i = index;//子节点
@@ -296,18 +295,6 @@ void heapSort(int *array,int length)
         //heapDownRecursiveAdjust(array,0,i);
     }
 }
-//int main()
-//{
-//    int i;
-//    int num[]={9,8,7,6,5,4,3,2,1,0};
-//    heapSort(num,sizeof(num)/sizeof(int));
-//    for(i=0;i<sizeof(num)/sizeof(int);i++)
-//    {
-//        printf("%d ",num[i]);
-//    }
-//    printf("\nok\n");
-//    return 0;
-//}
 
 #pragma mark 计数排序
 void countSort(int *input, int *output, int length, int k)//时间复杂度为Ο(n+k)（其中k是整数的范围）
