@@ -133,33 +133,26 @@ void deleteBSTree(Tree *T, int val){
         return;
     }
     
-    // 如果左右子树都为空
+    // 根节点 且 左右子树至少一个为空（ parent 为空，说明待删除根节点）
+    if ((NULL == parent) && (NULL == deleteNode->left || NULL == deleteNode->right)) {
+        // 如果都为空，其实 *T = NULL
+        *T = (NULL == deleteNode->left) ? deleteNode->right : deleteNode->left;
+        deallocNode(&deleteNode);
+        return;
+    }
+    
+    // 无左右子树
     if (NULL == deleteNode->left && NULL == deleteNode->right) {
-        if (NULL == parent) { // parent 为空，说明待删除根节点
-            deallocNode(&deleteNode);
-            *T = NULL;
-            return;
-        }
         (parent->left == deleteNode) ? (parent->left = NULL) : (parent->right = NULL);
         deallocNode(&deleteNode);
     }
     // 无左子树
     else if (NULL == deleteNode->left){
-        if (NULL == parent) {
-            *T = deleteNode->right;
-            deallocNode(&deleteNode);
-            return;
-        }
         (parent->left == deleteNode) ? (parent->left = deleteNode->right):(parent->right = deleteNode->right);
         deallocNode(&deleteNode);
     }
     // 无右子树
     else if (NULL == deleteNode->right){
-        if (NULL == parent) {
-            *T = deleteNode->left;
-            deallocNode(&deleteNode);
-            return;
-        }
         (parent->left == deleteNode) ? (parent->left = deleteNode->left) : (parent->right = deleteNode->left);
         deallocNode(&deleteNode);
     }
