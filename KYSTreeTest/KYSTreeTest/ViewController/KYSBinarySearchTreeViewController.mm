@@ -44,7 +44,16 @@ BinaryTree T = NULL;
         return;
     }
     int value = [content intValue];
-    if (1 == index) {
+    
+    if (0 == index){
+        printf("\n 查找：%d \n",value);
+        BinaryNode *node = searchBSTree(T, value);
+        if (node) {
+            printf("%d",node->value);
+        } else {
+            printf("\n 未找到 \n");
+        }
+    } else if (1 == index) {
         printf("\n 前序遍历：\n");
         preorderRecursionTraversal(T);
     } else if (2 == index) {

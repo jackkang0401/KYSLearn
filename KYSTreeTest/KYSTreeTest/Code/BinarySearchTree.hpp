@@ -17,4 +17,7 @@ BinaryNode *searchBSTree(BinaryTree T, int val);
 // 插入元素
 void insertBSTree(BinaryTree *T, int val);
 
+// 删除元素
+void deleteBSTree(BinaryTree *T, int val);
+
 #endif /* BinarySearchTree_hpp */

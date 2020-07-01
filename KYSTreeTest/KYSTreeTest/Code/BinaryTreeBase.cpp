@@ -12,7 +12,7 @@ BinaryNode* newNode(int value) {
     BinaryNode *p = (BinaryNode *)malloc(sizeof(BinaryNode));
     p->value = value;
     p->lChild = NULL;
-    p->lChild = NULL;
+    p->rChild = NULL;
     return p;
 }
 
@@ -78,11 +78,11 @@ void preorderTraversal(BinaryTree T){
         if (NULL != p) {
             stack.push(p);
             printf("%d ",p->value);
-            p=p->lChild;
+            p = p->lChild;
         }else{
-            p=stack.top();
+            p = stack.top();
             stack.pop();
-            p=p->rChild;
+            p = p->rChild;
         }
     }
 }
@@ -105,12 +105,12 @@ void inorderTraversal(BinaryTree T){
     while (NULL!=p || !stack.empty()) {
         if (NULL != p) {
             stack.push(p);
-            p=p->lChild;
+            p = p->lChild;
         }else{
-            p=stack.top();
+            p = stack.top();
             printf("%d ",p->value);
             stack.pop();
-            p=p->rChild;
+            p = p->rChild;
         }
     }
 }
@@ -134,31 +134,31 @@ typedef struct BinaryAuxiliaryNode{
 
 void postorderTraversal(BinaryTree T){
     std::stack<BinaryAuxiliaryTree> stack;
-    BinaryTree p=T;
+    BinaryTree p = T;
     BinaryAuxiliaryTree aTree;
     while (NULL!=p || !stack.empty()) {
         //遍历左子树
         while (NULL != p) {
-            aTree=(BinaryAuxiliaryTree)malloc(sizeof(BinaryAuxiliaryNode));
-            aTree->node=p;
+            aTree = (BinaryAuxiliaryTree)malloc(sizeof(BinaryAuxiliaryNode));
+            aTree->node = p;
             //访问过左子树
-            aTree->flag='L';
+            aTree->flag = 'L';
             stack.push(aTree);
-            p=p->lChild;
+            p = p->lChild;
         }
         //左右子树访问完毕，访问根结点
-        while (!stack.empty() && stack.top()->flag=='R') {
-            aTree=stack.top();
+        while (!stack.empty() && stack.top()->flag == 'R') {
+            aTree = stack.top();
             stack.pop();
             printf("%d ",aTree->node->value);
         }
         //遍历右子树
         if (!stack.empty()) {
-            aTree=stack.top();
+            aTree = stack.top();
             //访问过右子树
-            aTree->flag='R';
-            p=aTree->node;
-            p=p->rChild;
+            aTree->flag = 'R';
+            p = aTree->node;
+            p = p->rChild;
         }
     }
     

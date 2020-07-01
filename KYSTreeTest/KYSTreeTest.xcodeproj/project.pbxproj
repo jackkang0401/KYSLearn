@@ -16,7 +16,7 @@
 		DBFCBC8524AB5C65007A7854 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBFCBC8324AB5C65007A7854 /* LaunchScreen.storyboard */; };
 		DBFCBC8824AB5C65007A7854 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFCBC8724AB5C65007A7854 /* main.m */; };
 		DBFCBC9024AB5C99007A7854 /* BinarySearchTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DBFCBC8F24AB5C99007A7854 /* BinarySearchTree.cpp */; };
-		DBFCBC9424AC3616007A7854 /* KYSBinarySearchTreeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFCBC9324AC3616007A7854 /* KYSBinarySearchTreeViewController.m */; };
+		DBFCBC9424AC3616007A7854 /* KYSBinarySearchTreeViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = DBFCBC9324AC3616007A7854 /* KYSBinarySearchTreeViewController.mm */; };
 		DBFCBC9724AC379E007A7854 /* KYSBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFCBC9624AC379E007A7854 /* KYSBaseViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -38,7 +38,7 @@
 		DBFCBC8724AB5C65007A7854 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DBFCBC8F24AB5C99007A7854 /* BinarySearchTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BinarySearchTree.cpp; sourceTree = "<group>"; };
 		DBFCBC9224AC3616007A7854 /* KYSBinarySearchTreeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KYSBinarySearchTreeViewController.h; sourceTree = "<group>"; };
-		DBFCBC9324AC3616007A7854 /* KYSBinarySearchTreeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KYSBinarySearchTreeViewController.m; sourceTree = "<group>"; };
+		DBFCBC9324AC3616007A7854 /* KYSBinarySearchTreeViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = KYSBinarySearchTreeViewController.mm; sourceTree = "<group>"; };
 		DBFCBC9524AC379E007A7854 /* KYSBaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KYSBaseViewController.h; sourceTree = "<group>"; };
 		DBFCBC9624AC379E007A7854 /* KYSBaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KYSBaseViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,7 +107,7 @@
 				DBFCBC9524AC379E007A7854 /* KYSBaseViewController.h */,
 				DBFCBC9624AC379E007A7854 /* KYSBaseViewController.m */,
 				DBFCBC9224AC3616007A7854 /* KYSBinarySearchTreeViewController.h */,
-				DBFCBC9324AC3616007A7854 /* KYSBinarySearchTreeViewController.m */,
+				DBFCBC9324AC3616007A7854 /* KYSBinarySearchTreeViewController.mm */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -185,7 +185,7 @@
 				DBFCBC7D24AB5C64007A7854 /* ViewController.m in Sources */,
 				DBFCBC7724AB5C64007A7854 /* AppDelegate.mm in Sources */,
 				DBFCBC8824AB5C65007A7854 /* main.m in Sources */,
-				DBFCBC9424AC3616007A7854 /* KYSBinarySearchTreeViewController.m in Sources */,
+				DBFCBC9424AC3616007A7854 /* KYSBinarySearchTreeViewController.mm in Sources */,
 				DBFCBC9724AC379E007A7854 /* KYSBaseViewController.m in Sources */,
 				DBFCBC9024AB5C99007A7854 /* BinarySearchTree.cpp in Sources */,
 				DBFCBC7A24AB5C64007A7854 /* SceneDelegate.m in Sources */,

@@ -14,7 +14,6 @@
 #include <stack>
 #include <iostream>
 
-
 typedef struct BinaryNode{
     int value;
     struct BinaryNode *lChild;
@@ -42,7 +41,7 @@ void deallocNode(BinaryNode **p);
  CreateBinaryTree(T, array, &index, 15);
 */
 // 前序遍历创建二叉树，0 代表空结点
-int createBinaryTree(BinaryTree &T, int *array, int *index, int length);
+int createBinaryTree(BinaryTree &T, int *array, int *index, int length);// &T c ++ 的传地址
 
 // 前序遍历
 // 递归实现
@@ -63,7 +62,7 @@ void inorderTraversal(BinaryTree T);
 // 递归实现
 void postorderRecursionTraversal(BinaryTree T);
 
-
+// 非递归实现
 void postorderTraversal(BinaryTree T);
 
 #endif /* BinaryTreeBase_hpp */
