@@ -133,32 +133,23 @@ void deleteBSTree(Tree *T, int val){
         return;
     }
     
-    // 根节点 且 左右子树至少一个为空（ parent 为空，说明待删除根节点）
-    if ((NULL == parent) && (NULL == deleteNode->left || NULL == deleteNode->right)) {
-        // 如果都为空，其实 *T = NULL
-        *T = (NULL == deleteNode->left) ? deleteNode->right : deleteNode->left;
-        deallocNode(&deleteNode);
-        return;
-    }
-    
-    // 无左右子树
-    if (NULL == deleteNode->left && NULL == deleteNode->right) {
-        (parent->left == deleteNode) ? (parent->left = NULL) : (parent->right = NULL);
-        deallocNode(&deleteNode);
-    }
-    // 无左子树
-    else if (NULL == deleteNode->left){
-        (parent->left == deleteNode) ? (parent->left = deleteNode->right):(parent->right = deleteNode->right);
+    // 1.无左右子树  2.无左子树或右子树
+    if (NULL == deleteNode->left || NULL == deleteNode->right) {
+        // 待删除节点为根节点
+        if (NULL == parent) {
+            // 如果都为空，其实 *T = NULL
+            *T = (NULL == deleteNode->left) ? deleteNode->right : deleteNode->left;
+            deallocNode(&deleteNode);
+            return;
+        }
+        // 父节点新的子节点, 如果左右子节点都为 NULL，child 为 NULL
+        Node *child = (NULL == deleteNode->left) ? deleteNode->right :deleteNode->left ;
+        (parent->left == deleteNode) ? (parent->left = child) : (parent->right = child);
         deallocNode(&deleteNode);
     }
-    // 无右子树
-    else if (NULL == deleteNode->right){
-        (parent->left == deleteNode) ? (parent->left = deleteNode->left) : (parent->right = deleteNode->left);
-        deallocNode(&deleteNode);
-    }
-    // 左右子树都有
+    // 3.左右子树都有
     else {
-        // 寻找右子树最小值
+        // 寻找右子树最小值，找到的待删除节点要么是 1. 叶子节点，2. 要么只有一个右子树，无左子树
         Node *pMinParent = deleteNode;
         Node *pMin = deleteNode->right;
         while (pMin->left) {
@@ -166,22 +157,12 @@ void deleteBSTree(Tree *T, int val){
             pMin = pMin->left;
         }
         deleteNode->value = pMin->value;
-        // 如果左右子树都为空
-        if (NULL == pMin->left && NULL == pMin->right) {
-            (pMinParent->left == pMin) ? (pMinParent->left = NULL) : (pMinParent->right = NULL);
+        // 删除该节点，1. 叶子节点，2. 要么只有一个右子树，无左子树
+        if (NULL == pMin->left || NULL == pMin->right) {
+            Node *child = (NULL == pMin->left) ? pMin->right :pMin->left ;
+            (pMinParent->left == pMin) ? (pMinParent->left = child) : (pMinParent->right = child);
             deallocNode(&pMin);
         }
-        // 无左子树
-        else if (NULL == pMin->left){
-            (pMinParent->left == pMin) ? (pMinParent->left = pMin->right):(pMinParent->right = pMin->right);
-            deallocNode(&deleteNode);
-        }
-        // 无右子树
-        else if (NULL == pMin->right){
-            (pMinParent->left == pMin) ? (pMinParent->left = pMin->left) : (pMinParent->right = pMin->left);
-            deallocNode(&deleteNode);
-        }
     }
-    
 }
 
