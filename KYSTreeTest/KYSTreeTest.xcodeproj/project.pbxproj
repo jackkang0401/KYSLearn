@@ -7,20 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DBFCBC7724AB5C64007A7854 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFCBC7624AB5C64007A7854 /* AppDelegate.m */; };
+		DB2F6DA624AC871D001B1A3A /* BinaryTreeBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DB2F6DA424AC871D001B1A3A /* BinaryTreeBase.cpp */; };
+		DBFCBC7724AB5C64007A7854 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = DBFCBC7624AB5C64007A7854 /* AppDelegate.mm */; };
 		DBFCBC7A24AB5C64007A7854 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFCBC7924AB5C64007A7854 /* SceneDelegate.m */; };
 		DBFCBC7D24AB5C64007A7854 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFCBC7C24AB5C64007A7854 /* ViewController.m */; };
 		DBFCBC8024AB5C64007A7854 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBFCBC7E24AB5C64007A7854 /* Main.storyboard */; };
 		DBFCBC8224AB5C65007A7854 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBFCBC8124AB5C65007A7854 /* Assets.xcassets */; };
 		DBFCBC8524AB5C65007A7854 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBFCBC8324AB5C65007A7854 /* LaunchScreen.storyboard */; };
 		DBFCBC8824AB5C65007A7854 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFCBC8724AB5C65007A7854 /* main.m */; };
-		DBFCBC9024AB5C99007A7854 /* BinarySearchTree.c in Sources */ = {isa = PBXBuildFile; fileRef = DBFCBC8F24AB5C99007A7854 /* BinarySearchTree.c */; };
+		DBFCBC9024AB5C99007A7854 /* BinarySearchTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DBFCBC8F24AB5C99007A7854 /* BinarySearchTree.cpp */; };
+		DBFCBC9424AC3616007A7854 /* KYSBinarySearchTreeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFCBC9324AC3616007A7854 /* KYSBinarySearchTreeViewController.m */; };
+		DBFCBC9724AC379E007A7854 /* KYSBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFCBC9624AC379E007A7854 /* KYSBaseViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DB2F6DA424AC871D001B1A3A /* BinaryTreeBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BinaryTreeBase.cpp; sourceTree = "<group>"; };
+		DB35E6F324AC959D00CD2EEC /* BinarySearchTree.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BinarySearchTree.hpp; sourceTree = "<group>"; };
+		DB35E6F424AC968100CD2EEC /* BinaryTreeBase.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BinaryTreeBase.hpp; sourceTree = "<group>"; };
 		DBFCBC7224AB5C64007A7854 /* KYSTreeTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KYSTreeTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBFCBC7524AB5C64007A7854 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		DBFCBC7624AB5C64007A7854 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		DBFCBC7624AB5C64007A7854 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		DBFCBC7824AB5C64007A7854 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
 		DBFCBC7924AB5C64007A7854 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
 		DBFCBC7B24AB5C64007A7854 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
@@ -30,8 +36,11 @@
 		DBFCBC8424AB5C65007A7854 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DBFCBC8624AB5C65007A7854 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DBFCBC8724AB5C65007A7854 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		DBFCBC8E24AB5C99007A7854 /* BinarySearchTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BinarySearchTree.h; sourceTree = "<group>"; };
-		DBFCBC8F24AB5C99007A7854 /* BinarySearchTree.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BinarySearchTree.c; sourceTree = "<group>"; };
+		DBFCBC8F24AB5C99007A7854 /* BinarySearchTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BinarySearchTree.cpp; sourceTree = "<group>"; };
+		DBFCBC9224AC3616007A7854 /* KYSBinarySearchTreeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KYSBinarySearchTreeViewController.h; sourceTree = "<group>"; };
+		DBFCBC9324AC3616007A7854 /* KYSBinarySearchTreeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KYSBinarySearchTreeViewController.m; sourceTree = "<group>"; };
+		DBFCBC9524AC379E007A7854 /* KYSBaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KYSBaseViewController.h; sourceTree = "<group>"; };
+		DBFCBC9624AC379E007A7854 /* KYSBaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KYSBaseViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +54,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DB2F6D9A24AC7F06001B1A3A /* Code */ = {
+			isa = PBXGroup;
+			children = (
+				DB35E6F424AC968100CD2EEC /* BinaryTreeBase.hpp */,
+				DB2F6DA424AC871D001B1A3A /* BinaryTreeBase.cpp */,
+				DB35E6F324AC959D00CD2EEC /* BinarySearchTree.hpp */,
+				DBFCBC8F24AB5C99007A7854 /* BinarySearchTree.cpp */,
+			);
+			path = Code;
+			sourceTree = "<group>";
+		};
 		DBFCBC6924AB5C64007A7854 = {
 			isa = PBXGroup;
 			children = (
@@ -64,10 +84,10 @@
 		DBFCBC7424AB5C64007A7854 /* KYSTreeTest */ = {
 			isa = PBXGroup;
 			children = (
-				DBFCBC8E24AB5C99007A7854 /* BinarySearchTree.h */,
-				DBFCBC8F24AB5C99007A7854 /* BinarySearchTree.c */,
+				DB2F6D9A24AC7F06001B1A3A /* Code */,
+				DBFCBC9124AC35CA007A7854 /* ViewController */,
 				DBFCBC7524AB5C64007A7854 /* AppDelegate.h */,
-				DBFCBC7624AB5C64007A7854 /* AppDelegate.m */,
+				DBFCBC7624AB5C64007A7854 /* AppDelegate.mm */,
 				DBFCBC7824AB5C64007A7854 /* SceneDelegate.h */,
 				DBFCBC7924AB5C64007A7854 /* SceneDelegate.m */,
 				DBFCBC7B24AB5C64007A7854 /* ViewController.h */,
@@ -79,6 +99,17 @@
 				DBFCBC8724AB5C65007A7854 /* main.m */,
 			);
 			path = KYSTreeTest;
+			sourceTree = "<group>";
+		};
+		DBFCBC9124AC35CA007A7854 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				DBFCBC9524AC379E007A7854 /* KYSBaseViewController.h */,
+				DBFCBC9624AC379E007A7854 /* KYSBaseViewController.m */,
+				DBFCBC9224AC3616007A7854 /* KYSBinarySearchTreeViewController.h */,
+				DBFCBC9324AC3616007A7854 /* KYSBinarySearchTreeViewController.m */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -152,10 +183,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBFCBC7D24AB5C64007A7854 /* ViewController.m in Sources */,
-				DBFCBC7724AB5C64007A7854 /* AppDelegate.m in Sources */,
+				DBFCBC7724AB5C64007A7854 /* AppDelegate.mm in Sources */,
 				DBFCBC8824AB5C65007A7854 /* main.m in Sources */,
-				DBFCBC9024AB5C99007A7854 /* BinarySearchTree.c in Sources */,
+				DBFCBC9424AC3616007A7854 /* KYSBinarySearchTreeViewController.m in Sources */,
+				DBFCBC9724AC379E007A7854 /* KYSBaseViewController.m in Sources */,
+				DBFCBC9024AB5C99007A7854 /* BinarySearchTree.cpp in Sources */,
 				DBFCBC7A24AB5C64007A7854 /* SceneDelegate.m in Sources */,
+				DB2F6DA624AC871D001B1A3A /* BinaryTreeBase.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,7 +329,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_STYLE = Automatic;
+				GCC_INPUT_FILETYPE = automatic;
 				INFOPLIST_FILE = KYSTreeTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -303,6 +340,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = kkk.cn.KYSTreeTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"SYSTEM_HEADER_SEARCH_PATHS[arch=*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -311,7 +349,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_STYLE = Automatic;
+				GCC_INPUT_FILETYPE = automatic;
 				INFOPLIST_FILE = KYSTreeTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -319,6 +360,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = kkk.cn.KYSTreeTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYSTEM_HEADER_SEARCH_PATHS = "";
+				"SYSTEM_HEADER_SEARCH_PATHS[arch=*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
