@@ -53,3 +53,47 @@ int nthUglyNumber(int n){
 }
 
 ```
+
+## 3.前 K 个高频元素
+
+
+``` 
+// C ++
+
+#include <stdio.h>
+#include <stack>
+#include <vector>
+#include <unordered_map>
+#include <queue>
+#include <utility>
+#include <algorithm>
+
+class TopKFrequentSolution {
+public:
+    std::vector<int> topKFrequent(std::vector<int>& nums, int k) {
+        std::unordered_map<int,int> record;
+        for (int i = 0; i < nums.size(); i++){
+            record[nums[i]] ++;
+        }
+        std::priority_queue<std::pair<int,int>,std::vector<std::pair<int,int>>,std::greater<std::pair<int,int>>> minHeap;
+        for (auto iter = record.begin(); iter!=record.end(); iter++){
+            if(minHeap.size() == k){
+                if(minHeap.top().first < iter->second){
+                    minHeap.pop();
+                    minHeap.push(std::make_pair(iter->second,iter->first));
+                }
+            } else {
+                minHeap.push(std::make_pair(iter->second,iter->first));
+            }
+        }
+        std::vector<int> result;
+        while(minHeap.size()) {
+            result.push_back(minHeap.top().second);
+            minHeap.pop();
+        }
+        reverse(result.begin(),result.end());
+        return result;
+    }
+};
+
+```
