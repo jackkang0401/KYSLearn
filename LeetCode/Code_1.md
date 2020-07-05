@@ -54,7 +54,7 @@ int nthUglyNumber(int n){
 
 ```
 
-## 3.前 K 个高频元素
+## 3.前 K 个高频元素（Leetcode 347）
 
 
 ``` 
