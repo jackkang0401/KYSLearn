@@ -28,3 +28,28 @@ struct TreeNode* lowestCommonAncestor(struct TreeNode* root, struct TreeNode* p,
 }
 
 ```
+
+## 2.丑数（剑指 Offer 49 ）
+
+
+```
+// C
+
+int nthUglyNumber(int n){
+    int u2 = 0,u3 = 0,u5 = 0;
+    int u[n];
+    u[0] = 1;
+    for (int i = 1; i < n; i++){
+        int v2 = u[u2]*2;
+        int v3 = u[u3]*3;
+        int v5 = u[u5]*5;
+        int min = v2 < v3 ? v2 : v3;
+        u[i] = min < v5 ? min : v5;
+        if (u[i] == v2) u2++;
+        if (u[i] == v3) u3++;
+        if (u[i] == v5) u5++;
+    }
+    return u[n-1];
+}
+
+```
