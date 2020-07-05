@@ -217,7 +217,7 @@ int insertElement(int *array, int length, int element) {
     return -1;
 }
 
-//删除堆元素（堆只能删除根元素）
+// 删除堆元素（堆只能删除根元素）
 int deleteElement(int *array, int length) {
     if (length) {
         swap(array,array+length-1);         // 根节点与最后一个节点交换

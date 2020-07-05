@@ -73,9 +73,9 @@ void preorderRecursionTraversal(BinaryTree T){
 // 非递归实现
 void preorderTraversal(BinaryTree T){
     std::stack<BinaryTree> stack;
-    BinaryTree p=T;
-    while (NULL!=p || !stack.empty()) {
-        if (NULL != p) {
+    BinaryTree p = T;
+    while (p || !stack.empty()) {
+        if (p) {
             stack.push(p);
             printf("%d ",p->value);
             p = p->lChild;
@@ -102,11 +102,11 @@ void inorderRecursionTraversal(BinaryTree T){
 void inorderTraversal(BinaryTree T){
     std::stack<BinaryTree> stack;
     BinaryTree p=T;
-    while (NULL!=p || !stack.empty()) {
-        if (NULL != p) {
+    while (p || !stack.empty()) {
+        if (p) {
             stack.push(p);
             p = p->lChild;
-        }else{
+        } else {
             p = stack.top();
             printf("%d ",p->value);
             stack.pop();
