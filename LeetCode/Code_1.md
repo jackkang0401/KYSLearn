@@ -1,9 +1,10 @@
-# Code
+# Code_1
 
 ## 1. 二叉树的最近公共祖先（Leetcode 236）
 
-'''
+```
 // C
+
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -26,4 +27,4 @@ struct TreeNode* lowestCommonAncestor(struct TreeNode* root, struct TreeNode* p,
     return NULL; 
 }
 
-'''
+```
