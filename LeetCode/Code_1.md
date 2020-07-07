@@ -98,6 +98,7 @@ public:
 
 ```
 
+
 ## 4.盛最多水的容器（Leetcode 11）
 
 ```
@@ -115,3 +116,41 @@ int maxArea(int* height, int heightSize){
 }
 
 ```
+
+
+## 5.两两交换链表中的节点（Leetcode 24）
+
+```
+// C
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+
+
+struct ListNode* swapPairs(struct ListNode* first){
+    if (NULL == first) return NULL;
+    struct ListNode *head = (struct ListNode *)malloc(sizeof(struct ListNode));
+    head->next = first;
+
+    struct ListNode *pre = head; 
+    struct ListNode *current = head->next;
+    while (current && current->next) {
+        struct ListNode *next = current->next;
+
+        pre->next = next;
+        current->next = next->next;
+        next->next = current;
+
+        pre = current;
+        current = current->next;
+    }
+    return head->next;
+}
+
+```
+
