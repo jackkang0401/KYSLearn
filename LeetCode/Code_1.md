@@ -97,3 +97,21 @@ public:
 };
 
 ```
+
+## 4.盛最多水的容器（Leetcode 11）
+
+```
+int maxArea(int* height, int heightSize){
+    int i = 0, j = heightSize-1;
+    int h =  height[i]<height[j] ? height[i] : height[j];
+    int max = h*(j-i);
+    while (i < j){
+        height[i]<height[j] ? i++ : j--;
+        int h =  height[i]<height[j] ? height[i] : height[j];
+        int area = h * (j-i);
+        max = max > area ? max : area;
+    }
+    return max;
+}
+
+```
