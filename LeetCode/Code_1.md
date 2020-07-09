@@ -154,3 +154,51 @@ struct ListNode* swapPairs(struct ListNode* first){
 
 ```
 
+## 5.括号生成（Leetcode 22）
+
+
+```
+
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+ 
+char **generateParenthesis(int n, int *returnSize) {
+    char *s = (char *)calloc((2 * n + 1), sizeof(char));
+    char **result = (char **)malloc(catalan(n) * sizeof(char *));
+    *returnSize = 0;
+    generate(0, 0, n, s, result, returnSize);
+    return result;
+}
+
+void generate(int left, int right, int n, char *s, char **result, int *returnSize) {
+    if (left == n && right == n) {
+        result[(*returnSize)] = (char *)calloc((2*n+1), sizeof(char));
+        strcpy(result[(*returnSize)++], s);
+        return;
+    }
+    int index = left + right;
+    if (left < n) {
+        s[index] = '(';
+        generate(left+1, right, n, s, result, returnSize);
+    }
+    if (right < left) {
+        s[index] = ')';
+        generate(left, right+1, n, s, result, returnSize);
+    }
+}
+
+int catalan(int n) {
+  int i, j, h[n + 1];
+  h[0] = h[1] = 1;
+  for (i = 2; i <= n; i++) {
+    h[i] = 0;
+    for (j = 0; j < i; j++)
+      h[i] = h[i] + h[j] * h[i - j - 1];
+  }
+  return h[n];
+}
+
+
+```
+
