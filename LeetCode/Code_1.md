@@ -202,3 +202,54 @@ int catalan(int n) {
 
 ```
 
+## 6.全排列（Leetcode 46）
+
+```
+
+/**
+ * Return an array of arrays of size *returnSize.
+ * The sizes of the arrays are returned as *returnColumnSizes array.
+ * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
+ */
+
+void dfs(int *nums, int numsSize, char *used, int *path, int current, int **result, int *returnSize, int **returnColumnSizes) {
+    int i;
+
+    if (current == numsSize) {
+        result[*returnSize] = malloc(sizeof(int) * numsSize);
+        memcpy(result[*returnSize], path, sizeof(int) * numsSize);
+        (*returnColumnSizes)[*returnSize] = numsSize;
+        (*returnSize) ++;
+        return;
+    }
+
+    for (i = 0; i < numsSize; i++) {
+        if (!used[i]) {
+            used[i] = 1;
+            path[current] = nums[i];
+            dfs(nums, numsSize, used, path, current+1, result, returnSize, returnColumnSizes);
+            used[i] = 0;
+        }
+    }
+}
+
+int** permute(int* nums, int numsSize, int* returnSize, int** returnColumnSizes){
+    int path[numsSize];
+    char used[numsSize];
+    memset(used, 0, numsSize);
+
+    int total = 1; // 总数
+    for (int i = 2; i <= numsSize; i++) {
+        total *= i;
+    } 
+    
+    int **result = (int **)malloc(total * sizeof(int *));
+    *returnColumnSizes = (int *)malloc(total * sizeof(int));
+
+    *returnSize = 0;
+    dfs(nums, numsSize, used, path, 0, result, returnSize, returnColumnSizes);
+    
+    return result;
+}
+
+```
