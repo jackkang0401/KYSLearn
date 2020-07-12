@@ -258,7 +258,7 @@ int** permute(int* nums, int numsSize, int* returnSize, int** returnColumnSizes)
 ```
 
 
-## 5.全排列 II（Leetcode 47）
+## 7.全排列 II（Leetcode 47）
 
 ```
 // C
