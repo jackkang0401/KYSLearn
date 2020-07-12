@@ -158,6 +158,7 @@ struct ListNode* swapPairs(struct ListNode* first){
 
 
 ```
+// C
 
 /**
  * Note: The returned array must be malloced, assume caller calls free().
@@ -205,6 +206,7 @@ int catalan(int n) {
 ## 6.全排列（Leetcode 46）
 
 ```
+// C
 
 /**
  * Return an array of arrays of size *returnSize.
@@ -212,43 +214,107 @@ int catalan(int n) {
  * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
  */
 
-void dfs(int *nums, int numsSize, char *used, int *path, int current, int **result, int *returnSize, int **returnColumnSizes) {
-    int i;
-
+void dfs(int* nums, int numsSize, char *used, int *path, int current, int **result, int* returnSize, int** returnColumnSizes) {
     if (current == numsSize) {
-        result[*returnSize] = malloc(sizeof(int) * numsSize);
+        result[*returnSize] = (int *)malloc(sizeof(int) * numsSize); 
         memcpy(result[*returnSize], path, sizeof(int) * numsSize);
         (*returnColumnSizes)[*returnSize] = numsSize;
         (*returnSize) ++;
         return;
     }
-
-    for (i = 0; i < numsSize; i++) {
-        if (!used[i]) {
+    for (int i = 0; i < numsSize; i++) {
+        if (0 == used[i]) {
             used[i] = 1;
             path[current] = nums[i];
             dfs(nums, numsSize, used, path, current+1, result, returnSize, returnColumnSizes);
             used[i] = 0;
         }
-    }
+    }   
 }
 
 int** permute(int* nums, int numsSize, int* returnSize, int** returnColumnSizes){
+    if (NULL == nums) return NULL;
+    
+    // 计算总数
+    int total = 1;
+    for (int i = 2; i <= numsSize; i++) {
+        total *= i;
+    }
+
+    // 初始化入参
     int path[numsSize];
     char used[numsSize];
     memset(used, 0, numsSize);
+    int **result = (int **)malloc(sizeof(int *) * total);
+    *returnSize = 0;
+    *returnColumnSizes = (int *)malloc(sizeof(int) * total); 
 
-    int total = 1; // 总数
+    // 进入函数
+    dfs(nums, numsSize, used, path, 0, result, returnSize, returnColumnSizes);
+
+    return result;
+}
+
+```
+
+
+## 5.全排列 II（Leetcode 47）
+
+```
+// C
+
+/**
+ * Return an array of arrays of size *returnSize.
+ * The sizes of the arrays are returned as *returnColumnSizes array.
+ * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
+ */
+
+int comp(const void*a, const void*b) {
+    return *(int*)a-*(int*)b;
+}
+
+void dfs(int* nums, int numsSize, char *used, int *path, int current, int **result, int* returnSize, int** returnColumnSizes) {
+    if (current == numsSize) {
+        result[*returnSize] = (int *)malloc(sizeof(int) * numsSize); 
+        memcpy(result[*returnSize], path, sizeof(int) * numsSize);
+        (*returnColumnSizes)[*returnSize] = numsSize;
+        (*returnSize) ++;
+        return;
+    }
+    for (int i = 0; i < numsSize; i++) {
+        if (i > 0 && nums[i] == nums[i-1] && 0 == used[i-1]) continue;
+        if (0 == used[i]) {
+            used[i] = 1;
+            path[current] = nums[i];
+            dfs(nums, numsSize, used, path, current+1, result, returnSize, returnColumnSizes);
+            used[i] = 0;
+        }
+    }   
+}
+
+int** permuteUnique(int* nums, int numsSize, int* returnSize, int** returnColumnSizes){
+    if (NULL == nums) return NULL;
+
+    // 排序
+    qsort(nums, numsSize, sizeof(int), comp);
+
+    // 计算总数
+    int total = 1;
     for (int i = 2; i <= numsSize; i++) {
         total *= i;
-    } 
-    
-    int **result = (int **)malloc(total * sizeof(int *));
-    *returnColumnSizes = (int *)malloc(total * sizeof(int));
+    }
 
+    // 初始化入参
+    int path[numsSize];
+    char used[numsSize];
+    memset(used, 0, numsSize);
+    int **result = (int **)malloc(sizeof(int *) * total);
     *returnSize = 0;
+    *returnColumnSizes = (int *)malloc(sizeof(int) * total); 
+
+    // 进入函数
     dfs(nums, numsSize, used, path, 0, result, returnSize, returnColumnSizes);
-    
+
     return result;
 }
 
