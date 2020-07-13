@@ -319,3 +319,40 @@ int** permuteUnique(int* nums, int numsSize, int* returnSize, int** returnColumn
 }
 
 ```
+
+## 8.二叉树中序遍历（Leetcode 94）
+
+```
+// C++
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        stack<TreeNode *> stack;
+        vector<int> result;
+        TreeNode *p = root;
+        while (p || !stack.empty()){
+            if (p){
+                stack.push(p);
+                p = p->left;
+            } else {
+                p = stack.top();
+                result.push_back(p->val);
+                stack.pop();
+                p = p->right;
+            }
+        }
+        return result;
+    }
+};
+
+```
