@@ -356,3 +356,44 @@ public:
 };
 
 ```
+
+## 9.从前序与中序遍历序列构造二叉树（Leetcode 105）
+
+```
+// C
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+
+struct TreeNode* buildTree(int* preorder, int preorderSize, int* inorder, int inorderSize) {
+    // 结束条件
+    if (0 == preorderSize || 0 == inorderSize) return NULL;
+    if (NULL == preorder || NULL == inorder) return NULL;
+    if (preorderSize != inorderSize) return NULL;
+
+    // 计算左右子树个数
+    int rootVal = preorder[0];
+    int leftNum = 0;
+    for (; leftNum < inorderSize; leftNum ++) {
+        if (rootVal == inorder[leftNum]) break;
+    }
+    int rightNum = inorderSize - leftNum - 1;
+
+    // 初始化节点
+    struct TreeNode *rootNode = (struct TreeNode *)malloc(sizeof(struct TreeNode));
+    memset(rootNode, 0, sizeof(struct TreeNode));
+
+    // 递归
+    rootNode->val = rootVal;
+    rootNode->left = buildTree(preorder+1, leftNum, inorder, leftNum);
+    rootNode->right = buildTree(preorder+(leftNum+1), rightNum, inorder+(leftNum+1), rightNum);
+    
+    return rootNode;
+}
+```
