@@ -273,7 +273,7 @@ int comp(const void*a, const void*b) {
     return *(int*)a-*(int*)b;
 }
 
-void dfs(int* nums, int numsSize, char *used, int *path, int current, int **result, int* returnSize, int** returnColumnSizes) {
+void dfs(int* nums, int numsSize, int *used, int *path, int current, int **result, int* returnSize, int** returnColumnSizes) {
     if (current == numsSize) {
         result[*returnSize] = (int *)malloc(sizeof(int) * numsSize); 
         memcpy(result[*returnSize], path, sizeof(int) * numsSize);
@@ -306,8 +306,8 @@ int** permuteUnique(int* nums, int numsSize, int* returnSize, int** returnColumn
 
     // 初始化入参
     int path[numsSize];
-    char used[numsSize];
-    memset(used, 0, numsSize);
+    int used[numsSize];
+    memset(used, 0, sizeof(int) * numsSize);
     int **result = (int **)malloc(sizeof(int *) * total);
     *returnSize = 0;
     *returnColumnSizes = (int *)malloc(sizeof(int) * total); 
