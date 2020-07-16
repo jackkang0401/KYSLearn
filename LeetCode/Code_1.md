@@ -397,3 +397,71 @@ struct TreeNode* buildTree(int* preorder, int preorderSize, int* inorder, int in
     return rootNode;
 }
 ```
+
+## 10.岛屿数量（Leetcode 200）
+
+```
+// C
+
+void dfs(char** grid, int gridSize, int* gridColSize, int i, int j) {
+    if(i<0 || i>=gridSize || j<0 || j>=gridColSize[i] || '1'!=grid[i][j]) return;
+    grid[i][j] = '0';
+    dfs(grid, gridSize, gridColSize, i+1, j);
+    dfs(grid, gridSize, gridColSize, i-1, j);
+    dfs(grid, gridSize, gridColSize, i, j+1);
+    dfs(grid, gridSize, gridColSize, i, j-1);
+}
+
+int numIslands(char** grid, int gridSize, int* gridColSize){
+    if(grid==NULL || gridSize == 0 || gridColSize==NULL) return 0;
+
+    int count = 0;
+    for(int i=0; i<gridSize; i++) {
+        for(int j = 0; j<gridColSize[i]; j++) {
+            if('1' == grid[i][j])
+                count ++;
+                dfs(grid, gridSize, gridColSize, i, j);
+        }
+    }
+    return count;
+}
+
+```
+
+## 10.二叉树的层序遍历（Leetcode 102）
+
+```
+// C++
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        vector<vector<int>> result;
+        if (!root) return result;
+        queue<TreeNode*> q;    // 队列
+        q.push(root);
+        while (!q.empty()) {
+            int currentLevelSize = q.size();              // 当前层全部节点数
+            result.push_back(vector<int>());              // vector<int> 存放当前层全部节点
+            for (int i = 1; i <= currentLevelSize; ++i) { // 取出当前层全部节点放入 vector<int>
+                auto node = q.front(); // 队列头节点
+                q.pop();               // 移出队列头节点
+                result.back().push_back(node->val);
+                if (node->left) q.push(node->left);
+                if (node->right) q.push(node->right);
+            }
+        }
+        
+        return result;
+    }
+};
+```
