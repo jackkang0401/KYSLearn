@@ -64,11 +64,7 @@ void deleteBSTree(BinaryTree *T, int val){
             break;
         }
         parent = deleteNode;
-        if (val < deleteNode->value) {
-            deleteNode = deleteNode->lChild;
-        } else if (val > deleteNode->value) {
-            deleteNode = deleteNode->rChild;
-        }
+        deleteNode = (val < deleteNode->value) ? deleteNode->lChild : deleteNode->rChild;
     }
     
     // 未找到删除节点
@@ -92,7 +88,7 @@ void deleteBSTree(BinaryTree *T, int val){
     }
     // 3.左右子树都有
     else {
-        // 寻找右子树最小值，找到的待删除节点要么是 1. 叶子节点，2. 要么只有一个右子树，无左子树
+        // 寻找右子树最小值，找到的待删除节点
         BinaryNode *pMinParent = deleteNode;
         BinaryNode *pMin = deleteNode->rChild;
         while (pMin->lChild) {
@@ -100,12 +96,10 @@ void deleteBSTree(BinaryTree *T, int val){
             pMin = pMin->lChild;
         }
         deleteNode->value = pMin->value;
-        // 删除该节点，1. 叶子节点，2. 要么只有一个右子树，无左子树
-        if (NULL == pMin->lChild || NULL == pMin->rChild) {
-            BinaryNode *child = (NULL == pMin->lChild) ? pMin->rChild :pMin->lChild ;
-            (pMinParent->lChild == pMin) ? (pMinParent->lChild = child) : (pMinParent->rChild = child);
-            deallocNode(&pMin);
-        }
+        // 情况只能是：1. 无叶子节点，2. 只有一个右子树，无左子树
+        BinaryNode *child = (NULL == pMin->lChild) ? pMin->rChild :pMin->lChild ;
+        (pMinParent->lChild == pMin) ? (pMinParent->lChild = child) : (pMinParent->rChild = child);
+        deallocNode(&pMin);
     }
 }
 
