@@ -214,7 +214,7 @@ int catalan(int n) {
  * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
  */
 
-void dfs(int* nums, int numsSize, char *used, int *path, int current, int **result, int* returnSize, int** returnColumnSizes) {
+void dfs(int* nums, int numsSize, int *used, int *path, int current, int **result, int* returnSize, int** returnColumnSizes) {
     if (current == numsSize) {
         result[*returnSize] = (int *)malloc(sizeof(int) * numsSize); 
         memcpy(result[*returnSize], path, sizeof(int) * numsSize);
@@ -234,7 +234,7 @@ void dfs(int* nums, int numsSize, char *used, int *path, int current, int **resu
 
 int** permute(int* nums, int numsSize, int* returnSize, int** returnColumnSizes){
     if (NULL == nums) return NULL;
-    
+
     // 计算总数
     int total = 1;
     for (int i = 2; i <= numsSize; i++) {
@@ -243,8 +243,8 @@ int** permute(int* nums, int numsSize, int* returnSize, int** returnColumnSizes)
 
     // 初始化入参
     int path[numsSize];
-    char used[numsSize];
-    memset(used, 0, numsSize);
+    int used[numsSize];
+    memset(used, 0, sizeof(int) * numsSize);
     int **result = (int **)malloc(sizeof(int *) * total);
     *returnSize = 0;
     *returnColumnSizes = (int *)malloc(sizeof(int) * total); 
