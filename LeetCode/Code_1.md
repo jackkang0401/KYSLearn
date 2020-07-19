@@ -465,3 +465,44 @@ public:
     }
 };
 ```
+
+## 11.买卖股票的最佳时机 II（Leetcode 122）
+
+```
+// C
+
+int maxProfit(int* prices, int pricesSize){
+    if (pricesSize<=1) return 0;
+    int total = 0;
+    for (int i=0; i<pricesSize-1; i++) {
+        if (prices[i+1] > prices[i]) {
+            total += (prices[i+1] - prices[i]);
+        }
+    }
+    return total;
+}
+
+```
+
+## 12.搜索旋转排序数组（Leetcode 33）
+
+```
+// C
+
+int search(int* nums, int numsSize, int target){
+    if (0 == numsSize) return -1;
+    int low = 0;
+    int high = numsSize-1;
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        if (nums[mid] == target) return mid;
+        if (nums[0] <= nums[mid] ) {
+            (nums[0]<=target && nums[mid]>target) ? (high=mid-1) : (low=mid+1);
+        } else {
+            (nums[mid]<target && nums[numsSize-1]>=target) ? (low=mid+1) : (high=mid-1);
+        }
+    }
+    return -1;
+}
+
+```
