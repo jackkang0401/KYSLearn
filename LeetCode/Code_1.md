@@ -506,3 +506,41 @@ int search(int* nums, int numsSize, int target){
 }
 
 ```
+## 13.四数之和（Leetcode 18）
+
+```
+// C++
+
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        vector<vector<int> > result; 
+        int numSize = nums.size();
+        if (numSize < 4) return result;      
+        sort(nums.begin(), nums.end());                         // 排序
+        for(int a = 0; a <= numSize-4; a++){
+            if(a > 0 && nums[a] == nums[a-1]) continue;         // 跳过相同的 a
+            for(int b = a+1; b <= numSize-3; b++){
+                if(b > a+1 && nums[b] == nums[b-1]) continue;   // 跳过相同的 b
+                int ab = nums[a] + nums[b];          
+                int c = b + 1;
+                int d = numSize - 1;
+                while(c < d){
+                    int abcd = ab + nums[c] + nums[d]; 
+                    if (abcd == target) {
+                        result.push_back({nums[a],nums[b],nums[c],nums[d]});
+                        c++;
+                        d--;
+                        while(c < d && nums[c] == nums[c-1]) c++;
+                        while(c < d && nums[d] == nums[d+1]) d--;
+                    } else {
+                       abcd < target ? c++ : d--;   // 小于 c 右移，大于 d 左移
+                    } 
+                }
+            }
+        }
+        return result;
+    }
+};
+
+```
