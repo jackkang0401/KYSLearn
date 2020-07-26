@@ -544,3 +544,26 @@ public:
 };
 
 ```
+
+## 14.跳跃游戏 II（Leetcode 45）
+
+```
+// C
+
+int jump(int* nums, int numsSize){
+    if(NULL == nums) return NULL;
+    int jumpCount = 0;
+    int end = numsSize - 1;
+    while (end >= 0) {
+        int current = end;
+        for (int i = end-1; i>=0; i--) { // 找到最靠前并且能到达当前 end 的 index
+            if (i + nums[i] >= end) current = i;  
+        }
+        if (current == end) break;
+        end = current;                   // 更新 end
+        jumpCount ++;
+    }
+    return jumpCount;
+}
+
+```
