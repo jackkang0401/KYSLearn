@@ -29,11 +29,8 @@ void insertBSTree(BinaryTree *T, int val) {
     BinaryNode *current = *T;
     BinaryNode *parent = NULL;
     while (NULL != current) {
+        if (val == current->value) return; // 值相同，数据冲突
         parent = current;
-        if (val == current->value) {
-            printf("duplicate value %d/n",val);
-            return;
-        }
         current = (val < current->value) ? current->lChild : current->rChild;
     }
     BinaryNode *childNode = newNode(val);
