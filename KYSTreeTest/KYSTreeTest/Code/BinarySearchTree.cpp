@@ -15,11 +15,7 @@ BinaryNode *searchBSTree(BinaryTree T, int val) {
         if (val == current->value) {
             return current;
         }
-        if (val < current->value) {
-            current = current->lChild;
-        } else if (val > current->value) {
-            current = current->rChild;
-        }
+        current = (val < current->value) ? current->lChild : current->rChild;
     }
     return NULL;
 }
