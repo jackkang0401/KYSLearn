@@ -670,3 +670,31 @@ public:
 };
 
 ```
+
+## 17.回文子串（Leetcode 647）
+
+```
+// C++
+
+// 1.中心扩展法
+
+class Solution {
+public:
+    int countSubstrings(string s) {
+        int length = s.length();
+        int total = 0;
+        for(int i = 0; i < length*2; i++){
+            // 长度分别为奇数（s[i]）、偶数（中心为空）的回文子串
+            int left = i/2;
+            int right = left + i % 2;
+            while(left >= 0 && right < length && s[left] == s[right]){
+                total++;
+                left--;
+                right++;
+            }
+        }
+        return total;
+    }
+};
+
+```
