@@ -3,29 +3,70 @@
 ## 1. 二叉树的最近公共祖先（Leetcode 236）
 
 ```
-// C
+// C ++
+
 
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
  *     int val;
- *     struct TreeNode *left;
- *     struct TreeNode *right;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
-struct TreeNode* lowestCommonAncestor(struct TreeNode* root, struct TreeNode* p, struct TreeNode* q) {
-    if(root == NULL) return NULL;
-    if(root == p || root == q) return root;
-            
-    struct TreeNode* left =  lowestCommonAncestor(root->left, p, q);
-    struct TreeNode* right = lowestCommonAncestor(root->right, p, q);
-       
-    if(left == NULL) return right;
-    if(right == NULL) return left;      
-    if(left && right) return root; // p 和 q 在两侧
 
-    return NULL; 
-}
+// 递归
+
+class Solution {
+public:
+    bool dfs(TreeNode* root, TreeNode* p, TreeNode* q, TreeNode* &ans) {
+        if (NULL == root) return false;
+        bool lson = dfs(root->left, p, q, ans);
+        bool rson = dfs(root->right, p, q, ans);
+        if ((lson && rson) || ((root->val == p->val || root->val == q->val) && (lson || rson))) {
+            ans = root;
+        } 
+        return lson || rson || (root->val == p->val || root->val == q->val);
+    }
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        TreeNode* ans;
+        dfs(root, p, q, ans);
+        return ans;
+    }
+};
+
+
+// 非递归
+
+class Solution {
+public:
+    unordered_map<int, TreeNode*> fa;
+    unordered_map<int, bool> vis;
+    void dfs(TreeNode* root){
+        if (root->left != nullptr) {
+            fa[root->left->val] = root;
+            dfs(root->left);
+        }
+        if (root->right != nullptr) {
+            fa[root->right->val] = root;
+            dfs(root->right);
+        }
+    }
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        fa[root->val] = NULL;
+        dfs(root);
+        while (p != NULL) {
+            vis[p->val] = true;
+            p = fa[p->val];
+        }
+        while (q != NULL) {
+            if (vis[q->val]) return q;
+            q = fa[q->val];
+        }
+        return NULL;
+    }
+};
 
 ```
 
