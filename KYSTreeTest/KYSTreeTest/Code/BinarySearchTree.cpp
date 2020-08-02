@@ -45,25 +45,19 @@ void insertBSTree(BinaryTree *T, int val) {
 3. 左右子树都不为空，降级为 2 或 1
 */
 void deleteBSTree(BinaryTree *T, int val){
-    if (NULL == *T) {
-        return;
-    }
+    if (NULL == *T) return;
     
     // 查找待删除节点
     BinaryNode *deleteNode = *T;
     BinaryNode *parent = NULL;        // 记录待删除节点的父节点
     while (NULL != deleteNode) {
-        if (val == deleteNode->value) {
-            break;
-        }
+        if (val == deleteNode->value) break;
         parent = deleteNode;
         deleteNode = (val < deleteNode->value) ? deleteNode->lChild : deleteNode->rChild;
     }
     
     // 未找到删除节点
-    if (NULL == deleteNode) {
-        return;
-    }
+    if (NULL == deleteNode) return;
     
     // 1.无左右子树  2.无左子树或右子树
     if (NULL == deleteNode->lChild || NULL == deleteNode->rChild) {
@@ -75,7 +69,7 @@ void deleteBSTree(BinaryTree *T, int val){
             return;
         }
         // 父节点新的子节点, 如果左右子节点都为 NULL，child 为 NULL
-        BinaryNode *child = (NULL == deleteNode->lChild) ? deleteNode->rChild :deleteNode->lChild ;
+        BinaryNode *child = (NULL == deleteNode->lChild) ? deleteNode->rChild : deleteNode->lChild;
         (parent->lChild == deleteNode) ? (parent->lChild = child) : (parent->rChild = child);
         deallocNode(&deleteNode);
     }
@@ -90,7 +84,7 @@ void deleteBSTree(BinaryTree *T, int val){
         }
         deleteNode->value = pMin->value;
         // 情况只能是：1. 无叶子节点，2. 只有一个右子树，无左子树
-        BinaryNode *child = (NULL == pMin->lChild) ? pMin->rChild :pMin->lChild ;
+        BinaryNode *child = (NULL == pMin->lChild) ? pMin->rChild : pMin->lChild;
         (pMinParent->lChild == pMin) ? (pMinParent->lChild = child) : (pMinParent->rChild = child);
         deallocNode(&pMin);
     }
