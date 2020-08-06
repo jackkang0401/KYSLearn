@@ -125,3 +125,76 @@ public:
  */
  
 ```
+
+## 4.单词搜索 II（Leetcode 212）
+
+```
+class Trie {
+private:
+    bool isEnd;
+    string str;
+    Trie* links[26];
+public:
+    Trie() {
+        isEnd = false;
+        str = "";
+        for (int i = 0; i < 26; i++) {
+            links[i] = nullptr;
+        }
+    }
+    void insert(string word) {
+        Trie *node = this;
+        for (auto c : word) {
+            if (node->links[c - 'a'] == nullptr) {
+                node->links[c - 'a'] = new Trie();
+            }
+            node = node->links[c - 'a'];
+        }
+        node->str = word; 
+        node->isEnd = true;
+    }
+    void search(vector<string>& result, vector<vector<char>>& board) {
+        for (int i = 0; i < board.size(); i++) {
+            for (int j = 0; j < board[i].size(); j++) {
+                help(result, board, this, i, j);
+            }
+        }
+    }
+    void help(vector<string>&result, vector<vector<char>>& board, Trie* node, int x, int y) {
+        if (node->isEnd) {
+            node->isEnd = false;    // 删除单词（相当于标记为已使用过）
+            result.push_back(node->str);
+            return;
+        }
+        if (x < 0 || x == board.size() || y < 0 || y == board[x].size()) {
+            return;
+        }
+        char c = board[x][y];
+        // 当前字符已使用过或不存在直接返回
+        if ('#' == c || node->links[c - 'a'] == nullptr) {
+            return; 
+        }
+        node = node->links[c - 'a'];
+        board[x][y] = '#';
+        help(result, board, node, x+1, y);
+        help(result, board, node, x-1, y);
+        help(result, board, node, x, y+1);
+        help(result, board, node, x, y-1);
+        board[x][y] = c;
+    }
+};
+
+class Solution {
+public:
+    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+        Trie trie;
+        vector<string> result;
+        for (string& w: words) {
+            trie.insert(w);
+        }
+        trie.search(result, board);
+        return result;
+    }
+};
+
+```
