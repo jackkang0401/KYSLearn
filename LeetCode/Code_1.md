@@ -195,7 +195,7 @@ struct ListNode* swapPairs(struct ListNode* first){
 
 ```
 
-## 5.括号生成（Leetcode 22）
+## 6.括号生成（Leetcode 22）
 
 
 ```
@@ -247,7 +247,7 @@ char ** generateParenthesis(int n, int* returnSize){
 
 ```
 
-## 6.全排列（Leetcode 46）
+## 7.全排列（Leetcode 46）
 
 ```
 // C
@@ -302,7 +302,7 @@ int** permute(int* nums, int numsSize, int* returnSize, int** returnColumnSizes)
 ```
 
 
-## 7.全排列 II（Leetcode 47）
+## 8.全排列 II（Leetcode 47）
 
 ```
 // C
@@ -364,7 +364,7 @@ int** permuteUnique(int* nums, int numsSize, int* returnSize, int** returnColumn
 
 ```
 
-## 8.二叉树中序遍历（Leetcode 94）
+## 9.二叉树中序遍历（Leetcode 94）
 
 ```
 // C++
@@ -401,7 +401,7 @@ public:
 
 ```
 
-## 9.从前序与中序遍历序列构造二叉树（Leetcode 105）
+## 10.从前序与中序遍历序列构造二叉树（Leetcode 105）
 
 ```
 // C
@@ -442,7 +442,7 @@ struct TreeNode* buildTree(int* preorder, int preorderSize, int* inorder, int in
 }
 ```
 
-## 10.岛屿数量（Leetcode 200）
+## 11.岛屿数量（Leetcode 200）
 
 ```
 // C
@@ -472,7 +472,7 @@ int numIslands(char** grid, int gridSize, int* gridColSize){
 
 ```
 
-## 10.二叉树的层序遍历（Leetcode 102）
+## 12.二叉树的层序遍历（Leetcode 102）
 
 ```
 // C++
@@ -510,7 +510,7 @@ public:
 };
 ```
 
-## 11.买卖股票的最佳时机 II（Leetcode 122）
+## 13.买卖股票的最佳时机 II（Leetcode 122）
 
 ```
 // C
@@ -528,7 +528,7 @@ int maxProfit(int* prices, int pricesSize){
 
 ```
 
-## 12.搜索旋转排序数组（Leetcode 33）
+## 14.搜索旋转排序数组（Leetcode 33）
 
 ```
 // C
@@ -550,7 +550,7 @@ int search(int* nums, int numsSize, int target){
 }
 
 ```
-## 13.四数之和（Leetcode 18）
+## 15.四数之和（Leetcode 18）
 
 ```
 // C++
@@ -589,7 +589,7 @@ public:
 
 ```
 
-## 14.跳跃游戏 II（Leetcode 45）
+## 16.跳跃游戏 II（Leetcode 45）
 
 ```
 // C
@@ -611,7 +611,7 @@ int jump(int* nums, int numsSize){
 }
 
 ```
-## 15.最小路径和（Leetcode 64）
+## 17.最小路径和（Leetcode 64）
 
 ```
 // C++
