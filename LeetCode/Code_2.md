@@ -63,11 +63,13 @@ public:
 // C++
 
 class Trie {
+
 private:
     bool isEnd;
     Trie* links[26];
-public:
-    /** Initialize your data structure here. */
+    
+public:    
+    // 初始化
     Trie() {
         isEnd = false;
         for (int i = 0; i < 26; i++) {
@@ -75,6 +77,7 @@ public:
         }
     }
 
+    // 析构
     ~Trie() {
         for (int i = 0; i < 26; i++) {
             if (links[i] == nullptr) continue;
@@ -83,34 +86,35 @@ public:
         }
     }
     
-    /** Inserts a word into the trie. */
+    // 插入单词
     void insert(string word) {
         Trie *node = this;
         for (auto c : word) {
-            if (node->links[c - 'a'] == nullptr) {
-                node->links[c - 'a'] = new Trie();
-            }
-            node = node->links[c - 'a'];
+            int i = c - 'a';
+            if (node->links[i] == nullptr) node->links[i] = new Trie();
+            node = node->links[i];
         }
         node->isEnd = true;
     }
     
-    /** Returns if the word is in the trie. */
+    // 查找单词
     bool search(string word) {
         Trie *node = this;
         for (auto c : word) {
-            if (node->links[c - 'a'] == nullptr) return false;
-            node = node->links[c - 'a'];
+            int i = c - 'a';
+            if (node->links[i] == nullptr) return false;
+            node = node->links[i];
         }
         return node->isEnd;
     }
     
-    /** Returns if there is any word in the trie that starts with the given prefix. */
+    // 查找前缀
     bool startsWith(string prefix) {
         Trie *node = this;
         for (auto c : prefix) {
-            if (node->links[c - 'a'] == nullptr) return false;
-            node = node->links[c - 'a'];
+            int i = c - 'a';
+            if (node->links[i] == nullptr) return false;
+            node = node->links[i];
         }
         return true;
     }
