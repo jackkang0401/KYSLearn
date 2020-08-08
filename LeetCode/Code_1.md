@@ -70,27 +70,28 @@ public:
 
 ```
 
-## 2.丑数（Leetcode 263、剑指 Offer 49 ）
+## 2.丑数（剑指 Offer 49 ）
 
 
 ```
 // C
 
 int nthUglyNumber(int n){
-    int u2 = 0,u3 = 0,u5 = 0;   // 记录索引
-    int u[n];
-    u[0] = 1;
-    for (int i = 1; i < n; i++){
-        int v2 = u[u2]*2;
-        int v3 = u[u3]*3;
-        int v5 = u[u5]*5;
+    int u2 = 0, u3 = 0, u5 = 0; // 存放索引
+    int dp[n];
+    dp[0] = 1;
+    for (int i = 1; i < n; i++) {
+        int v2 = dp[u2] * 2;
+        int v3 = dp[u3] * 3;
+        int v5 = dp[u5] * 5;
         int min = v2 < v3 ? v2 : v3;
-        u[i] = min < v5 ? min : v5;
-        if (u[i] == v2) u2++;
-        if (u[i] == v3) u3++;
-        if (u[i] == v5) u5++;
+        dp[i] = min < v5 ? min : v5;
+        // v2 v3 v5 中可能存在相等的情况
+        if (dp[i] == v2) u2++;
+        if (dp[i] == v3) u3++;
+        if (dp[i] == v5) u5++;
     }
-    return u[n-1];
+    return dp[n-1];
 }
 
 ```
