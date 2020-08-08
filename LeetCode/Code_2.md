@@ -9,18 +9,18 @@
 class Solution {
 public:
     int numDecodings(string s) {
-        if (s[0] == '0') return 0;
+        if ('0' == s[0]) return 0;
         vector<int> dp(s.size()+1);
-        dp[0]=1;
-        dp[1]=1;
-        for (int i = 1; i < s.size(); i++) {
+        dp[0] = 1;
+        dp[1] = 1;
+        for (int i = 1, size = s.size(); i < size; i++) {
             if (s[i] == '0') {
-                if (!(s[i - 1] == '1' || s[i - 1] == '2')) return 0;
+                if (!(s[i-1] == '1' || s[i-1] == '2')) return 0;
                 dp[i+1] = dp[i-1];      // 当前位为 ‘0’ 只有 1 或 2 可以解码
             } else if (s[i] <= '6') {
-                (s[i - 1] == '1' || s[i - 1] == '2') ? (dp[i+1] = dp[i] + dp[i-1]) : (dp[i+1] = dp[i]);
+                dp[i+1] = (s[i-1] == '1' || s[i-1] == '2') ? (dp[i] + dp[i-1]) : dp[i];
             } else {
-                (s[i - 1] == '1') ? (dp[i+1] = dp[i] + dp[i-1]) : (dp[i+1] = dp[i]);
+                dp[i+1] = (s[i-1] == '1') ? (dp[i] + dp[i-1]) : dp[i];
             }
         }
         return dp[s.size()];
