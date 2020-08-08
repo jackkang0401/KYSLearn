@@ -70,14 +70,14 @@ public:
 
 ```
 
-## 2.丑数（剑指 Offer 49 ）
+## 2.丑数（Leetcode 263、剑指 Offer 49 ）
 
 
 ```
 // C
 
 int nthUglyNumber(int n){
-    int u2 = 0,u3 = 0,u5 = 0;
+    int u2 = 0,u3 = 0,u5 = 0;   // 记录索引
     int u[n];
     u[0] = 1;
     for (int i = 1; i < n; i++){
