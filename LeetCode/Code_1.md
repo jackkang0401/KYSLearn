@@ -364,6 +364,41 @@ int** permuteUnique(int* nums, int numsSize, int* returnSize, int** returnColumn
 
 ```
 
+```
+// C++
+
+class Solution {
+
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<bool> used(nums.size(), false);
+        vector<int> path;
+        vector<vector<int>> result;
+        sort(nums.begin(), nums.end());
+        dfs(nums, used, path, result);
+        return result;
+    }
+
+private:
+    void dfs(vector<int> &nums, vector<bool> &used, vector<int> &path, vector<vector<int>> &result) {
+        if (path.size() == nums.size()) {
+            result.push_back(path);
+        }
+        for (int i = 0, numsSize = nums.size(); i < numsSize; i++) {
+            if (i > 0 && nums[i] == nums[i-1] && 0 == used[i-1]) continue;
+            if (0 == used[i]) {
+                used[i] = true;
+                path.push_back(nums[i]);
+                dfs(nums, used, path, result);
+                path.pop_back();
+                used[i] = false;
+            }
+        }        
+    }
+};
+
+```
+
 ## 9.二叉树中序遍历（Leetcode 94）
 
 ```
