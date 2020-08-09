@@ -110,31 +110,31 @@ int nthUglyNumber(int n){
 #include <utility>
 #include <algorithm>
 
-class TopKFrequentSolution {
+class Solution {
 public:
-    std::vector<int> topKFrequent(std::vector<int>& nums, int k) {
-        std::unordered_map<int,int> record;
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int,int> record;
         for (int i = 0; i < nums.size(); i++){
             record[nums[i]] ++;
         }
-        std::priority_queue<std::pair<int,int>,std::vector<std::pair<int,int>>,std::greater<std::pair<int,int>>> minHeap;
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> minHeap;
         for (auto iter = record.begin(); iter!=record.end(); iter++){
             if(minHeap.size() == k){
-                if(minHeap.top().first < iter->second){
+                if(iter->second > minHeap.top().first){
                     minHeap.pop();
-                    minHeap.push(std::make_pair(iter->second,iter->first));
+                    minHeap.push(make_pair(iter->second,iter->first));
                 }
             } else {
-                minHeap.push(std::make_pair(iter->second,iter->first));
+                minHeap.push(make_pair(iter->second,iter->first));
             }
         }
-        std::vector<int> result;
+        vector<int> result;
         while(minHeap.size()) {
             result.push_back(minHeap.top().second);
             minHeap.pop();
         }
         reverse(result.begin(),result.end());
-        return result;
+        return result; 
     }
 };
 
