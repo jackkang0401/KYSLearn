@@ -136,55 +136,91 @@ public:
 class Trie {
 private:
     bool isEnd;
-    string str;
     Trie* links[26];
+
 public:
+    // 初始化
     Trie() {
         isEnd = false;
-        str = "";
         for (int i = 0; i < 26; i++) {
             links[i] = nullptr;
         }
     }
+
+    // 析构
+    ~Trie() {
+        for (int i = 0; i < 26; i++) {
+            if (nullptr == links[i]) continue;
+            delete(links[i]);
+            links[i] = nullptr;
+        }
+    }
+
+    // 插入
     void insert(string word) {
         Trie *node = this;
         for (auto c : word) {
-            if (node->links[c - 'a'] == nullptr) {
-                node->links[c - 'a'] = new Trie();
-            }
-            node = node->links[c - 'a'];
+            int i = c - 'a';
+            if (nullptr == node->links[i]) node->links[i] = new Trie();
+            node = node->links[i];
         }
-        node->str = word; 
         node->isEnd = true;
     }
-    void search(vector<string>& result, vector<vector<char>>& board) {
-        for (int i = 0; i < board.size(); i++) {
-            for (int j = 0; j < board[i].size(); j++) {
-                help(result, board, this, i, j);
+
+    // 查找
+    bool search(string word) {
+        Trie *node = this;
+        for (auto c : word) {
+            int i = c - 'a';
+            if (nullptr == node->links[i]) return false;
+            node = node->links[i];
+        }
+        return node->isEnd;
+    }
+
+    // 查找前缀
+    bool startWith(string prefix) {
+        Trie *node = this;
+        for (auto c : prefix) {
+            int i = c - 'a';
+            if (nullptr == node->links[i]) return false;
+            node = node->links[i];
+        }
+        return true;
+    }
+
+    // 查找 board
+    void searchFromBoard(vector<string>& result, vector<vector<char>>& board) {
+        for (int i = 0, rowSize = board.size(); i < rowSize; i++) {
+            for (int j = 0, colSize = board[i].size(); j < colSize; j++) {
+                string word;
+                dfs(result, board, this, i, j, word);
             }
         }
     }
-    void help(vector<string>&result, vector<vector<char>>& board, Trie* node, int x, int y) {
+
+    // 遍历 board
+    void dfs(vector<string>& result, vector<vector<char>>& board, Trie* node, int x, int y, string& word) {
         if (node->isEnd) {
-            node->isEnd = false;    // 删除单词（相当于标记为已使用过）
-            result.push_back(node->str);
+            node->isEnd = false;
+            result.push_back(word);
             return;
         }
-        if (x < 0 || x == board.size() || y < 0 || y == board[x].size()) {
-            return;
-        }
+        if (x < 0 || x == board.size() || y < 0 || y == board[x].size()) return;
         char c = board[x][y];
-        // 当前字符已使用过或不存在直接返回
-        if ('#' == c || node->links[c - 'a'] == nullptr) {
-            return; 
-        }
-        node = node->links[c - 'a'];
+        if ('#' == c) return;                   // 当前字符已使用过
+        int i = c - 'a';
+        if (nullptr == node->links[i]) return;  // 当前字符不存在
+
+        node = node->links[i];
+        word.push_back(c);
         board[x][y] = '#';
-        help(result, board, node, x+1, y);
-        help(result, board, node, x-1, y);
-        help(result, board, node, x, y+1);
-        help(result, board, node, x, y-1);
+        dfs(result, board, node, x+1, y, word);
+        dfs(result, board, node, x-1, y, word);
+        dfs(result, board, node, x, y+1, word);
+        dfs(result, board, node, x, y-1, word);
         board[x][y] = c;
+        word.pop_back();
     }
 };
 
@@ -193,10 +229,10 @@ public:
     vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
         Trie trie;
         vector<string> result;
-        for (string& w: words) {
+        for (string& w : words) {
             trie.insert(w);
         }
-        trie.search(result, board);
+        trie.searchFromBoard(result, board);
         return result;
     }
 };
