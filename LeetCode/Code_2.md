@@ -255,17 +255,59 @@ private:
     bool solve(vector<vector<char>>& board) {
         for (int i = 0, rowSize = board.size(); i < rowSize; i++) {
             for (int j = 0, colSize = board[i].size(); j < colSize; j++) {
-                if (board[i][j] == '.') {
-                    for (char c = '1'; c <= '9'; c++) {
-                        if (isValid(board, i, j, c)) {
-                            board[i][j] = c;
-                            if (solve(board)) return true;
-                            board[i][j] = '.';
-                        }
+                if ('.' != board[i][j]) continue;
+                for (char c = '1'; c <= '9'; c++) {
+                    if (isValid(board, i, j, c)) {
+                        board[i][j] = c;
+                        if (solve(board)) return true;
+                        board[i][j] = '.';
                     }
-                    return false;
+                }
+                return false;
+            }
+        }
+        return true;
+    }
+
+    bool isValid(vector<vector<char>>& board, int row, int col, char c) {
+        for (int i = 0; i < 9; i++) {
+            if (board[i][col] != '.' && board[i][col] == c) return false;
+            if (board[row][i] != '.' && board[row][i] == c) return false;
+            int boxI = 3*(row/3) + i/3;
+            int boxJ = 3*(col/3) + i%3;
+            if (board[boxI][boxJ] != '.' && board[boxI][boxJ] == c) return false;
+        }
+        return true;
+    }
+};
+
+```
+
+```
+// C++
+
+// 优化：每次递归起点都是下一个，不再是从头开始判断
+
+class Solution {
+public:
+    void solveSudoku(vector<vector<char>>& board) {
+        if (0 == board.size() || 0 == board[0].size()) return;
+        solve(board, board.size(), 0); // 每次递归起点都是下一个
+    }
+
+private:
+    bool solve(vector<vector<char>>& board, int size, int current) {
+        for (int k = current, total = size*size; k < total; k++) {
+            int i = k / size, j = k % size;
+            if ('.' != board[i][j]) continue;
+            for (char c = '1'; c <= '9'; c++) {
+                if (isValid(board, i, j, c)) {
+                    board[i][j] = c;
+                    if (solve(board, size, k+1)) return true;
+                    board[i][j] = '.';
                 }
             }
+            return false;
         }
         return true;
     }
