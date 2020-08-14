@@ -43,35 +43,53 @@ private:
     }
 };
 
+```
 
+```
 // 非递归
 
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
 class Solution {
 public:
-    unordered_map<int, TreeNode*> fa;
-    unordered_map<int, bool> vis;
-    void dfs(TreeNode* root){
-        if (root->left != nullptr) {
-            fa[root->left->val] = root;
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if (nullptr == root) return nullptr;
+        // 建立父指针映射
+        father_map[root] = nullptr;
+        dfs(root);
+        // 遍历 p 及父节点放入 visited
+        while (nullptr != p) {
+            visited.insert(p);
+            p = father_map[p];
+        }
+        // 遍历 q 及父节点，若 visited 内存在该节点，说明此节点为最近公共祖先
+        while (nullptr != q) {
+            if(visited.find(q) != visited.end()) return q;
+            q = father_map[q];
+        }
+        return nullptr;
+    }
+
+private:
+    unordered_map<TreeNode*, TreeNode*> father_map;
+    unordered_set<TreeNode *> visited;
+    // 建立父指针映射
+    void dfs(TreeNode* root) {
+        if (nullptr != root->left) {
+            father_map[root->left] = root;
             dfs(root->left);
         }
-        if (root->right != nullptr) {
-            fa[root->right->val] = root;
+        if (nullptr != root->right) {
+            father_map[root->right] = root;
             dfs(root->right);
         }
-    }
-    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        fa[root->val] = NULL;
-        dfs(root);
-        while (p != NULL) {
-            vis[p->val] = true;
-            p = fa[p->val];
-        }
-        while (q != NULL) {
-            if (vis[q->val]) return q;
-            q = fa[q->val];
-        }
-        return NULL;
     }
 };
 
