@@ -583,20 +583,20 @@ public:
     vector<vector<int>> levelOrder(TreeNode* root) {
         vector<vector<int>> result;
         if (!root) return result;
-        queue<TreeNode*> q;    // 队列
+        queue<TreeNode *> q;            // 队列
         q.push(root);
         while (!q.empty()) {
-            int currentLevelSize = q.size();              // 当前层全部节点数
-            result.push_back(vector<int>());              // vector<int> 存放当前层全部节点
-            for (int i = 1; i <= currentLevelSize; ++i) { // 取出当前层全部节点放入 vector<int>
-                auto node = q.front(); // 队列头节点
-                q.pop();               // 移出队列头节点
-                result.back().push_back(node->val);
+            int currentLevelSize = q.size();
+            vector<int> currentLevelNodes;
+            for (int i = 0; i < currentLevelSize; i++) {
+                auto node = q.front();
+                q.pop();
+                currentLevelNodes.push_back(node->val);
                 if (node->left) q.push(node->left);
                 if (node->right) q.push(node->right);
             }
+            result.push_back(currentLevelNodes);
         }
-        
         return result;
     }
 };
