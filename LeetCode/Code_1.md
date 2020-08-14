@@ -5,7 +5,6 @@
 ```
 // C++
 
-
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -15,24 +14,32 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
-
-// 递归
-
 class Solution {
 public:
-    bool dfs(TreeNode* root, TreeNode* p, TreeNode* q, TreeNode* &ans) {
-        if (NULL == root) return false;
-        bool lson = dfs(root->left, p, q, ans);
-        bool rson = dfs(root->right, p, q, ans);
-        if ((lson && rson) || ((root->val == p->val || root->val == q->val) && (lson || rson))) {
-            ans = root;
-        } 
-        return lson || rson || (root->val == p->val || root->val == q->val);
-    }
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if (nullptr == root) return nullptr;
         TreeNode* ans;
         dfs(root, p, q, ans);
         return ans;
+    }
+
+private:
+    bool dfs(TreeNode* root, TreeNode* p, TreeNode* q, TreeNode* &ans) {
+        if (nullptr == root) return false;
+        bool lson = dfs(root->left, p, q, ans);
+        bool rson = dfs(root->right, p, q, ans);
+        /*
+            1.当前节点左右子树都包含 p 或 q
+            2.当前节点已是 p 或 q，左右子树有一个包含另一节点即可
+        */
+        if ((lson && rson) || (root->val == p->val || root->val == q->val) && (lson || rson) ) {
+            ans = root;
+        }
+        /*
+            1.当前节点子树包含 p 或 q
+            2.当前节点为 p 或 q
+        */
+        return (lson || rson) || (root->val == p->val || root->val == q->val);
     }
 };
 
