@@ -273,6 +273,39 @@ char ** generateParenthesis(int n, int* returnSize){
 
 ```
 
+```
+// C++
+
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+        vector<string> result;
+        string s;
+        dfs(n, 0, 0, s, result);
+        return result;
+    }
+
+private:
+    void dfs(int n, int left, int right, string& s, vector<string>& result) {
+        if (n == left && n == right) {
+            result.push_back(s);
+            return;
+        }
+        if (left < n) {
+            s.push_back('(');
+            dfs(n, left+1, right, s, result);
+            s.pop_back();
+        }
+        if (right < left) {
+            s.push_back(')');
+            dfs(n, left, right+1, s, result);
+            s.pop_back();
+        }
+    }
+};
+
+```
+
 ## 7.全排列（Leetcode 46）
 
 ```
