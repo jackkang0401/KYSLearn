@@ -9,21 +9,21 @@
 class Solution {
 public:
     int numDecodings(string s) {
-        if ('0' == s[0]) return 0;
-        vector<int> dp(s.size()+1);
-        dp[0] = 1;
-        dp[1] = 1;
-        for (int i = 1, size = s.size(); i < size; i++) {
-            if (s[i] == '0') {
-                if (!(s[i-1] == '1' || s[i-1] == '2')) return 0;
-                dp[i+1] = dp[i-1];      // 当前位为 ‘0’ 只有 1 或 2 可以解码
+        if (0 == s.size() || '0' == s[0]) return 0;
+        int size = s.size();
+        vector<int> dp(size + 1);
+        dp[0] = dp[1] = 1;
+        for (int i = 1; i < size; i++) {
+            if ('0' == s[i]) {  // 当前位置为 0，上一位置是 1 或 2 才可以解码
+                if (!('1' == s[i-1] || '2' == s[i-1])) return 0;
+                dp[i+1] = dp[i-1];
             } else if (s[i] <= '6') {
-                dp[i+1] = (s[i-1] == '1' || s[i-1] == '2') ? (dp[i] + dp[i-1]) : dp[i];
+                dp[i+1] = dp[i] + (('1' == s[i-1] || '2' == s[i-1]) ? dp[i-1] : 0);
             } else {
-                dp[i+1] = (s[i-1] == '1') ? (dp[i] + dp[i-1]) : dp[i];
+                dp[i+1] = dp[i] + (('1' == s[i-1]) ? dp[i-1] : 0);
             }
         }
-        return dp[s.size()];
+        return dp[size];
     }
 };
 
