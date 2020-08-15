@@ -41,14 +41,15 @@ public:
     int countSubstrings(string s) {
         int length = s.length();
         int total = 0;
-        for(int i = 0; i < length*2; i++){
+        for(int i = 0, count = length*2; i < count; i++){
             // 长度分别为奇数（s[i]）、偶数（中心为空）的回文子串
             int left = i / 2;
             int right = left + i % 2;
+            // 向外扩张
             while(left >= 0 && right < length && s[left] == s[right]){
-                total++;
                 left--;
                 right++;
+                total++;
             }
         }
         return total;
