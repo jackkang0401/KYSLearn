@@ -687,16 +687,18 @@ public:
 // C
 
 int jump(int* nums, int numsSize){
-    if(NULL == nums) return NULL;
+    if (0 == numsSize || NULL == nums) return -1;
     int jumpCount = 0;
     int end = numsSize - 1;
     while (end > 0) {
-        int current = end;
-        for (int i = end-1; i>=0; i--) { // 找到最靠前并且能到达当前 end 的 index
-            if (i + nums[i] >= end) current = i;  
+        // 找到最远的可以到达该 end 的位置，（也就是第一个到达 end 的位置）
+        for (int i = 0; i <= (end-1); i++) {// 这个过程可以用二分查找
+            if (i + nums[i] >= end) { 
+                end = i;
+                jumpCount++;
+                break;
+            };
         }
-        end = current;                   // 更新 end
-        jumpCount ++;
     }
     return jumpCount;
 }
