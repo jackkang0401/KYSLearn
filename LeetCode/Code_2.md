@@ -373,6 +373,7 @@ public:
 class Solution {
 public:
     vector<vector<string>> solveNQueens(int n) {
+        if (n <= 0) return vector<vector<string>>();
         vector<vector<int>> result;
         vector<int> currentState(n, -1);    // 下标代表皇后所在行，值代表列
         set<int> cols;                      // '|' 列
@@ -439,6 +440,7 @@ private:
 class Solution {
 public:
     vector<vector<string>> solveNQueens(int n) {
+        if (n <= 0) return vector<vector<string>>();
         vector<vector<string>> result;
         vector<string> currentState(n, string(n, '.')); 
         set<int> cols;                      // '|' 列
