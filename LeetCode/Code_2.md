@@ -368,7 +368,7 @@ public:
 
 ```
 // C++
-// 回溯 方法一
+// 回溯 方法一 生成中间结果，各个皇后的位置
 
 class Solution {
 public:
@@ -426,6 +426,58 @@ private:
             generateResult.push_back(currentStateStr);
         }
         return generateResult;
+    }
+};
+
+```
+
+```
+
+// C++
+// 回溯 方法二 直接生成结果
+
+class Solution {
+public:
+    vector<vector<string>> solveNQueens(int n) {
+        vector<vector<string>> result;
+        vector<string> currentState(n, string(n, '.')); 
+        set<int> cols;                      // '|' 列
+        set<int> slashs;                    // '/' row + column
+        set<int> backslashs;                // '\' row - column
+        dfs(n, 0, cols, slashs, backslashs, currentState, result);
+        return result;
+    }
+
+private:
+    void dfs(int n, int row, set<int> &cols, set<int> &slashs, set<int> &backslashs, vector<string> &currentState, vector<vector<string>> &result) {
+        if (row >= n) {
+            result.push_back(currentState);
+            return;
+        }
+        for (int col = 0; col < n; col++) {
+            if (hasContain(row, col, cols, slashs, backslashs)) continue;
+            cols.insert(col);
+            slashs.insert(row + col);
+            backslashs.insert(row - col);
+
+            currentState[row][col] = 'Q'; 
+            dfs(n, row + 1, cols, slashs, backslashs, currentState, result);
+            currentState[row][col] = '.';
+
+            cols.erase(col);
+            slashs.erase(row + col);
+            backslashs.erase(row - col);
+        }
+    }
+
+    // 检测是否发生冲突
+    bool hasContain(int row, int col, set<int> &cols, set<int> &slashs, set<int> &backslashs) {
+        if (cols.find(col) != cols.end() || 
+            slashs.find(row + col) != slashs.end() ||
+            backslashs.find(row - col) != backslashs.end()) {
+            return true;
+        }
+        return false;
     }
 };
 
