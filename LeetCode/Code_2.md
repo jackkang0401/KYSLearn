@@ -529,3 +529,100 @@ private:
 };
 
 ```
+
+## 8.LRU缓存机制（Leetcode 146）
+
+```
+// C++
+
+class LRUCache {
+public:
+    LRUCache(int _capacity): capacity(_capacity), size(0) {
+        head = new DLinkedNode();
+        tail = new DLinkedNode();
+        head->next = tail;
+        tail->pre = head;
+    }
+    
+    int get(int key) {
+        if (!cache.count(key)) return -1;
+        DLinkedNode* node = cache[key];
+        moveToHead(node);
+        return node->value;
+    }
+    
+    void put(int key, int value) {
+        // 如果已存在，移到表头
+        if (cache.count(key)) {
+            DLinkedNode* node = cache[key];
+            node->value = value; 
+            moveToHead(node);
+            return;
+        }
+        // 如果不存在，加入新 key value
+        DLinkedNode* node = new DLinkedNode(key, value);
+        cache[key] = node;          // 加入哈希表
+        addToHead(node);             // 添加到链表表头
+        size++;
+        // 如果超过上限，移除最久没使用的节点
+        if (size > capacity) {
+            DLinkedNode* removed = removeTail();
+            cache.erase(removed->key);
+            delete removed;
+            size--;
+        }
+    }
+
+private:
+    // 双向链表节点
+    struct DLinkedNode {
+        int key;
+        int value;
+        DLinkedNode* pre;
+        DLinkedNode* next;
+        DLinkedNode(): key(0), value(0), pre(nullptr), next(nullptr) {}
+        DLinkedNode(int _key, int _value): key(_key), value(_value), pre(nullptr), next(nullptr) {}
+    };
+
+    unordered_map<int, DLinkedNode *> cache;
+    DLinkedNode* head;
+    DLinkedNode* tail;
+    int size;
+    int capacity;
+
+    // 添加到链表头
+    void addToHead(DLinkedNode* node) {
+        node->pre = head;
+        node->next = head->next;
+        head->next->pre = node;
+        head->next = node;
+    }
+
+    // 删除节点
+    void removeNode(DLinkedNode* node) {
+        node->pre->next = node->next;
+        node->next->pre = node->pre;
+    }
+
+    // 将节点移动到链表头
+    void moveToHead(DLinkedNode* node) {
+        removeNode(node);
+        addToHead(node);
+    }
+
+    // 移除尾部节点
+    DLinkedNode* removeTail() {
+        DLinkedNode* node = tail->pre;
+        removeNode(node);
+        return node;
+    }
+};
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache* obj = new LRUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */
+ 
+```
