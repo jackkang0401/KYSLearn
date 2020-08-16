@@ -484,3 +484,48 @@ private:
 };
 
 ```
+
+```
+// C++
+// 回溯 方法三 位运算
+
+class Solution {
+public:
+    vector<vector<string>> solveNQueens(int n) {
+        if (n <= 0) return vector<vector<string>>();
+        vector<vector<string>> result;
+        vector<string> currentState(n, string(n, '.')); 
+        dfs(n, 0, 0, 0, 0, currentState, result);
+        return result;
+    }
+
+private:
+    void dfs(int n, int row, int cols, int slashs, int backslashs, vector<string> &currentState, vector<vector<string>> &result) {
+        if (row >= n) {
+            result.push_back(currentState);
+            return;
+        }
+        int bits = (~(cols | slashs | backslashs)) & ((1 << n) - 1); // 当前所有空位
+        while(bits) {
+            int p = bits & -bits;           // 取出最低位的 1
+            bits = bits & (bits - 1);       // 最低位置 0，表示在 p 放入皇后
+            int col = column(p);           
+            currentState[row][col] = 'Q'; 
+            // 继续向下一行左下角和右下角进行攻击
+            dfs(n, row + 1, cols | p, (slashs | p) << 1, (backslashs | p) >> 1, currentState, result); 
+            currentState[row][col] = '.';
+        } 
+    }
+
+    // 计算 p 对应的列的位置
+    int column(int p) {
+        int col = 0;
+        while (p) { 
+            p = p >> 1;
+            col ++;
+        }
+        return col - 1;
+    }
+};
+
+```
