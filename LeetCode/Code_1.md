@@ -661,21 +661,48 @@ int maxProfit(int* prices, int pricesSize){
 int search(int* nums, int numsSize, int target){
     if (0 == numsSize) return -1;
     int low = 0;
-    int high = numsSize-1;
-    while (low <= high) {
+    int high = numsSize - 1;
+    while(low <= high) {
         int mid = (low + high) / 2;
         if (nums[mid] == target) return mid;
-        if (nums[0] <= nums[mid] ) {
-            (nums[0]<=target && nums[mid]>target) ? (high=mid-1) : (low=mid+1);
-        } else {
-            (nums[mid]<target && nums[numsSize-1]>=target) ? (low=mid+1) : (high=mid-1);
+        if (nums[mid] >= nums[0]) {             // mid 在左边上升区域
+            (target >= nums[0] && target < nums[mid]) ? (high = mid - 1) : (low = mid + 1);
+        } else {                                // mid 在右边上升区域 
+            (target > nums[mid] && target <= nums[numsSize-1]) ? (low = mid + 1) : (high = mid - 1);
         }
     }
     return -1;
 }
 
 ```
+
+```
+// C++
+
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        int numsSize = nums.size();
+        if (0 == numsSize) return -1;
+        int low = 0;
+        int high = numsSize - 1;
+        while(low <= high) {
+            int mid = (low + high) / 2;
+            if (nums[mid] == target) return mid;
+            if (nums[mid] >= nums[0]) {             // mid 在左边上升区域
+                (target >= nums[0] && target < nums[mid]) ? (high = mid - 1) : (low = mid + 1);
+            } else {                                // mid 在右边上升区域 
+                (target > nums[mid] && target <= nums[numsSize-1]) ? (low = mid + 1) : (high = mid - 1);
+            }
+        }
+        return -1;
+    }
+};
+
+```
+
 ## 15.四数之和（Leetcode 18）
+
 
 ```
 // C++
