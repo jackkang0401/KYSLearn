@@ -180,7 +180,7 @@ public:
     }
 
     // 查找前缀
-    bool startWith(string prefix) {
+    bool startWithPrefix(string prefix) {
         Trie *node = this;
         for (auto c : prefix) {
             int i = c - 'a';
@@ -215,12 +215,12 @@ public:
 
         node = node->links[i];
         word.push_back(c);
-        board[x][y] = '#';
+        board[x][y] = '#';                      // 标记为已遍历
         dfs(result, board, node, x+1, y, word);
         dfs(result, board, node, x-1, y, word);
         dfs(result, board, node, x, y+1, word);
         dfs(result, board, node, x, y-1, word);
-        board[x][y] = c;
+        board[x][y] = c;                        // 恢复原字符
         word.pop_back();
     }
 };
