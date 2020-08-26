@@ -12,9 +12,7 @@
 BinaryNode *searchBSTree(BinaryTree T, int val) {
     BinaryNode *current = T;
     while (NULL != current) {
-        if (val == current->value) {
-            return current;
-        }
+        if (val == current->value) return current;
         current = (val < current->value) ? current->lChild : current->rChild;
     }
     return NULL;
@@ -29,7 +27,7 @@ void insertBSTree(BinaryTree *T, int val) {
     BinaryNode *current = *T;
     BinaryNode *parent = NULL;
     while (NULL != current) {
-        if (val == current->value) return; // 值相同，数据冲突
+        if (val == current->value) return; // 出现相同值
         parent = current;
         current = (val < current->value) ? current->lChild : current->rChild;
     }
