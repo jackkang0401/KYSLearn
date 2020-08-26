@@ -167,17 +167,16 @@ public:
 ## 4.盛最多水的容器（Leetcode 11）
 
 ```
+// C
+
 int maxArea(int* height, int heightSize){
-    int i = 0, j = heightSize-1;
-    int h =  height[i]<height[j] ? height[i] : height[j];
-    int max = h*(j-i);
-    while (i < j){
-        height[i]<height[j] ? i++ : j--;
-        int h =  height[i]<height[j] ? height[i] : height[j];
-        int area = h * (j-i);
-        max = max > area ? max : area;
+    if (heightSize <= 1) return 0;
+    int maxArea = 0, i = 0, j = heightSize - 1;
+    while (i < j) {
+        int area = (j-i) * (height[i] < height[j] ? height[i++] : height[j--]);
+        maxArea = area > maxArea ? area : maxArea;
     }
-    return max;
+    return maxArea;
 }
 
 ```
