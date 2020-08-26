@@ -49,7 +49,7 @@ BinaryTree T = NULL;
         printf("\n 查找：%d \n",value);
         BinaryNode *node = searchBSTree(T, value);
         if (node) {
-            printf("%d",node->value);
+            printf("%d",node->val);
         } else {
             printf("\n 未找到 \n");
         }

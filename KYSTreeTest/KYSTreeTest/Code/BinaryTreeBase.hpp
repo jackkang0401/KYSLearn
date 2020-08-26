@@ -15,12 +15,12 @@
 #include <iostream>
 
 typedef struct BinaryNode{
-    int value;
-    struct BinaryNode *lChild;
-    struct BinaryNode *rChild;
+    int val;
+    struct BinaryNode *left;
+    struct BinaryNode *right;
 }BinaryNode,*BinaryTree;
 
-BinaryNode* newNode(int value);
+BinaryNode* newNode(int val);
 
 void deallocNode(BinaryNode **p);
 

@@ -8,11 +8,11 @@
 
 #include "BinaryTreeBase.hpp"
 
-BinaryNode* newNode(int value) {
+BinaryNode* newNode(int val) {
     BinaryNode *p = (BinaryNode *)malloc(sizeof(BinaryNode));
-    p->value = value;
-    p->lChild = NULL;
-    p->rChild = NULL;
+    p->val = val;
+    p->left = NULL;
+    p->right = NULL;
     return p;
 }
 
@@ -45,17 +45,17 @@ int createBinaryTree(BinaryTree &T, int *array, int *index, int length){
     if (*index >= length) {
         return 0;
     }
-    int value = array[*index];
-    printf("%d",value);
-    if (0 == value) {
+    int val = array[*index];
+    printf("%d",val);
+    if (0 == val) {
         T = NULL;
     }else{
         T = (BinaryTree)malloc(sizeof(BinaryNode));
-        T->value = value;
+        T->val = val;
         *index = *index+1;
-        createBinaryTree(T->lChild, array, index, length);
+        createBinaryTree(T->left, array, index, length);
         *index = *index+1;
-        createBinaryTree(T->rChild, array, index, length);
+        createBinaryTree(T->right, array, index, length);
     }
     return 1;
 }
@@ -64,9 +64,9 @@ int createBinaryTree(BinaryTree &T, int *array, int *index, int length){
 // 递归实现
 void preorderRecursionTraversal(BinaryTree T){
     if (NULL != T) {
-        printf("%d ",T->value);
-        preorderRecursionTraversal(T->lChild);
-        preorderRecursionTraversal(T->rChild);
+        printf("%d ",T->val);
+        preorderRecursionTraversal(T->left);
+        preorderRecursionTraversal(T->right);
     }
 }
 
@@ -77,12 +77,12 @@ void preorderTraversal(BinaryTree T){
     while (p || !stack.empty()) {
         if (p) {
             stack.push(p);
-            printf("%d ",p->value);
-            p = p->lChild;
+            printf("%d ",p->val);
+            p = p->left;
         }else{
             p = stack.top();
             stack.pop();
-            p = p->rChild;
+            p = p->right;
         }
     }
 }
@@ -92,9 +92,9 @@ void preorderTraversal(BinaryTree T){
 // 递归实现
 void inorderRecursionTraversal(BinaryTree T){
     if (NULL != T) {
-        inorderRecursionTraversal(T->lChild);
-        printf("%d ",T->value);
-        inorderRecursionTraversal(T->rChild);
+        inorderRecursionTraversal(T->left);
+        printf("%d ",T->val);
+        inorderRecursionTraversal(T->right);
     }
 }
 
@@ -105,12 +105,12 @@ void inorderTraversal(BinaryTree T){
     while (p || !stack.empty()) {
         if (p) {
             stack.push(p);
-            p = p->lChild;
+            p = p->left;
         } else {
             p = stack.top();
-            printf("%d ",p->value);
+            printf("%d ",p->val);
             stack.pop();
-            p = p->rChild;
+            p = p->right;
         }
     }
 }
@@ -119,9 +119,9 @@ void inorderTraversal(BinaryTree T){
 // 递归实现
 void postorderRecursionTraversal(BinaryTree T){
     if (NULL != T) {
-        postorderRecursionTraversal(T->lChild);
-        postorderRecursionTraversal(T->rChild);
-        printf("%d ",T->value);
+        postorderRecursionTraversal(T->left);
+        postorderRecursionTraversal(T->right);
+        printf("%d ",T->val);
     }
 }
 
@@ -144,13 +144,13 @@ void postorderTraversal(BinaryTree T){
             //访问过左子树
             aTree->flag = 'L';
             stack.push(aTree);
-            p = p->lChild;
+            p = p->left;
         }
         //左右子树访问完毕，访问根结点
         while (!stack.empty() && stack.top()->flag == 'R') {
             aTree = stack.top();
             stack.pop();
-            printf("%d ",aTree->node->value);
+            printf("%d ",aTree->node->val);
         }
         //遍历右子树
         if (!stack.empty()) {
@@ -158,7 +158,7 @@ void postorderTraversal(BinaryTree T){
             //访问过右子树
             aTree->flag = 'R';
             p = aTree->node;
-            p = p->rChild;
+            p = p->right;
         }
     }
     
