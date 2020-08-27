@@ -93,7 +93,7 @@ private:
 
 ```
 
-## 2.丑数（剑指 Offer 49 ）
+## 2.丑数（Leetcode264、剑指 Offer 49）
 
 
 ```
