@@ -569,27 +569,27 @@ struct TreeNode* buildTree(int* preorder, int preorderSize, int* inorder, int in
 ```
 // C
 
+int numIslands(char** grid, int gridSize, int* gridColSize){
+    if(grid == NULL || gridSize == 0 || gridColSize == NULL) return 0;
+    int count = 0;
+    for(int i=0; i<gridSize; i++) {
+        for(int j = 0; j<gridColSize[i]; j++) {
+            if('1' == grid[i][j]) {
+                count++;
+                dfs(grid, gridSize, gridColSize, i, j);
+            }
+        }
+    }
+    return count;
+}
+
 void dfs(char** grid, int gridSize, int* gridColSize, int i, int j) {
-    if(i<0 || i>=gridSize || j<0 || j>=gridColSize[i] || '1'!=grid[i][j]) return;
+    if(i < 0 || i >= gridSize || j < 0 || j >= gridColSize[i] || '1' != grid[i][j]) return;
     grid[i][j] = '0';
     dfs(grid, gridSize, gridColSize, i+1, j);
     dfs(grid, gridSize, gridColSize, i-1, j);
     dfs(grid, gridSize, gridColSize, i, j+1);
     dfs(grid, gridSize, gridColSize, i, j-1);
-}
-
-int numIslands(char** grid, int gridSize, int* gridColSize){
-    if(grid==NULL || gridSize == 0 || gridColSize==NULL) return 0;
-
-    int count = 0;
-    for(int i=0; i<gridSize; i++) {
-        for(int j = 0; j<gridColSize[i]; j++) {
-            if('1' == grid[i][j])
-                count ++;
-                dfs(grid, gridSize, gridColSize, i, j);
-        }
-    }
-    return count;
 }
 
 ```
