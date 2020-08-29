@@ -498,37 +498,41 @@ public:
     vector<vector<string>> solveNQueens(int n) {
         if (n <= 0) return vector<vector<string>>();
         vector<vector<string>> result;
-        vector<string> currentState(n, string(n, '.')); 
+        vector<string> currentState(n, string(n, '.'));
         dfs(n, 0, 0, 0, 0, currentState, result);
         return result;
     }
 
 private:
-    void dfs(int n, int row, int cols, int slashs, int backslashs, vector<string> &currentState, vector<vector<string>> &result) {
+    void dfs(int n, int row, int cols, int slashs, int backslashs, vector<string>& currentState, vector<vector<string>>& result) {
         if (row >= n) {
             result.push_back(currentState);
             return;
         }
-        int bits = (~(cols | slashs | backslashs)) & ((1 << n) - 1); // 当前所有空位
-        while(bits) {
-            int p = bits & -bits;           // 取出最低位的 1
-            bits = bits & (bits - 1);       // 最低位置 0，表示在 p 放入皇后
-            int col = column(p);           
-            currentState[row][col] = 'Q'; 
-            // 继续向下一行左下角和右下角进行攻击
-            dfs(n, row + 1, cols | p, (slashs | p) << 1, (backslashs | p) >> 1, currentState, result); 
+        /*
+         1. cls | slash | backslashs 得到所有可以放置皇后的列，对应位为 0
+         2. ~ 取反将可放皇后的位置改为 1
+         3. & ((1 << n) - 1) 清空高位多余的 1
+        */
+        int placeCols = (~(cols | slashs | backslashs)) & ((1 << n) - 1);
+        while (placeCols) {
+            int p = placeCols & -placeCols;         // 取出最低位的 1（可放置皇后位置）
+            placeCols = placeCols & (placeCols - 1);// 清除最低位 1
+            int col = getColumn(p);
+            currentState[row][col] = 'Q';
+            // (slashs | p) << 1 与 (backslashs | p) >> 1 都是下一行不可放置的列
+            dfs(n, row + 1, cols | p, (slashs | p) << 1, (backslashs | p) >> 1, currentState, result);
             currentState[row][col] = '.';
-        } 
+        }
     }
 
-    // 计算 p 对应的列的位置
-    int column(int p) {
+    // 计算 p 对应的列
+    int getColumn(int p) {
         int col = 0;
-        while (p) { 
-            p = p >> 1;
-            col ++;
+        while(p = (p >> 1)) {
+            col++;
         }
-        return col - 1;
+        return col;
     }
 };
 
