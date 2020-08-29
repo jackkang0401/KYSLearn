@@ -18,9 +18,9 @@ public:
                 if (!('1' == s[i-1] || '2' == s[i-1])) return 0;
                 dp[i+1] = dp[i-1];
             } else if (s[i] <= '6') {
-                dp[i+1] = dp[i] + (('1' == s[i-1] || '2' == s[i-1]) ? dp[i-1] : 0);
+                dp[i+1] = (('1' == s[i-1] || '2' == s[i-1]) ? (dp[i] + dp[i-1]) : dp[i]);
             } else {
-                dp[i+1] = dp[i] + (('1' == s[i-1]) ? dp[i-1] : 0);
+                dp[i+1] = (('1' == s[i-1]) ? (dp[i] + dp[i-1]) : dp[i]);
             }
         }
         return dp[size];
