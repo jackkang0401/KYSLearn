@@ -537,31 +537,27 @@ public:
  * };
  */
 
-struct TreeNode* buildTree(int* preorder, int preorderSize, int* inorder, int inorderSize) {
-    // 结束条件
-    if (0 == preorderSize || 0 == inorderSize) return NULL;
-    if (NULL == preorder || NULL == inorder) return NULL;
-    if (preorderSize != inorderSize) return NULL;
 
-    // 计算左右子树个数
-    int rootVal = preorder[0];
-    int leftNum = 0;
-    for (; leftNum < inorderSize; leftNum ++) {
-        if (rootVal == inorder[leftNum]) break;
+struct TreeNode* buildTree(int* preorder, int preorderSize, int* inorder, int inorderSize){
+    // 边界判断
+    if (preorderSize <= 0 || inorderSize <= 0 || preorderSize != inorderSize) return NULL;
+    // 计算左右子树长度
+    int p = preorder[0];
+    int left = 0;
+    for (int i = 0; i < inorderSize; i++) {
+        if (p == inorder[i]) break;
+        left++;
     }
-    int rightNum = inorderSize - leftNum - 1;
-
-    // 初始化节点
-    struct TreeNode *rootNode = (struct TreeNode *)malloc(sizeof(struct TreeNode));
-    memset(rootNode, 0, sizeof(struct TreeNode));
-
-    // 递归
-    rootNode->val = rootVal;
-    rootNode->left = buildTree(preorder+1, leftNum, inorder, leftNum);
-    rootNode->right = buildTree(preorder+(leftNum+1), rightNum, inorder+(leftNum+1), rightNum);
-    
-    return rootNode;
+    int right = inorderSize - left - 1;
+    // 递归生成子树
+    struct TreeNode* root = (struct TreeNode*)malloc(sizeof(struct TreeNode));
+    memset(root, 0, sizeof(struct TreeNode));
+    root->val = p;
+    root->left = buildTree(preorder+1, left, inorder, left);
+    root->right = buildTree(preorder+1+left, right, inorder+1+left, right);
+    return root;
 }
+
 ```
 
 ## 11.岛屿数量（Leetcode 200）
