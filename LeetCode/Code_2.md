@@ -639,25 +639,24 @@ private:
 ## 9. 正则表达式匹配（Leetcode 10）
 
 ```
+// C++
+
 class Solution {
 public:
     bool isMatch(string s, string p) {
         unordered_map<string, bool> memo;
         return dp(s, 0, p, 0, memo);
     }
-    
+
 private:
     bool dp(string& s, int i, string& p, int j, unordered_map<string, bool>& memo) {
-        int m = s.size();
-        int n = p.size();
-        // 如果 p 匹配完，s 也恰好被匹配完，则匹配成功
-        if (j == n) { 
-            return i == m;
-        }
-        // 如果 s 匹配完，只要 j 后的字符串能够匹配空串，则完成匹配
+        int m = s.size(), n = p.size();
+        // 1.如果 p 匹配完，s 也恰好被匹配完，则匹配成功
+        if (j == n) return i == m; 
+        // 2.如果 s 匹配完，只要 j 后的字符串能够匹配空串，则匹配成功
         if (i == m) {
-            if ((n-j)%2 == 1) return false; // 字符和 * 一定成对儿出现
-            for (; j+1 < n; j += 2) {         // 隔一个字符出现一个 *
+            if ((n-j)%2 == 1) return false;     // 字符和 * 一定成对儿出现
+            for (; j+1 < n; j += 2 ) {          // 隔一个字符出现一个 *
                 if (p[j+1] != '*') return false;
             }
             return true;
@@ -666,23 +665,17 @@ private:
         // 记录状态 (i,j)，消除重叠子问题
         string key = to_string(i) + "," + to_string(j);
         if (memo.count(key)) return memo[key];
-    
-        bool res = false;
+
         // 判断当前位置是否匹配
+        bool res = false;
         if (s[i] == p[j] || p[j] == '.') {
-            if (j < n-1 && p[j+1] == '*') {
-                res = dp(s, i, p, j+2, memo) || dp(s, i+1, p, j, memo); // 有 *，可以匹配 0 次或多次
-            } else {
-                res = dp(s, i+1, p, j+1, memo);                         // 无 *，常规匹配 1 次
-            }
+            // 如果下一位是 *，可以匹配 0 或多次，否则常规匹配 1 次
+            res = j<n-1 && p[j+1]=='*' ? (dp(s, i, p, j+2, memo) || dp(s, i+1, p, j, memo)) : dp(s, i+1, p, j+1, memo);
         } else {
-            if (j < n-1 && p[j+1] == '*') {
-                res = dp(s, i, p, j+2, memo);                           // 有 *，只能匹配 0 次
-            } else {
-                res = false;                                            // 无 *，无法匹配
-            }
+            // 如果下一位是 *，可以匹配 0 次，否则匹配失败
+            res = j<n-1 && p[j+1]=='*' ? dp(s, i, p, j+2, memo) : false;
         }
-        memo[key] = res;    // 缓存记录
+        memo[key] = res;
         return res;
     }
 };
