@@ -561,45 +561,43 @@ public:
     }
     
     void put(int key, int value) {
-        // 如果已存在，移到表头
         if (cache.count(key)) {
             DLinkedNode* node = cache[key];
-            node->value = value; 
-            moveToHead(node);
+            node->value = value;
+            moveToHead(node);       // 移到表头
             return;
         }
-        // 如果不存在，加入新 key value
+
         DLinkedNode* node = new DLinkedNode(key, value);
-        cache[key] = node;          // 加入哈希表
-        addToHead(node);             // 添加到链表表头
+        cache[key] = node;
+        addToHead(node);            // 添加到表头
         size++;
-        // 如果超过上限，移除最久没使用的节点
+        // 如果超过上限，移除最久没使用节点
         if (size > capacity) {
-            DLinkedNode* removed = removeTail();
-            cache.erase(removed->key);
-            delete removed;
+            DLinkedNode* removeNode = removeTail();
+            cache.erase(removeNode->key);
+            delete removeNode;
             size--;
-        }
+        } 
     }
 
 private:
-    // 双向链表节点
     struct DLinkedNode {
         int key;
         int value;
         DLinkedNode* pre;
         DLinkedNode* next;
-        DLinkedNode(): key(0), value(0), pre(nullptr), next(nullptr) {}
-        DLinkedNode(int _key, int _value): key(_key), value(_value), pre(nullptr), next(nullptr) {}
+        DLinkedNode(): key(0), value(0), pre(nullptr), next(nullptr){}
+        DLinkedNode(int _key, int _value): key(_key), value(_value), pre(nullptr), next(nullptr){}
     };
 
     unordered_map<int, DLinkedNode *> cache;
     DLinkedNode* head;
     DLinkedNode* tail;
-    int size;
-    int capacity;
+    int size;           // 当前数量
+    int capacity;       // 容量
 
-    // 添加到链表头
+    // 将节点添加到表头
     void addToHead(DLinkedNode* node) {
         node->pre = head;
         node->next = head->next;
@@ -613,18 +611,19 @@ private:
         node->next->pre = node->pre;
     }
 
-    // 将节点移动到链表头
+    // 将节点移到表头
     void moveToHead(DLinkedNode* node) {
         removeNode(node);
         addToHead(node);
     }
 
-    // 移除尾部节点
+    // 删除尾部节点
     DLinkedNode* removeTail() {
-        DLinkedNode* node = tail->pre;
+        DLinkedNode *node = tail->pre;
         removeNode(node);
         return node;
     }
+
 };
 
 /**
