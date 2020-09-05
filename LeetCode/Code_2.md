@@ -729,14 +729,12 @@ public:
                 dp[++k] = nums[i];
             } else {
                 int left = 0, right = k;
-                while (left < right) {
+                while (left <= right) {  // 第一个大于等于 nums[i] 的下标
                     int mid = (left + right) >> 1;
-                    // 中位数肯定不是要找的数，把它写在分支的前面
-                    dp[mid] < nums[i] ? left = mid + 1 : right = mid;
+                    nums[i] > dp[mid] ? left = mid + 1 : right = mid - 1;
                 }
-                dp[left] = nums[i];
+                dp[right+1] = nums[i];
             }
-
         }
         return k + 1;
     }
