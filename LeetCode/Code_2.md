@@ -684,12 +684,15 @@ private:
 ## 10.最长上升子序列（Leetcode 300）
 
 ```
+// C++
+// DP
+
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
         int n = nums.size();
         if (n == 0) return 0;
-        // dp[i] 为前 i 个元素，以第 i 个数字结尾的最长上升子序列的长度（ nums[i] 必须被选取）
+        // dp[i] 为前 i+1 个元素，以第 i+1 个数字结尾的最长上升子序列的长度（ nums[i] 必须被选取）
         vector<int> dp(n, 0);
         for (int i = 0; i < n; ++i) {
             dp[i] = 1;
@@ -700,6 +703,42 @@ public:
             }
         }
         return *max_element(dp.begin(), dp.end());
+    }
+};
+
+```
+
+```
+// C++
+// 贪心 + 二分查找
+
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        if (n == 0) return 0;
+        /* 
+            dp[i] 表示长度为 i+1 的所有上升子序列的结尾的最小值
+            [10,9,2,5,3,7,101,18] 中长度为 2 的所有上升子序列中结尾最小的是子序列 [2,3]，因此 dp[1] = 3
+        */
+        vector<int> dp(n, 0); 
+        int k = 0;
+        dp[k] = nums[0];
+        for (int i = 1; i < n; ++i) {
+            if (nums[i] > dp[k]) {
+                dp[++k] = nums[i];
+            } else {
+                int left = 0, right = k;
+                while (left < right) {
+                    int mid = (left + right) >> 1;
+                    // 中位数肯定不是要找的数，把它写在分支的前面
+                    dp[mid] < nums[i] ? left = mid + 1 : right = mid;
+                }
+                dp[left] = nums[i];
+            }
+
+        }
+        return k + 1;
     }
 };
 
