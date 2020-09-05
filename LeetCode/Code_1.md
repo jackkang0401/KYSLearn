@@ -740,18 +740,17 @@ public:
 // C
 
 int jump(int* nums, int numsSize){
-    if (0 == numsSize || NULL == nums) return -1;
+    if (0 == numsSize) return 0;
     int jumpCount = 0;
     int end = numsSize - 1;
-    while (end > 0) {
-        // 找到最远的可以到达该 end 的位置，（也就是第一个到达 end 的位置）
-        for (int i = 0; i <= (end-1); i++) {// 这个过程可以用二分查找
-            if (i + nums[i] >= end) { 
-                end = i;
-                jumpCount++;
-                break;
-            };
+    while(end > 0) {
+        for (int i = 0; i < end; i++) {
+            if ((i+nums[i]) >= end) {
+                 end = i;
+                 break;
+            }
         }
+        jumpCount++;
     }
     return jumpCount;
 }
