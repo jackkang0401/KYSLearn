@@ -738,6 +738,7 @@ public:
 
 ```
 // C
+// 反向查找出发位置
 
 int jump(int* nums, int numsSize){
     if (0 == numsSize) return 0;
@@ -756,6 +757,28 @@ int jump(int* nums, int numsSize){
 }
 
 ```
+
+```
+// C++
+// 贪心（正向查找可到达的最大位置）
+
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        int n = nums.size(), end = 0, max = 0, step = 0;
+        for (int i = 0; i < n - 1; ++i) {
+            max = max > (i + nums[i]) ? max : (i + nums[i]);
+            if (i == end) {
+                end = max;
+                ++step;
+            }
+        }
+        return step;
+    }
+};
+
+```
+
 ## 17.最小路径和（Leetcode 64）
 
 ```
