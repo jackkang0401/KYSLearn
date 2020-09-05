@@ -138,3 +138,29 @@ private:
 };
 
 ```
+
+## 2.搜索插入位置（Leetcode 35）
+
+```
+// C++
+// 二分查找
+
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        int n = nums.size();
+        int left = 0, right = n - 1;
+        // 其实就是找第一个大于等于 target 的下标
+        while (left <= right) {
+            int mid = (right + left) >> 1;
+            if (target > nums[mid]) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return right+1;
+    }
+};
+
+```
