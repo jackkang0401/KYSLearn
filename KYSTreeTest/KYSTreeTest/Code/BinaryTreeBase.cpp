@@ -125,41 +125,25 @@ void postorderRecursionTraversal(BinaryTree T){
     }
 }
 
-// 非递归实现(完全想不到思路，参考网上的)
-typedef struct BinaryAuxiliaryNode{
-    BinaryNode *node;
-    char flag;
-}BinaryAuxiliaryNode,*BinaryAuxiliaryTree;
-
-
+// 非递归实现
 void postorderTraversal(BinaryTree T){
-    std::stack<BinaryAuxiliaryTree> stack;
-    BinaryTree p = T;
-    BinaryAuxiliaryTree aTree;
-    while (NULL!=p || !stack.empty()) {
-        //遍历左子树
-        while (NULL != p) {
-            aTree = (BinaryAuxiliaryTree)malloc(sizeof(BinaryAuxiliaryNode));
-            aTree->node = p;
-            //访问过左子树
-            aTree->flag = 'L';
-            stack.push(aTree);
-            p = p->left;
+    if (nullptr == T) return;
+    std::vector<int> result;
+    std::stack<BinaryNode *> stack;
+    stack.push(T);
+    while(!stack.empty()) {
+        BinaryNode* node = stack.top();
+        stack.pop();
+        result.insert(result.begin(), node->val);
+        if (nullptr != node->left) {
+            stack.push(node->left);
         }
-        //左右子树访问完毕，访问根结点
-        while (!stack.empty() && stack.top()->flag == 'R') {
-            aTree = stack.top();
-            stack.pop();
-            printf("%d ",aTree->node->val);
-        }
-        //遍历右子树
-        if (!stack.empty()) {
-            aTree = stack.top();
-            //访问过右子树
-            aTree->flag = 'R';
-            p = aTree->node;
-            p = p->right;
+        if (nullptr != node->right) {
+            stack.push(node->right);
         }
     }
     
+    for (size_t i = 0, n = result.size(); i < n; i++) {
+        printf("%d ",result[i]);
+    }
 }

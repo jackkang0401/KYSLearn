@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stack>
+#include <vector>
 #include <iostream>
 
 typedef struct BinaryNode{
