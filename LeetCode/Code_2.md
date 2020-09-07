@@ -254,6 +254,7 @@ public:
 
 private:
     // 递归填充数据（每次递归起点从头开始）
+    // 求得一个解需要设有返回值，如果想获得所有解需要在达到最大数时记录结果
     bool solve(vector<vector<char>>& board) {
         for (int i = 0, rowSize = board.size(); i < rowSize; i++) {
             for (int j = 0, colSize = board[i].size(); j < colSize; j++) {
@@ -300,6 +301,7 @@ public:
 
 private:
     // 递归填充数据（每次递归起点为下一个）
+    // 求得一个解需要设有返回值，如果想获得所有解需要在达到最大数时记录结果
     bool solve(vector<vector<char>>& board, int size, int current) {
         for (int k = current, total = size*size; k < total; k++) {
             int i = k / size, j = k % size;
