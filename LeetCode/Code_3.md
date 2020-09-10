@@ -150,7 +150,7 @@ public:
     int searchInsert(vector<int>& nums, int target) {
         int n = nums.size();
         int left = 0, right = n - 1;
-        // 其实就是找第一个大于等于 target 的下标
+        // 其实就是找第一个大于等于 target 的下标（看等于时停在哪）
         while (left <= right) {
             int mid = (right + left) >> 1;
             if (target > nums[mid]) {
@@ -159,7 +159,7 @@ public:
                 right = mid - 1;
             }
         }
-        return right+1;
+        return left; // right+1
     }
 };
 
