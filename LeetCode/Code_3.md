@@ -11,17 +11,22 @@ class Solution {
 public:
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
         if (0 ==beginWord.size()) return 0;
+
         // 建立映射
-        unordered_map<string,vector<string>> allWordMap;
+        bool hasEndWord = false;
+        unordered_map<string, vector<string>> wordMap;
         for (auto word : wordList) {
+            if (word == endWord) hasEndWord = true;
             string key = word;
             for (int i = 0, size = word.size(); i < size; i++) {
                 char c = key[i];
                 key[i] = '*'; 
-                allWordMap[key].push_back(word);
+                wordMap[key].push_back(word);
                 key[i] = c;
             }
         }
+
+        if (false == hasEndWord) return 0;
 
         // BFS
         queue<pair<string,int>> q;
@@ -36,7 +41,7 @@ public:
             for (int i = 0, size = word.size(); i < size; i++) {
                 char c = word[i];
                 word[i] = '*';
-                for (auto w : allWordMap[word]) {
+                for (auto w : wordMap[word]) {
                     if (w == endWord) return level + 1;
                     if (visitedSet.find(w) != visitedSet.end()) continue;
                     q.push(make_pair(w, level + 1));
