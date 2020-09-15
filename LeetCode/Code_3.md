@@ -192,3 +192,44 @@ public:
 };
 
 ```
+
+## 3.最长回文子串（Leetcode 5）
+
+```
+// C++
+// DP
+
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        int size = s.size();
+        if (size < 2) return s;
+        int maxSize = 1, begin = 0;
+        // dp[i][j] 表示子串 s[i..j] 是否为回文子串（包含 i、j）
+        vector<vector<bool>> dp(size, vector(size, false));
+        for (int i = 0; i < size; i++) {
+            dp[i][i] = true;
+        }
+        for (int j = 1; j < size; j++) {
+            for (int i = 0; i < j; i++) {
+                if (s[i] != s[j]) {
+                    dp[i][j] = false;
+                } else {
+                    /*  
+                        s[i] == s[j] 
+                        ((j - 1) - (i + 1) + 1 < 2) => (j - i < 3) 
+                        表示只有一个字符或空串，可直接设置 dp[i][j] = true
+                    */
+                    dp[i][j] = (j - i < 3) ? true : dp[i+1][j-1];
+                }
+                if (true == dp[i][j] && (j-i+1) > maxSize) {
+                    maxSize = j-i+1;            // 长度（直径）
+                    begin = i;                  // 左端点
+                }
+            }
+        }
+        return s.substr(begin, maxSize);
+    }
+};
+
+```
