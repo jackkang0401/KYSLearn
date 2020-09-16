@@ -58,6 +58,45 @@ public:
 
 ```
 
+```
+// C++
+// 2.Manacher
+
+class Solution {
+public:
+    int countSubstrings(string s) {
+        int n = s.size();
+        if (n < 2) return n;
+        
+        // 插入字符串
+        string str = "$#";
+        for (char c: s) {
+            str += c;
+            str += '#';
+        }
+        str += '!';
+        n = str.size() - 1;
+        
+        int total = 0;                          // 记录所有回文子串
+        vector<int> radius = vector<int>(n);    // 记录 i 对应半径
+        int iMax = 0, rMax = 0;                 // 记录前 i 位置回文最大右端点及对应位置
+        for (int i = 1; i < n; i++) {
+            radius[i] = (i <= rMax) ? min(rMax-i+1, radius[2*iMax-i]) : 1;
+            while (str[i+radius[i]] == str[i-radius[i]]) radius[i]++;   // 继续向外扩张
+            int r = i+radius[i]-1;                                      // 右端点  
+            if (r > rMax) {                                             
+                iMax = i;
+                rMax = r;
+            }
+            total += (radius[i] / 2);           // (radius[i] - 1) / 2 上取整
+        }
+        return total;
+    }
+};
+
+
+```
+
 ## 3.实现 Trie (前缀树)（Leetcode 208）
 
 ```
