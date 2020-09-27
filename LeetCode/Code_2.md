@@ -10,18 +10,18 @@ class Solution {
 public:
     int numDecodings(string s) {
         int size = s.size();
-        if (0 == size || '0' == s[0]) return 0;
-        vector<int> dp(size + 1);
-        dp[0] = dp[1] = 1;      // dp[n] 代表 s[0..n-1] 的解码方法总数
+        if (0 == size || '0' == s[0]) return 0; // 首位为 0，不可解码
+        vector<int> dp(size+1);
+        dp[0] = dp[1] = 1;                      // dp[n] 代表 s[0..n-1] 的解码方法总数
         for (int i = 1; i < size; i++) {
-            if ('0' == s[i]) {  // 当前位置为 0，上一位置是 1 或 2 才可以解码
+            if ('0' == s[i]) {                  // 当前位为 0，上一位必须是 1 或 2 才能解码
                 if (!('1' == s[i-1] || '2' == s[i-1])) return 0;
                 dp[i+1] = dp[i-1];
             } else if (s[i] <= '6') {
-                dp[i+1] = ('1' == s[i-1] || '2' == s[i-1]) ? ( dp[i] + dp[i-1]) : dp[i];
+                dp[i+1] = dp[i] + (('1' == s[i-1] || '2' == s[i-1]) ? dp[i-1] : 0);
             } else {
-                dp[i+1] = ('1' == s[i-1]) ? ( dp[i] + dp[i-1]) : dp[i];
-            }   
+                dp[i+1] = dp[i] + (('1' == s[i-1]) ? dp[i-1] : 0);
+            }
         }
         return dp[size];
     }
