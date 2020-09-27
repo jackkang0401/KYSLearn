@@ -554,10 +554,10 @@ private:
          2. ~ 取反将可放皇后的位置改为 1
          3. & ((1 << n) - 1) 清空高位多余的 1
         */
-        int placeCols = (~(cols | slashs | backslashs)) & ((1 << n) - 1);
-        while (placeCols) {
-            int p = placeCols & -placeCols;         // 取出最低位的 1（可放置皇后位置）
-            placeCols = placeCols & (placeCols - 1);// 清除最低位 1
+        int placeColBits = (~(cols | slashs | backslashs)) & ((1 << n) - 1);
+        while (placeColBits) {
+            int p = placeColBits & -placeColBits;         // 取出最低位的 1（可放置皇后位置）
+            placeColBits = placeColBits & (placeColBits - 1);// 清除最低位 1
             int col = getColumn(p);
             currentState[row][col] = 'Q';
             // (slashs | p) << 1 与 (backslashs | p) >> 1 都是下一行不可放置的列
