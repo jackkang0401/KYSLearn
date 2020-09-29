@@ -64,9 +64,9 @@ public:
 
 class Solution {
 public:
-    int countSubstrings(string s) {
+    string longestPalindrome(string s) {
         int n = s.size();
-        if (n < 2) return n;
+        if (n < 2) return s;
         // 插入字符串
         string str = "$#";
         for (char c: s) {
@@ -74,22 +74,31 @@ public:
             str += '#';
         }
         str += '!';
-        n = str.size() - 1;
+        n = str.size();
 
-        int total = 0;                          // 所有回文子串
         vector<int> radius = vector<int>(n);    // 位置 i 对应的最大回文串半径
-        int maxI = 0, maxRight = 0;             // 前 i 个位置对应所有回文串中的最大右端点及位置
-        for (int i = 1; i < n; i++) {
-            radius[i] = (i <= maxRight) ? min(maxRight-i+1, radius[2*maxI-i]) : 1;
+        int maxRightI = 0, maxRight = 0;        // 前 i 个位置对应所有回文串中的最大右端点及位置
+        int maxRadiusI = 0;                     // 最大半径位置
+        for (int i = 1, size = n-1; i < size; i++) {                        // 从第一个 ‘#’ 开始
+            radius[i] = (i <= maxRight) ? min(maxRight-i+1, radius[2*maxRightI-i]) : 1;
             while (str[i+radius[i]] == str[i-radius[i]]) radius[i]++;       // 继续向外扩张
             int curRight = i+radius[i]-1;                                   // 右端点  
             if (curRight > maxRight) {                                             
-                maxI = i;
+                maxRightI = i;
                 maxRight = curRight;
             }
-            total += (radius[i] / 2);        // (radius[i] - 1) / 2 上取整
+            if (radius[i] > radius[maxRadiusI]) maxRadiusI = i;             // 记录最大半径位置   
         }
-        return total;
+
+        // 生成最大回文子串
+        int begin = maxRadiusI - radius[maxRadiusI] + 1;
+        int end = maxRadiusI + radius[maxRadiusI] - 1;
+        string result;
+        for (int i = begin; i < end; i++) {
+            if (str[i] == '#' || str[i] == '$' || str[i] == '!') continue;
+            result.push_back(str[i]);
+        }
+        return result;
     }
 };
 
