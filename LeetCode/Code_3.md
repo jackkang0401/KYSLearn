@@ -322,6 +322,7 @@ public:
 ```
 
 // C++
+// 1
 
 class Solution {
 public:
@@ -343,7 +344,7 @@ public:
 ```
 
 // C++
-// 优化 O(2n)
+// 2.优化 空间复杂度 O(2n)
 
 class Solution {
 public:
@@ -357,6 +358,26 @@ public:
             pre.assign(cur.begin(), cur.end());
         }
         return pre[m-1];
+    }
+};
+
+```
+
+```
+
+// C++
+// 3.优化 空间复杂度 O(n)
+
+class Solution {
+public:
+    int uniquePaths(int m, int n) { 
+        vector<int> cur = vector(m, 1); 
+        for (int i = 1; i < n; i++) {
+            for (int j = 1; j < m; j++) {
+                cur[j] += cur[j-1];
+            }
+        }
+        return cur[m-1];
     }
 };
 
