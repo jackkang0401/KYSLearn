@@ -382,3 +382,81 @@ public:
 };
 
 ```
+
+## 6.不同路径II（Leetcode 63）
+
+
+```
+
+class Solution {
+public:
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+        int n = obstacleGrid.size(), m = obstacleGrid[0].size();
+        if (0 == n || 0 == m) return 0;
+        vector<int> cur = vector(m, 0); 
+        cur[0] = (0 == obstacleGrid[0][0]) ? 1 : 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (obstacleGrid[i][j] == 1) {
+                    cur[j] = 0;
+                    continue;
+                }
+                if (j-1 >= 0 && 0 == obstacleGrid[i][j-1]) {
+                    cur[j] += cur[j-1];
+                }
+            }
+        }
+        return cur[m-1];
+    }
+};
+
+```
+
+## 7.不同路径III（Leetcode 980）
+
+
+```
+class Solution {
+public:
+    int uniquePathsIII(vector<vector<int>>& grid) {
+        int n = grid.size(), m = grid[0].size();
+        int ans = 0;
+        int cnt = 0;        // 记录走过的空方格数量
+        int x, y;           // 起点
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < m; j++) {
+                if(grid[i][j] == 1) {
+                    x = i, y = j;       // 记录起点
+                    continue;
+                }
+                if(0 == grid[i][j] || 2 == grid[i][j]) { 
+                    cnt++;              // 空方格数量 +1              
+                }
+            }
+        }
+        dfs(x, y, n, m, cnt, grid, ans);
+        return ans;
+    }
+
+private:
+    void dfs(int x, int y, int n, int m, int cnt, vector<vector<int>> &grid, int &ans) {
+        if(grid[x][y] == 2) {
+            if(0 == cnt) ans++;     // 经过所有的0 才算一条合法路径
+            return;                 
+        }
+        int cur = grid[x][y];       // 保存当前值
+        grid[x][y] = 3;             // 标记为已遍历
+        int dx[4] = {1, 0, -1, 0}, dy[4] = {0, 1, 0, -1};
+        for(int i = 0; i < 4; i++) {
+            int a = x + dx[i];
+            int b = y + dy[i];
+            if((a >= 0 && a < n) && (b >= 0 && b < m)) {
+                if(-1 == grid[a][b] || 3 == grid[a][b]) continue;
+                dfs(a, b, n, m, cnt - 1, grid, ans);
+            }
+        }
+        grid[x][y] = cur;           // 恢复值
+    }
+};
+
+```
