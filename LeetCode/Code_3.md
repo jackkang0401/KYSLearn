@@ -339,3 +339,25 @@ public:
 };
 
 ```
+
+```
+
+// C++
+// 优化 O(2n)
+
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        vector<int> pre = vector(m, 1); 
+        vector<int> cur = vector(m, 1); 
+        for (int i = 1; i < n; i++) {
+            for (int j = 1; j < m; j++) {
+                cur[j] = cur[j-1] + pre[j];
+            }
+            pre.assign(cur.begin(), cur.end());
+        }
+        return pre[m-1];
+    }
+};
+
+```
