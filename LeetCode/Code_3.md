@@ -517,6 +517,7 @@ private:
 
 ```
 // C++
+// 1.DP
 
 class Solution {
 public:
@@ -539,6 +540,34 @@ public:
             }
         }
         return map[stones[size-1]].size() > 0;
+    }
+};
+
+```
+
+```
+
+// C++
+// 2. DP 比方法 1 慢些
+
+class Solution {
+public:
+    bool canCross(vector<int>& stones) {
+        int size = stones.size();
+        if(stones[1] != 1) return false; // 第一步只能跳 1 单元格
+        // dp[i][k] 表示能否由前面的某一个石头 j 通过跳 k 步到达当前这个石头 i，j 的范围是 [1, i - 1]
+        vector<vector<bool>> dp = vector(size, vector(size+1, false));
+        dp[0][0] = true;
+        for(int i = 1; i < size; i++){
+            for(int j = 0; j < i; j++){
+                int k = stones[i] - stones[j];
+                if(k <= i){
+                    dp[i][k] = dp[j][k - 1] || dp[j][k] || dp[j][k + 1];
+                    if(i == size-1 && dp[i][k]) return true;
+                }
+            }
+        }
+        return false;
     }
 };
 
