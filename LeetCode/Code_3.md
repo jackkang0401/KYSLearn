@@ -412,10 +412,14 @@ public:
 
 ```
 
+
 ## 7.不同路径III（Leetcode 980）
 
 
 ```
+// C++
+// 1
+
 class Solution {
 public:
     int uniquePathsIII(vector<vector<int>>& grid) {
@@ -456,6 +460,57 @@ private:
             }
         }
         grid[x][y] = cur;           // 恢复值
+    }
+};
+
+```
+
+```
+
+// C++
+// 2. 消耗极大的空间、时间，仅提供思路，不建议使用
+
+class Solution {
+public:
+    int uniquePathsIII(vector<vector<int>>& grid) {
+        int row = grid.size(), col = grid[0].size();
+        int x = 0, y = 0, cnt = 0;
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (2 == grid[i][j] || 0 == grid[i][j]) {
+                    cnt |= (1 << (i * col + j)); // 记录所有可走位置（包含结束位置）
+                } else if (grid[i][j] == 1) {
+                    x = i, y = j;
+                }
+            }
+        }
+        /*
+            memo(x,y,cnt) 为从 (x,y) 开始行走，还没有遍历的无障碍方格集合为 cnt 的路径的数量
+            并通过记忆化状态 (x,y,cnt) 缓存的结果来避免重复搜索
+        */
+        vector<vector<vector<int>>> memo = vector(row, vector(col, vector(1 << (row*col), -1)));
+        return dfs(x, y, row, col, cnt, memo, grid);
+    }
+
+private:
+    int dfs(int x, int y, int row, int col, int cnt, vector<vector<vector<int>>> &memo, vector<vector<int>>& grid) {
+        if (memo[x][y][cnt] != -1) return memo[x][y][cnt];
+        if(2 == grid[x][y]) return (0 == cnt) ? 1 : 0;      // 到达结束位置
+        
+        int ans = 0;
+        int dx[4] = {1, 0, -1, 0}, dy[4] = {0, 1, 0, -1};
+        for(int i = 0; i < 4; i++) {
+            int a = x + dx[i];
+            int b = y + dy[i];
+            if((a >= 0 && a < row) && (b >= 0 && b < col)) {
+                int cur = 1 << (a * col + b);
+                if (cnt & cur) {
+                    ans += dfs(a, b, row, col, cnt ^ cur, memo, grid);
+                }
+            }
+        }
+        memo[x][y][cnt] = ans;
+        return ans;
     }
 };
 
