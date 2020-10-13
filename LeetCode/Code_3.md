@@ -423,27 +423,24 @@ public:
 class Solution {
 public:
     int uniquePathsIII(vector<vector<int>>& grid) {
-        int n = grid.size(), m = grid[0].size();
         int ans = 0;
-        int cnt = 0;        // 记录走过的空方格数量
-        int x, y;           // 起点
-        for(int i = 0; i < n; i++) {
-            for(int j = 0; j < m; j++) {
-                if(grid[i][j] == 1) {
-                    x = i, y = j;       // 记录起点
-                    continue;
-                }
-                if(0 == grid[i][j] || 2 == grid[i][j]) { 
-                    cnt++;              // 空方格数量 +1              
+        int row = grid.size(), col = grid[0].size();
+        int x = 0, y = 0, cnt = 0;
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (2 == grid[i][j] || 0 == grid[i][j]) {
+                    cnt ++;         // 记录所有可走位置数量
+                } else if (grid[i][j] == 1) {
+                    x = i, y = j;
                 }
             }
         }
-        dfs(x, y, n, m, cnt, grid, ans);
+        dfs(x, y, row, col, cnt, grid, ans);
         return ans;
     }
 
 private:
-    void dfs(int x, int y, int n, int m, int cnt, vector<vector<int>> &grid, int &ans) {
+    void dfs(int x, int y, int row, int col, int cnt, vector<vector<int>> &grid, int &ans) {
         if(grid[x][y] == 2) {
             if(0 == cnt) ans++;     // 经过所有的0 才算一条合法路径
             return;                 
@@ -454,9 +451,9 @@ private:
         for(int i = 0; i < 4; i++) {
             int a = x + dx[i];
             int b = y + dy[i];
-            if((a >= 0 && a < n) && (b >= 0 && b < m)) {
+            if((a >= 0 && a < row) && (b >= 0 && b < col)) {
                 if(-1 == grid[a][b] || 3 == grid[a][b]) continue;
-                dfs(a, b, n, m, cnt - 1, grid, ans);
+                dfs(a, b, row, col, cnt - 1, grid, ans);
             }
         }
         grid[x][y] = cur;           // 恢复值
