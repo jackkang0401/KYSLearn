@@ -472,7 +472,7 @@ private:
             return;
         }
         for (int i = 0, numsSize = nums.size(); i < numsSize; i++) {
-            if (i > 0 && nums[i] == nums[i-1] && 0 == used[i-1]) continue;
+            if (i > 0 && nums[i] == nums[i-1] && false == used[i-1]) continue;
             if (false == used[i]) {
                 used[i] = true;
                 path.push_back(nums[i]);
