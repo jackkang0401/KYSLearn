@@ -512,3 +512,34 @@ private:
 };
 
 ```
+
+## 8.青蛙过河（Leetcode 403）
+
+```
+// C++
+
+class Solution {
+public:
+    bool canCross(vector<int>& stones) {
+        int size = stones.size();
+        /*
+            key 表示石头的位置，value 是一个包含 jumpSize 的集合，
+            代表可以通过大小为 jumpSize 的一跳到达当前位置
+        */
+        unordered_map<int, set<int>> map;
+        map[0].insert(0);
+        for(int i = 0; i < size; i++) {
+            for(int k : map[stones[i]]) { 
+                for (int jumpSize = k - 1; jumpSize <= k + 1; jumpSize++) {
+                    if (jumpSize > 0) {
+                        // stones[i]：石头位置，stones[i]+jumpSize：落点位置（可能为水里）
+                        map[stones[i]+jumpSize].insert(jumpSize); 
+                    }
+                }
+            }
+        }
+        return map[stones[size-1]].size() > 0;
+    }
+};
+
+```
