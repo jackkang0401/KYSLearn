@@ -598,3 +598,57 @@ public:
 };
 
 ```
+
+## 10.爬楼梯（Leetcode 70）
+
+
+```
+
+// C++
+// 1.
+
+class Solution {
+public:
+    int climbStairs(int n) {
+        /*  
+            dp(x)：到达 x+1 的方法总数
+            dp(x) = dp(x-1) + dp(x-2)
+            dp[0] = 1
+            dp[1] = 2;
+        */
+        if (n <= 2) return n;  
+        int p = 1, q = 2; // p 上上个，q 上个
+        for (int i = 2; i < n; i++) {
+            int k = p + q;
+            p = q;
+            q = k;
+        }
+        return q;
+    }
+};
+
+```
+
+```
+
+// C++
+// 2.
+
+class Solution {
+public:
+    int climbStairs(int n) { 
+        int p = 0, q = 0, k = 1; 
+        /* 
+                 i = 0    i = 1    i = 2
+        0,0,1 -> 0,1,1 -> 1,1,2 -> 1,2,3 -> ... 
+        */    
+        for (int i = 0; i < n; i++) {
+            p = q;
+            q = k;
+            k = p + q;
+        }
+        return k;
+    }
+};
+
+```
