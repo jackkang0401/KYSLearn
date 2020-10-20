@@ -652,3 +652,23 @@ public:
 };
 
 ```
+
+## 11.使用最小花费爬楼梯（Leetcode 746）
+
+
+```
+class Solution {
+public:
+    int minCostClimbingStairs(vector<int>& cost) {
+        // dp[i] = cost[i] + min(dp[i-1], dp[i-2])
+        int p = 0, q = 0;
+        for (int i = 0, size = cost.size(); i < size; i++) {
+            int k = cost[i] + min(p, q);
+            p = q;
+            q = k;
+        }
+        return min(p, q);
+    }
+};
+
+```
