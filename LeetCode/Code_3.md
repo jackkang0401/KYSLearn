@@ -387,6 +387,7 @@ public:
 
 
 ```
+// C++
 
 class Solution {
 public:
@@ -401,8 +402,8 @@ public:
                     cur[j] = 0;
                     continue;
                 }
-                if (j-1 >= 0 && 0 == obstacleGrid[i][j-1]) {
-                    cur[j] += cur[j-1];
+                if (j-1 >= 0) {
+                    cur[j] += cur[j-1];// cur[j-1]：左，cur[j]：上
                 }
             }
         }
