@@ -605,7 +605,7 @@ public:
 ```
 
 // C++
-// 1.
+// 1.DP
 
 class Solution {
 public:
@@ -632,7 +632,7 @@ public:
 ```
 
 // C++
-// 2.
+// 2.DP
 
 class Solution {
 public:
@@ -657,6 +657,9 @@ public:
 
 
 ```
+// C++
+// DP
+
 class Solution {
 public:
     int minCostClimbingStairs(vector<int>& cost) {
