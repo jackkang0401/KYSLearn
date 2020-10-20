@@ -352,8 +352,8 @@ public:
         vector<int> pre = vector(m, 1); 
         vector<int> cur = vector(m, 1); 
         for (int i = 1; i < n; i++) {
-            for (int j = 1; j < m; j++) {
-                cur[j] = cur[j-1] + pre[j];
+            for (int j = 1; j < m; j++) {   // cur 每次 0 位置已初始化 1
+                cur[j] = cur[j-1] + pre[j]; // cur[j-1]：左，pre[j]：上
             }
             pre.assign(cur.begin(), cur.end());
         }
@@ -373,8 +373,8 @@ public:
     int uniquePaths(int m, int n) { 
         vector<int> cur = vector(m, 1); 
         for (int i = 1; i < n; i++) {
-            for (int j = 1; j < m; j++) {
-                cur[j] += cur[j-1];
+            for (int j = 1; j < m; j++) {   // cur 每次 0 位置已初始化 1
+                cur[j] += cur[j-1];         // cur[j-1]：左，cur[j]：上
             }
         }
         return cur[m-1];
