@@ -830,3 +830,25 @@ public:
 
 
 ```
+
+```
+
+// C++
+// DP 空间优化
+
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int maxPre = nums[0], minPre = nums[0]; // 记录上一个最大，最小值
+        int ans = nums[0];                      // 记录最大值
+        for (int i = 1, size = nums.size(); i < size; i++) {
+            int mx = maxPre, mn = minPre;
+            maxPre = max(mx*nums[i], max(mn*nums[i], nums[i]));
+            minPre = min(mn*nums[i], min(mx*nums[i], nums[i]));
+            ans = max(maxPre, ans);
+        }
+        return ans;
+    }
+};
+
+```
