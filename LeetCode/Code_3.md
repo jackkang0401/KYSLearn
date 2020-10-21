@@ -792,3 +792,41 @@ public:
 
 
 ```
+
+## 14.乘积最大子数组（Leetcode 152）
+
+
+```
+
+// C++
+// DP
+
+
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+
+        /*
+            maxDP 记录最小，minDP 纪录最大
+
+            maxDP(i) = max(maxDP[i-1]*nums[i], minDP[i-1]*nums[i], nums[i])
+            minDP[i] = min(minDP[i-1]*nums[i], maxDP[i-1]*nums[i], nums[i])
+
+            可以考虑把
+                1. nums[i] 与 maxDP 第 i-1 个元素结尾的乘积
+                2. nums[i] 与 nimDP 第 i-1 个元素结尾的乘积
+                3. num[i]
+            三者取大写入 maxDP(i)，三者取小写入 minDP(i)
+        */
+
+        vector <int> maxDP(nums), minDP(nums);
+        for (int i = 1; i < nums.size(); ++i) {
+            maxDP[i] = max(maxDP[i-1]*nums[i], max(minDP[i-1]*nums[i], nums[i])); // 取最大
+            minDP[i] = min(minDP[i-1]*nums[i], min(maxDP[i-1]*nums[i], nums[i])); // 取最小
+        }
+        return *max_element(maxDP.begin(), maxDP.end());
+    }
+};
+
+
+```
