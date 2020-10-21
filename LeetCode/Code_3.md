@@ -682,7 +682,7 @@ public:
 
 ```
 // C++
-// 1.
+// 1.DP
 
 class Solution {
 public:
@@ -718,7 +718,7 @@ public:
 ```
 
 // C++
-// 2.空间优化 O(n)
+// 2.DP 空间优化 O(n)
 
 class Solution {
 public:
@@ -744,7 +744,7 @@ public:
 ```
 
 // C++
-// 2.空间优化 O(n)，下 -> 上
+// 2.DP 空间优化 O(n)，下 -> 上
 
 class Solution {
 public:
@@ -759,6 +759,34 @@ public:
             }
         }
         return dp[0];
+    }
+};
+
+
+```
+
+## 13.最大子序和（Leetcode 53）
+
+
+```
+
+// C++
+// DP
+
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        /*
+         dp(i) 代表以第 i 个数结尾的「连续子数组的最大和」
+         DP方程：dp[i] = max(dp[i-1], 0) + nums[i]
+        */
+        int pre = nums[0];
+        int maxValue = pre;
+        for (int i = 1, size = nums.size(); i < size; i++) {
+            pre = max(pre, 0) + nums[i];
+            maxValue = max(pre, maxValue); // 记录最大值
+        }
+        return maxValue;
     }
 };
 
