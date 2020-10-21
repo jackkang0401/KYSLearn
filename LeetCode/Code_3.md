@@ -881,3 +881,26 @@ public:
 };
 
 ```
+
+```
+// C++
+// 2. DP
+
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        // dp(i) 为组成金额 i 所需最少的硬币数量
+        vector<int> dp(amount+1, amount+1);
+        dp[0] = 0;
+        for (int i = 1; i <= amount; ++i) {
+            for (int j = 0, size = coins.size(); j < size; j++) {
+                if (coins[j] <= i) {
+                    dp[i] = min(dp[i], dp[i-coins[j]]+1);
+                }
+            }
+        }
+        return dp[amount]>amount ? -1 : dp[amount];
+    }
+};
+
+```
