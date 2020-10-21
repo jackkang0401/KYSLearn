@@ -852,3 +852,32 @@ public:
 };
 
 ```
+
+## 15.零钱兑换（Leetcode 322）
+
+
+```
+
+// C++
+// 1. dfs 超时
+
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        int size = coins.size();
+        if (0 == size) return -1;
+        int minValue = amount+1;    // 初始值 size+1，结果不可能比它大
+        dfs(coins, amount, 0, minValue);
+        return minValue > amount ? -1 : minValue;
+    }
+
+    void dfs(vector<int>& coins, int amount, int count, int& minValue) {
+        if (amount < 0) return;
+        if (0 == amount) minValue = count < minValue ? count : minValue;
+        for (int i = 0, size = coins.size(); i < size; i++) {
+            dfs(coins, amount-coins[i], count+1, minValue);
+        }
+    }
+};
+
+```
