@@ -740,3 +740,27 @@ public:
 
 
 ```
+
+```
+
+// C++
+// 2.空间优化 O(n)，下 -> 上
+
+class Solution {
+public:
+    int minimumTotal(vector<vector<int>>& triangle) {
+        int size = triangle.size();
+        vector<int> dp(size, 0);
+        dp.assign(triangle[size-1].begin(), triangle[size-1].end());
+        // 下 -> 上 DP
+        for (int i = size-2; i >= 0; i--) {
+            for (int j = 0; j <= i; j++) { 
+                dp[j] = triangle[i][j] + min(dp[j], dp[j+1]);
+            }
+        }
+        return dp[0];
+    }
+};
+
+
+```
