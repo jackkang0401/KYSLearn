@@ -904,3 +904,42 @@ public:
 };
 
 ```
+
+## 16.零钱兑换 II（Leetcode 518）
+
+
+```
+
+class Solution {
+public:
+    int change(int amount, vector<int>& coins) {
+        /*
+            1.分治，子问题，最优子结构
+            2.定义状态：dp[i][j]：硬币列表前 i 个硬币能够凑成总金额为 j 的组合数
+            3.DP方程：
+                dp[i][j]= dp[i-1][j] (j-coins[i-1] < 0)
+                dp[i][j] = dp[i-1][j] + dp[i][j-coins[i-1]] (j-coins[i-1] >= 0)
+        */
+        int size = coins.size();
+        vector<vector<int>> dp(size+1, vector(amount+1, 0));
+        for (int i = 0; i <= size; i++) {
+            dp[i][0] = 1;
+        }
+
+        for (int i = 1; i <= size; i++ ) {
+            for (int j = 1; j <= amount; j++) {
+                if (j-coins[i-1] < 0) {
+                    // 当选择的第 i 个硬币的金额比想凑的金额大时，只能选择不装
+                    dp[i][j] = dp[i-1][j];
+                } else {
+                    // dp[i][j] 是共有多少种凑法，所以 dp[i][j] = 不装 + 装
+                    dp[i][j] = dp[i-1][j] + dp[i][j-coins[i-1]];
+                }
+            }
+        }
+        return dp[size][amount];
+    }
+};
+
+
+```
