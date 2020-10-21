@@ -676,3 +676,39 @@ public:
 };
 
 ```
+
+## 12.三角形最小路径和（Leetcode 120）
+
+
+```
+// C++
+// 1.
+
+class Solution {
+public:
+    int minimumTotal(vector<vector<int>>& triangle) {
+        /*  
+                 j
+             i  [2]
+                [3,4]
+                [6,5,7]
+                [4,1,8,3]
+            
+            DP方程：dp[i][j] = triangle[i][j] + min(dp[i-1][j-1], dp[i-1][j]);
+        */
+        int size = triangle.size();
+        vector<vector<int>> dp(size, vector<int>(size));
+        dp[0][0] = triangle[0][0];
+        // 上 -> 下 DP
+        for(int i = 1; i < size; i++) {
+            dp[i][0] = dp[i-1][0] + triangle[i][0];
+            for (int j = 1; j < i; j++) {
+                dp[i][j] = min(dp[i-1][j-1], dp[i-1][j]) + triangle[i][j];
+            }
+            dp[i][i] = dp[i-1][i-1] + triangle[i][i];
+        }
+        return *min_element(dp[size-1].begin(), dp[size-1].end());
+    }
+};
+
+```
