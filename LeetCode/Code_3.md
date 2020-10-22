@@ -1033,3 +1033,24 @@ public:
 
 
 ```
+
+
+```
+
+// C++
+// 3. DP 方法 2 的基础上空间优化
+
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        int pre1 = 0, pre2 = 0; // pre1 上一个，pre2 上上个
+        for (int i = 0, size = nums.size(); i < size; i++) {
+            int now = max(pre1, pre2+nums[i]);
+            pre2 = pre1;
+            pre1 = now;
+        }
+        return pre1;
+    }
+};
+
+```
