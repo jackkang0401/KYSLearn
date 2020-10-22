@@ -1054,3 +1054,47 @@ public:
 };
 
 ```
+
+## 18.打家劫舍 II（Leetcode 213）
+
+
+```
+// C++
+// DP
+
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        /*
+            可转换为 Leetcode 198 
+                1.不偷第一个
+                2.不偷最后一个
+        */
+
+        int size = nums.size();
+        if (size < 2) return 0 == size ? 0 : nums[0];
+
+        // 不偷第一个
+        int pre1 = 0, pre2 = 0; // pre1 上一个，pre2 上上个
+        for (int i = 1; i < size; i++) {
+            int now = max(pre1, pre2+nums[i]);
+            pre2 = pre1;
+            pre1 = now;
+        }
+
+        int maxValue= pre1;
+
+        // 不偷最后一个
+        pre1 = 0, pre2 = 0; // pre1 上一个，pre2 上上个
+        for (int i = 0; i < size-1; i++) {
+            int now = max(pre1, pre2+nums[i]);
+            pre2 = pre1;
+            pre1 = now;
+        }
+
+        return max(maxValue, pre1);
+    }
+};
+
+
+```
