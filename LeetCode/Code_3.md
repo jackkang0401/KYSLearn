@@ -973,6 +973,9 @@ public:
 
 ```
 
+// C++
+// 1. DP
+
 class Solution {
 public:
     int rob(vector<int>& nums) {
@@ -994,6 +997,37 @@ public:
         }
 
         return max(dp[size-1][0], dp[size-1][1]);
+    }
+};
+
+
+```
+
+
+```
+
+// C++
+// 2. DP 另一种状态定义
+
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        /* 
+            dp[i]: 0~i 能偷到的最高金额
+                dp[i] = max(dp[i-1], dp[i-2] + nums[i])
+        */
+
+        int size = nums.size();
+        if (size < 2) return 0 == size ? 0 : nums[0];
+        vector<int> dp(size, 0);
+        dp[0] = nums[0];
+        dp[1] = max(nums[0], nums[1]);
+
+        for (int i = 2; i < size; i++) {
+            dp[i] = max(dp[i-1], dp[i-2]+nums[i]); // i 偷与不偷取大的
+        }
+
+        return dp[size-1];
     }
 };
 
