@@ -1105,7 +1105,7 @@ public:
 ```
 
 // C++
-// DP
+// 1. DP
 
 /**
  * Definition for a binary tree node.
@@ -1144,6 +1144,57 @@ public:
 
         dfs(o);
         return max(f[o], g[o]);
+    }
+};
+
+
+```
+
+
+```
+
+// C++
+// 2. DP 空间优化
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+struct SubtreeStatus {
+    int selected;
+    int notSelected;
+};
+
+class Solution {
+public:
+    unordered_map <TreeNode*, int> f, g;
+
+    // 后续遍历生成结果
+    SubtreeStatus dfs(TreeNode* o) {
+        if (!o) return {0, 0};
+        auto l = dfs(o->left);
+        auto r = dfs(o->right);
+        int selected = o->val + l.notSelected + r.notSelected;
+        int notSelected = max(l.selected, l.notSelected) + max(r.selected, r.notSelected);
+        return {selected, notSelected};
+    }
+
+    int rob(TreeNode* o) {
+
+        /*
+            无论是 f(o) 还是 g(o)，最终的值只和 f(l)、g(l)、f(r)、g(r) 有关，所以对于每个节点，
+            我们只关心它的孩子节点的 f 和 g 是多少。我们可以设计一个结构，表示某个节点的 f 和 g 值，
+            在每次递归返回的时候，都把当前节点对应的 f 和 g 返回给上一级，即可省去哈希映射的空间
+        */
+
+        auto rootStatus = dfs(o);
+        return max(rootStatus.selected, rootStatus.notSelected);
     }
 };
 
