@@ -90,3 +90,42 @@ public:
 
 
 ```
+
+
+## 2.朋友圈（Leetcode 547）
+
+
+```
+
+// C++
+// DFS
+
+
+class Solution {
+public:
+    int findCircleNum(vector<vector<int>>& M) {
+        int size = M.size();
+        vector<bool> visited(size, false);
+        int count = 0;
+        for (int i = 0; i < size; i++) {
+            if (false == visited[i]) {
+                dfs(M, visited, i);
+                count++;
+            }
+        }
+        return count;
+    }
+
+private:
+    void dfs(vector<vector<int>>& M, vector<bool>& visited, int i) {
+        for (int j = 0, size = M.size(); j < size; j++) {
+            if (1 == M[i][j] && false == visited[j]) {
+                visited[j] = true;
+                dfs(M, visited, j);
+            }
+        }
+    }
+};
+
+
+```
