@@ -98,8 +98,7 @@ public:
 ```
 
 // C++
-// DFS
-
+// 1. DFS
 
 class Solution {
 public:
@@ -130,6 +129,67 @@ private:
 
 ```
 
+```
+
+// C++
+// 2. 并查集
+
+class Solution {
+public:
+    int findCircleNum(vector<vector<int>>& M) {
+        int size = M.size();
+        if (0 == size) return 0;
+
+        // 初始化
+        this->count = size;
+        this->parent = vector(size, 0);
+        for (int i = 0; i < size; i++) {
+            this->parent[i] = i;
+        }
+        
+        // 进行合并
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (1 == M[i][j]) this->unionFind(i, j);
+            }
+        }
+        
+        // 返回集合数
+        return this->count;
+    }
+
+private:
+    int count;
+    vector<int> parent;
+  
+    int find(int i) {
+        int root = i;
+        while(this->parent[root] != root) {
+            root = this->parent[root];
+        }
+        // 路径压缩，所有节点的父节点都指向 root，可不进行压缩
+        while(parent[i] != i) {
+            int x = i;
+            i = this->parent[i];
+            this->parent[x] = root;
+        }
+        return root;
+    }
+
+    void unionFind(int p, int q) {
+        int rootP = this->find(p);
+        int rootQ = this->find(q);
+        if (rootP == rootQ) return;
+        this->parent[rootP] = rootQ;
+        this->count--;
+    }
+    
+};
+
+
+```
+
+
 ## 3.并查集
 
 ```
@@ -151,29 +211,30 @@ public:
         }
     }
 
-    int find(int p, int i) {
-        int root = i;
-        while(parent[root] != root) {
-            root = parent[root];
-        }
-        // 路径压缩，所有节点的父节点都指向 root，可不进行压缩
-        while(parent[i] != i) {
-            int x = i;
-            i = p[i];
-            parent[x] = root;
-        }
-        return root;
+int find(int i) {
+    int root = i;
+    while(this->parent[root] != root) {
+        root = this->parent[root];
     }
+    // 路径压缩，所有节点的父节点都指向 root，可不进行压缩
+    while(parent[i] != i) {
+        int x = i;
+        i = this->parent[i];
+        this->parent[x] = root;
+    }
+    return root;
+}
 
-    void union(int p, int q) {
-        int rootP = find(p);
-        int rootQ = find(q);
-        if (rootP == rootQ) return;
-        parent[rootP] = rootQ;
-    }
+void unionFind(int p, int q) {
+    int rootP = this->find(p);
+    int rootQ = this->find(q);
+    if (rootP == rootQ) return;
+    this->parent[rootP] = rootQ;
+    this->count--;
+}
 
     bool same(int p, int q) {
-        return find(p) == find(q)
+        return this->find(p) == this->find(q)
     }
 };
 
