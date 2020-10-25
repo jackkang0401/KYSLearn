@@ -129,3 +129,53 @@ private:
 
 
 ```
+
+## 3.并查集
+
+```
+
+// C++
+
+
+class UnionFind {
+
+private:
+    vector<int> parent;
+    
+public:    
+    // 初始化
+    UnionFind(int n) {
+        count = n;
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+        }
+    }
+
+    int find(int p, int i) {
+        int root = i;
+        while(parent[root] != root) {
+            root = parent[root];
+        }
+        // 路径压缩，所有节点的父节点都指向 root，可不进行压缩
+        while(parent[i] != i) {
+            int x = i;
+            i = p[i];
+            parent[x] = root;
+        }
+        return root;
+    }
+
+    void union(int p, int q) {
+        int rootP = find(p);
+        int rootQ = find(q);
+        if (rootP == rootQ) return;
+        parent[rootP] = rootQ;
+    }
+
+    bool same(int p, int q) {
+        return find(p) == find(q)
+    }
+};
+
+
+```
