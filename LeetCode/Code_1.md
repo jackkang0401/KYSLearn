@@ -123,15 +123,8 @@ int nthUglyNumber(int n){
 
 
 ``` 
-// C ++
 
-#include <stdio.h>
-#include <stack>
-#include <vector>
-#include <unordered_map>
-#include <queue>
-#include <utility>
-#include <algorithm>
+// C ++
 
 class Solution {
 public:
@@ -140,7 +133,7 @@ public:
         for (int i = 0; i < nums.size(); i++){
             record[nums[i]] ++;
         }
-        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> minHeap;
+        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> minHeap;
         for (auto iter = record.begin(); iter!=record.end(); iter++){
             if(minHeap.size() == k){
                 if(iter->second > minHeap.top().first){
