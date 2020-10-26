@@ -196,7 +196,6 @@ private:
 
 // C++
 
-
 class UnionFind {
 
 private:
@@ -211,30 +210,85 @@ public:
         }
     }
 
-int find(int i) {
-    int root = i;
-    while(this->parent[root] != root) {
-        root = this->parent[root];
+    int find(int i) {
+        int root = i;
+        while(this->parent[root] != root) {
+            root = this->parent[root];
+        }
+        // 路径压缩，所有节点的父节点都指向 root，可不进行压缩
+        while(parent[i] != i) {
+            int x = i;
+            i = this->parent[i];
+            this->parent[x] = root;
+        }
+        return root;
     }
-    // 路径压缩，所有节点的父节点都指向 root，可不进行压缩
-    while(parent[i] != i) {
-        int x = i;
-        i = this->parent[i];
-        this->parent[x] = root;
+
+    void unionFind(int p, int q) {
+        int rootP = this->find(p);
+        int rootQ = this->find(q);
+        if (rootP == rootQ) return;
+        this->parent[rootP] = rootQ;
+        this->count--;
     }
-    return root;
-}
+};
 
-void unionFind(int p, int q) {
-    int rootP = this->find(p);
-    int rootQ = this->find(q);
-    if (rootP == rootQ) return;
-    this->parent[rootP] = rootQ;
-    this->count--;
-}
 
-    bool same(int p, int q) {
-        return this->find(p) == this->find(q)
+```
+
+
+```
+
+// C++
+// 2. 添加类似权重信息，优化压缩逻辑
+
+class UnionFind {
+
+private:
+    int count;
+    vector<int> rank;
+    vector<int> parent;
+
+public:
+    UnionFind(vector<vector<char>>& grid) {
+        count = 0;
+        int row = grid.size();
+        if (0 == row) return;
+        int col = grid[0].size();
+        for (int i = 0; i < row; ++i) {
+            for (int j = 0; j < col; ++j) {
+                if (grid[i][j] == '1') {
+                    parent.push_back(i * col + j);
+                    ++count;
+                }
+                else {
+                    parent.push_back(-1);
+                }
+                rank.push_back(0);
+            }
+        }
+    }
+
+    int find(int i) {
+        while (parent[i] != i) {
+            parent[i] = parent[parent[i]];  // 压缩
+            i = parent[i];
+        }
+        return i;
+    }
+
+    void unionFind(int p, int q) {
+        int rootP = find(p);
+        int rootQ = find(q);
+        if (rootP == rootQ) return;
+        if (rank[rootP] < rank[rootQ]) swap(rootP, rootQ);  // 保证 rootP 为较大值
+        parent[rootQ] = rootP;                              // 大的往小里合
+        if (rank[rootP] == rank[rootQ]) rank[rootP]++;      // 如果相等 rank 加 1
+        count--;
+    }
+
+    int getCount() {
+        return count;
     }
 };
 
