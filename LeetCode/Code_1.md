@@ -564,6 +564,7 @@ struct TreeNode* buildTree(int* preorder, int preorderSize, int* inorder, int in
 
 ```
 // C
+// 1. DFS
 
 int numIslands(char** grid, int gridSize, int* gridColSize){
     if(grid == NULL || gridSize == 0 || gridColSize == NULL) return 0;
@@ -589,6 +590,90 @@ void dfs(char** grid, int gridSize, int* gridColSize, int i, int j) {
 }
 
 ```
+
+
+```
+// C++
+// 2. 并查集
+
+class UnionFind {
+
+private:
+    int count;
+    vector<int> rank;
+    vector<int> parent;
+
+public:
+    UnionFind(vector<vector<char>>& grid) {
+        count = 0;
+        int row = grid.size();
+        if (0 == row) return;
+        int col = grid[0].size();
+        for (int i = 0; i < row; ++i) {
+            for (int j = 0; j < col; ++j) {
+                if (grid[i][j] == '1') {
+                    parent.push_back(i * col + j);
+                    ++count;
+                }
+                else {
+                    parent.push_back(-1);
+                }
+                rank.push_back(0);
+            }
+        }
+    }
+
+    int find(int i) {
+        while (parent[i] != i) {
+            parent[i] = parent[parent[i]]; // 压缩
+            i = parent[i];
+        }
+        return i;
+    }
+
+    void unite(int p, int q) {
+        int rootP = find(p);
+        int rootQ = find(q);
+        if (rootP == rootQ) return;
+        if (rank[rootP] < rank[rootQ]) swap(rootP, rootQ);  // 保证 rootP 为较大值
+        parent[rootQ] = rootP;                              // 大的往小里合
+        if (rank[rootP] == rank[rootQ]) rank[rootP]++;      // 如果相等 rank 加 1
+        count--;
+    }
+
+    int getCount() {
+        return count;
+    }
+};
+
+class Solution {
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        int row = grid.size();
+        if (0 == row) return 0;
+        int col = grid[0].size();
+
+        UnionFind uf(grid);
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (grid[i][j] == '1') {
+                    grid[i][j] = '0';
+                    int current = i * col + j;
+                    if (i-1 >= 0 && grid[i-1][j] == '1') uf.unite(current, (i-1) * col + j);
+                    if (i+1 < row && grid[i+1][j] == '1') uf.unite(current, (i+1) * col + j);
+                    if (j-1 >= 0 && grid[i][j-1] == '1') uf.unite(current, i * col + j-1);
+                    if (j+1 < col && grid[i][j+1] == '1') uf.unite(current, i * col + j+1);
+                }
+            }
+        }
+
+        return uf.getCount();
+    }
+};
+
+
+```
+
 
 ## 12.二叉树的层序遍历（Leetcode 102）
 
