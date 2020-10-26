@@ -659,9 +659,10 @@ public:
                 if (grid[i][j] == '1') {
                     grid[i][j] = '0';
                     int current = i * col + j;
-                    if (i-1 >= 0 && grid[i-1][j] == '1') uf.unite(current, (i-1) * col + j);
+                    // “向上”、“向左”的位置已执行过，只要 “向下”、“向有” 两个方向即可，
+                    //if (i-1 >= 0 && grid[i-1][j] == '1') uf.unite(current, (i-1) * col + j);
                     if (i+1 < row && grid[i+1][j] == '1') uf.unite(current, (i+1) * col + j);
-                    if (j-1 >= 0 && grid[i][j-1] == '1') uf.unite(current, i * col + j-1);
+                    //if (j-1 >= 0 && grid[i][j-1] == '1') uf.unite(current, i * col + j-1);
                     if (j+1 < col && grid[i][j+1] == '1') uf.unite(current, i * col + j+1);
                 }
             }
