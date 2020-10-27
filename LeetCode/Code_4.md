@@ -212,24 +212,24 @@ public:
 
     int find(int i) {
         int root = i;
-        while(this->parent[root] != root) {
-            root = this->parent[root];
+        while(parent[root] != root) {
+            root = parent[root];
         }
         // 路径压缩，所有节点的父节点都指向 root，可不进行压缩
         while(parent[i] != i) {
             int x = i;
-            i = this->parent[i];
-            this->parent[x] = root;
+            i = parent[i];
+            parent[x] = root;
         }
         return root;
     }
 
     void unionFind(int p, int q) {
-        int rootP = this->find(p);
-        int rootQ = this->find(q);
+        int rootP = find(p);
+        int rootQ = find(q);
         if (rootP == rootQ) return;
-        this->parent[rootP] = rootQ;
-        this->count--;
+        parent[rootP] = rootQ;
+        count--;
     }
 };
 
