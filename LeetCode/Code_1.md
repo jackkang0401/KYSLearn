@@ -629,7 +629,7 @@ public:
         int rootQ = find(q);
         if (rootP == rootQ) return;
         if (rank[rootP] < rank[rootQ]) swap(rootP, rootQ);  // 保证 rootP 为较大值
-        parent[rootQ] = rootP;                              // 大的往小里合
+        parent[rootQ] = rootP;                              // 大的作为父节点
         if (rank[rootP] == rank[rootQ]) rank[rootP]++;      // 如果相等 rank 加 1
         count--;
     }
