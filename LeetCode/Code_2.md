@@ -421,7 +421,7 @@ public:
 
 ```
 // C++
-// 回溯 方法一 生成中间结果，各个皇后的位置
+// 1. 回溯 生成中间结果，各个皇后的位置
 
 class Solution {
 public:
@@ -488,7 +488,7 @@ private:
 ```
 
 // C++
-// 回溯 方法二 直接生成结果
+// 2. 回溯 直接生成结果
 
 class Solution {
 public:
@@ -540,7 +540,7 @@ private:
 
 ```
 // C++
-// 回溯 方法三 位运算
+// 3. 回溯 位运算
 
 class Solution {
 public:
@@ -565,8 +565,9 @@ private:
         */
         int placeColBits = (~(cols | slashs | backslashs)) & ((1 << n) - 1);
         while (placeColBits) {
-            int p = placeColBits & -placeColBits;         // 取出最低位的 1（可放置皇后位置）
-            placeColBits = placeColBits & (placeColBits - 1);// 清除最低位 1
+            // 负数的补码等于原码的尾数的第一个 1 及其右边的 0 保持不变，左边的各位按位取反，符号位不变
+            int p = placeColBits & -placeColBits;               // 取出最低位的 1（可放置皇后位置）
+            placeColBits = placeColBits & (placeColBits - 1);   // 清除最低位 1
             int col = getColumn(p);
             currentState[row][col] = 'Q';
             // (slashs | p) << 1 与 (backslashs | p) >> 1 都是下一行不可放置的列
