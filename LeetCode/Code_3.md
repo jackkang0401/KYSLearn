@@ -28,7 +28,7 @@ public:
 
         if (false == hasEndWord) return 0;
 
-        // BFS
+        // BFS 能先到就先到，这样得到的转换长度才是最短的
         queue<pair<string,int>> q;
         q.push(make_pair(beginWord, 1));
         set<string> visitedSet;          // 记录已遍历字符串，避免重复遍历
