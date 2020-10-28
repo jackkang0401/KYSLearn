@@ -197,7 +197,7 @@ public:
 
 ```
 // C++
-// 1.DP
+// 1. DP
 
 class Solution {
 public:
@@ -215,12 +215,8 @@ public:
                 if (s[i] != s[j]) {
                     dp[i][j] = false;
                 } else {
-                    /*  
-                        s[i] == s[j] 
-                        ((j - 1) - (i + 1) + 1 < 2) => (j - i < 3) 
-                        表示只有一个字符或空串，可直接设置 dp[i][j] = true
-                    */
-                    dp[i][j] = (j - i < 3) ? true : dp[i+1][j-1];
+                    // 长度小于等于 3，可直接设置为 true
+                    dp[i][j] = ((j-i)+1 <= 3) ? true : dp[i+1][j-1];
                 }
                 if (true == dp[i][j] && (j-i+1) > maxSize) {
                     maxSize = j-i+1;            // 长度（直径）
@@ -236,7 +232,7 @@ public:
 
 ```
 // C++
-// 2.中心扩展法
+// 2. 中心扩展法
 
 class Solution {
 public:
@@ -272,7 +268,7 @@ public:
 
 ```
 // C++
-// 3.Manacher
+// 3. Manacher
 
 class Solution {
 public:
