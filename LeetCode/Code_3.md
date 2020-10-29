@@ -554,9 +554,8 @@ class Solution {
 public:
     bool canCross(vector<int>& stones) {
         int size = stones.size();
-        if(stones[1] != 1) return false; // 第一步只能跳 1 单元格
-        // dp[i][k] 表示能否由前面的某一个石头 j 通过跳 k 步到达当前这个石头 i，j 的范围是 [1, i - 1]
-        vector<vector<bool>> dp = vector(size, vector(size+1, false));
+        if(stones[1] != 1) return false;                                    // 第一步只能跳 1 单元格
+        vector<vector<bool>> dp = vector(size, vector(size+1, false));      // dp[i][k] 表示能否由 i 前面的某一个石头 j 通过跳 k 步到达 i
         dp[0][0] = true;
         for(int i = 1; i < size; i++){
             for(int j = 0; j < i; j++){                                     // 遍历之前的所有石头位置
