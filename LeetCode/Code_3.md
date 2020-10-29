@@ -522,7 +522,7 @@ public:
         int size = stones.size();
         /*
             key 表示石头的位置，value 是一个包含 jumpSize 的集合，
-            jumpSize 跳到 key 位置需要的跳跃距离
+            jumpSize 为跳到 key 位置需要的跳跃距离
         */
         unordered_map<int, set<int>> map;
         map[0].insert(0);
