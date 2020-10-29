@@ -522,15 +522,18 @@ public:
         int size = stones.size();
         /*
             key 表示石头的位置，value 是一个包含 jumpSize 的集合，
-            代表可以通过大小为 jumpSize 的一跳到达当前位置
+            jumpSize 跳到 key 位置需要的跳跃距离
         */
         unordered_map<int, set<int>> map;
         map[0].insert(0);
         for(int i = 0; i < size; i++) {
+            // 获取到达 stones[i] 的所有跳跃距离
             for(int k : map[stones[i]]) { 
+                // 计算当前可跳距离
                 for (int jumpSize = k - 1; jumpSize <= k + 1; jumpSize++) {
                     if (jumpSize > 0) {
                         // stones[i]：石头位置，stones[i]+jumpSize：落点位置（可能为水里）
+                        // 记录可跳到的位置及其对应距离
                         map[stones[i]+jumpSize].insert(jumpSize); 
                     }
                 }
@@ -556,11 +559,11 @@ public:
         vector<vector<bool>> dp = vector(size, vector(size+1, false));
         dp[0][0] = true;
         for(int i = 1; i < size; i++){
-            for(int j = 0; j < i; j++){
-                int k = stones[i] - stones[j];
+            for(int j = 0; j < i; j++){                                     // 遍历之前的所有石头位置
+                int k = stones[i] - stones[j];                              // 计算 j 跳到 i，需要的跳跃距离 k
                 if(k <= i){
-                    dp[i][k] = dp[j][k - 1] || dp[j][k] || dp[j][k + 1];
-                    if(i == size-1 && dp[i][k]) return true;
+                    dp[i][k] = dp[j][k - 1] || dp[j][k] || dp[j][k + 1];    // 跳到 j 的所有可能跳跃距离为 k-1、k、k+1（看看有没有能通过跳 k-1、k、k+1 距离到达 j 的）
+                    if(i == size-1 && dp[i][k]) return true;                // 当前位置是最后的位置，且可跳到
                 }
             }
         }
