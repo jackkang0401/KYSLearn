@@ -530,7 +530,6 @@ public:
  * };
  */
 
-
 struct TreeNode* buildTree(int* preorder, int preorderSize, int* inorder, int inorderSize){
     // 边界判断
     if (preorderSize <= 0 || inorderSize <= 0 || preorderSize != inorderSize) return NULL;
@@ -538,8 +537,10 @@ struct TreeNode* buildTree(int* preorder, int preorderSize, int* inorder, int in
     int p = preorder[0];
     int left = 0;
     for (int i = 0; i < inorderSize; i++) {
-        if (p == inorder[i]) break;
-        left++;
+        if (p == inorder[i]) {
+            left = i;
+            break;
+        };
     }
     int right = inorderSize - left - 1;
     // 递归生成子树
