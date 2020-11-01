@@ -775,7 +775,7 @@ class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
         /*
-         dp(i) 代表以第 i 个数结尾的「连续子数组的最大和」
+         dp(i) 代表以第 i 个数结尾的「连续子数组的最大和」/Users/kangyongshuai/Desktop/KYSJianshuDemo/LeetCode/Code_3.md
          DP方程：dp[i] = max(dp[i-1], 0) + nums[i]
         */
         int pre = nums[0];
@@ -803,9 +803,9 @@ public:
 class Solution {
 public:
     int maxProduct(vector<int>& nums) {
-
         /*
-            maxDP 记录最小，minDP 纪录最大
+            maxDP(i)：以第 i 个数为结尾的乘积最大连续子数组的值
+            minDP(i)：以第 i 个数为结尾的乘积最小连续子数组的值
 
             maxDP(i) = max(maxDP[i-1]*nums[i], minDP[i-1]*nums[i], nums[i])
             minDP[i] = min(minDP[i-1]*nums[i], maxDP[i-1]*nums[i], nums[i])
