@@ -182,11 +182,11 @@ public:
 
 ```
 class Trie {
-private:
+
+public:
     bool isEnd;
     Trie* links[26];
 
-public:
     // 初始化
     Trie() {
         isEnd = false;
@@ -236,23 +236,37 @@ public:
         }
         return true;
     } 
+};
 
-    // 查找 board
-    void searchFormBoard(vector<string>& result, vector<vector<char>>& board) {
+class Solution {
+public:
+    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+        // Trie trie;               // 定义申明 '.' 调用
+        Trie* trie = new Trie();    // 指针创建 '->' 调用
+        for (string& w : words) {
+            trie->insert(w);
+        }
+        vector<string> result;
+        searchFormBoard(result, board, trie);
+        return result;
+    }
+
+        // 查找 board
+    void searchFormBoard(vector<string>& result, vector<vector<char>>& board, Trie* trie) {
         for(int i = 0, rowSize = board.size(); i < rowSize; i++) {
             for (int j = 0, colSize = board[i].size(); j < colSize; j++) {
                 string word;
-                dfs(result, board, this, i, j, word);
+                dfs(board, trie, i, j, word, result);
             }
         }
     }
 
     // 遍历 board
-    void dfs(vector<string>& result, vector<vector<char>>& board, Trie* node, int i, int j, string& word) {
+    void dfs(vector<vector<char>>& board, Trie* node, int i, int j, string& word, vector<string>& result) {
         if (node->isEnd) {
             node->isEnd = false;
             result.push_back(word);
-            return;
+            // return; 如果出现一个单词正好是另一个单词的前缀（oat、oath 同时出现），如果 return，只能遍历到前缀的那个单词
         }
         
         if (i < 0 || i >= board.size() || j < 0 || j >= board[i].size()) return;
@@ -262,25 +276,12 @@ public:
         node = node->links[c - 'a'];
         word.push_back(c);
         board[i][j] = '#';              // 标记已遍历
-        dfs(result, board, node, i+1, j, word);
-        dfs(result, board, node, i-1, j, word);
-        dfs(result, board, node, i, j+1, word);
-        dfs(result, board, node, i, j-1, word);
+        dfs(board, node, i+1, j, word, result);
+        dfs(board, node, i-1, j, word, result);
+        dfs(board, node, i, j+1, word, result);
+        dfs(board, node, i, j-1, word, result);
         board[i][j] = c;
         word.pop_back();                // 恢复
-    }
-};
-
-class Solution {
-public:
-    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
-        Trie trie;
-        for (string& w : words) {
-            trie.insert(w);
-        }
-        vector<string> result;
-        trie.searchFormBoard(result, board);
-        return result;
     }
 };
 
