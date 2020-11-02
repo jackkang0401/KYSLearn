@@ -1145,8 +1145,6 @@ public:
 
 ```
 
-## 20.完全平方数（Leetcode 279）
-
 
 ```
 
@@ -1198,6 +1196,8 @@ public:
 
 ```
 
+## 20.完全平方数（Leetcode 279）
+
 
 ```
 // C++
@@ -1209,7 +1209,7 @@ public:
         /*
             dp[i]：存放组成数字 i 需要的完全平方数最少的数量 
             DP方程：
-                 dp[i] = min(dp[i], dp[i-j*j]+1);
+                 dp[i] = min(dp[i], dp[i-j*j]+1); (j*j 为小于等于 i 的完全平方数)
         */
         vector<int> dp(n+1, 0);
         for (int i = 1; i<=n; i++) {
