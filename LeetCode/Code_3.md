@@ -318,7 +318,7 @@ public:
 ```
 
 // C++
-// 1
+// 1. DP
 
 class Solution {
 public:
@@ -340,7 +340,7 @@ public:
 ```
 
 // C++
-// 2.优化 空间复杂度 O(2n)
+// 2. DP 空间优化 空间复杂度 O(2n)
 
 class Solution {
 public:
