@@ -5,7 +5,7 @@
 
 ```
 // C++
-// BFS
+// 1. BFS
 
 class Solution {
 public:
@@ -58,7 +58,7 @@ public:
 
 ```
 // C++
-// DBFS
+// 2. DBFS
 
 class Solution {
 public:
@@ -124,6 +124,65 @@ private:
 };
 
 ```
+
+
+```
+
+// C++
+// 3. DBFS 优先走小的一端
+
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        // 生成单词集合
+        set<string> wordSet(wordList.begin(), wordList.end());
+        if (wordSet.size() == 0 || wordSet.find(endWord) == wordSet.end()) {
+             return 0;      // endWord 没出现在单词列表中，不存在转换
+        }
+        
+        set<string> visited;
+        set<string> beginSet; 
+        set<string> endSet;
+        beginSet.insert(beginWord);
+        endSet.insert(endWord);
+
+        int length = 1;
+        while(!beginSet.empty() && !endSet.empty()) {   // 注意是 &&，使用 || 结果也是正确的，但会超时
+            // 如果起始集合比结束集合大，进行交换
+            if (beginSet.size() > endSet.size()) {
+                set<string> tempSet = beginSet;
+                beginSet = endSet;
+                endSet = tempSet;
+            }
+
+            set<string> nextSet;
+            for (string word : beginSet) {
+                for (int i = 0, size = word.size(); i < size; i++) {
+                    char cur = word[i];
+                    for (char c = 'a'; c <= 'z'; c++) {
+                        if (cur == c) continue;
+                        word[i] = c;
+                        if (wordSet.find(word) != wordSet.end()) {
+                            if (endSet.find(word) != endSet.end()) return length + 1;
+                            if (visited.find(word) == visited.end()) {
+                                nextSet.insert(word);
+                                visited.insert(word);
+                            }
+                        }
+                        word[i] = cur;
+                    }  
+                }
+            }
+            beginSet = nextSet;
+            length ++;
+        }
+        return 0;
+    }
+};
+
+
+```
+
 
 ## 2.搜索插入位置（Leetcode 35）
 
