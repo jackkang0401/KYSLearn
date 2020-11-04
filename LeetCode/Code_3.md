@@ -202,20 +202,20 @@ public:
 
         // 广度优先遍历生成，到下个 word 映射
         unordered_map<string, vector<string>> nextMap;
-        if (!bfs(nextMap, beginWord, endWord, wordSet)) {
+        if (!bfs(beginWord, endWord, wordSet, nextMap)) {
             return {}; // 没有可转换到 endWord 的序列直接停止
         }
 
         // 深度优先遍历，生成结果
-        vector<vector<string>> paths;
+        vector<vector<string>> result;
         vector<string> path = {beginWord};
-        dfs(nextMap, beginWord, endWord, path, paths);
+        dfs(beginWord, endWord, nextMap, path, result);
         
-        return paths;
+        return result;
     }
 private:
     
-    bool bfs(unordered_map<string, vector<string>>& nextMap, string beginWord, string endWord, unordered_set<string>& wordSet) {
+    bool bfs(string beginWord, string endWord, unordered_set<string>& wordSet, unordered_map<string, vector<string>>& nextMap) {
         unordered_set<string> currentSet;
         currentSet.insert(beginWord);
         while (!currentSet.empty()) {
@@ -248,14 +248,14 @@ private:
         return false;   // 没有可转换到 endWord 的序列
     }
     
-    void dfs(unordered_map<string, vector<string>>& nextMap, string beginWord, string endWord, vector<string>& path, vector<vector<string>>& paths) {
+    void dfs(string beginWord, string endWord, unordered_map<string, vector<string>>& nextMap, vector<string>& path, vector<vector<string>>& result) {
         if (beginWord == endWord) {
-            paths.push_back(path);
+            result.push_back(path);
             return;
         }
         for (string next : nextMap[beginWord]) {
             path.push_back(next);
-            dfs(nextMap, next, endWord, path, paths);
+            dfs(next, endWord, nextMap, path, result);
             path.pop_back();
         }
     }
