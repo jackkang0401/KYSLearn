@@ -189,7 +189,7 @@ public:
 
 ```
 // C++
-// BFS+DFS
+// 1. BFS+DFS
 
 class Solution {
 public:
@@ -264,6 +264,98 @@ private:
 
 ```
 
+
+```
+
+// C++
+// 2. 预处理+BFS+DFS
+
+class Solution {
+public:
+    vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
+        
+        // 建立映射
+        bool hasEndWord = false;
+        unordered_map<string, vector<string>> wordMap;
+        for (auto word : wordList) {
+            if (word == endWord) hasEndWord = true;
+            string key = word;
+            for (int i = 0, size = word.size(); i < size; i++) {
+                char c = key[i];
+                key[i] = '*'; 
+                wordMap[key].push_back(word);
+                key[i] = c;
+            }
+        }
+
+        if (false == hasEndWord) return {}; // wordList 不包含 endWord 
+        
+        // 生成 word 集合
+        unordered_set<string> wordSet(wordList.begin(), wordList.end());
+
+        // 广度优先遍历生成，到下个 word 映射
+        unordered_map<string, vector<string>> nextMap;
+        if (!bfs(beginWord, endWord, wordSet, wordMap, nextMap)) {
+            return {}; // 没有可转换到 endWord 的序列直接停止
+        }
+
+        // 深度优先遍历，生成结果
+        vector<vector<string>> result;
+        vector<string> path = {beginWord};
+        dfs(beginWord, endWord, nextMap, path, result);
+        
+        return result;
+    }
+private:
+    
+    bool bfs(string beginWord, string endWord,unordered_set<string>& wordSet, unordered_map<string, vector<string>>& wordMap, unordered_map<string, vector<string>>& nextMap) {
+        unordered_set<string> currentSet;
+        currentSet.insert(beginWord);
+        while (!currentSet.empty()) {
+            // 由于是广度生成，遍历到 endWord 即可停止，本题要找出所有的最短转换序列，到这里已包含
+            if (currentSet.find(endWord) != currentSet.end()) {
+                return true;
+            }
+            // 从集合中移除当前层的 word
+            for (string word : currentSet) {
+                wordSet.erase(word);
+            }
+            // 计算下一层 word 集合 
+            unordered_set<string> temp;
+            for (string word : currentSet) {
+                string parent = word;
+                for (int i = 0; i < word.size(); i++) {
+                    char cur = word[i];
+                    word[i] = '*';
+                    for (auto w : wordMap[word]) {
+                        if (wordSet.find(w) != wordSet.end()) {
+                            temp.insert(w);
+                            nextMap[parent].push_back(w); // 插入映射表
+                        }
+                    }
+                    word[i] = cur;
+                }
+            }
+            currentSet = temp;
+        }
+        return false;   // 没有可转换到 endWord 的序列
+    }
+    
+    void dfs(string beginWord, string endWord, unordered_map<string, vector<string>>& nextMap, vector<string>& path, vector<vector<string>>& result) {
+        if (beginWord == endWord) {
+            result.push_back(path);
+            return;
+        }
+        for (string next : nextMap[beginWord]) {
+            path.push_back(next);
+            dfs(next, endWord, nextMap, path, result);
+            path.pop_back();
+        }
+    }
+};
+
+
+```
 
 
 ## 3.搜索插入位置（Leetcode 35）
