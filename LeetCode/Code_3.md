@@ -184,7 +184,89 @@ public:
 ```
 
 
-## 2.搜索插入位置（Leetcode 35）
+## 2.单词接龙 II（Leetcode 126）
+
+
+```
+// C++
+// BFS+DFS
+
+class Solution {
+public:
+    vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
+        // 生成 word 集合
+        unordered_set<string> wordSet(wordList.begin(), wordList.end());
+        if (wordSet.find(endWord) == wordSet.end()) {
+            return {};     // wordList 不包含 endWord 
+        }
+
+        // 广度优先遍历生成，到下个 word 映射
+        unordered_map<string, vector<string>> nextMap;
+        if (!bfs(nextMap, beginWord, endWord, wordSet)) {
+            return {}; // 没有可转换到 endWord 的序列直接停止
+        }
+
+        // 深度优先遍历，生成结果
+        vector<vector<string>> paths;
+        vector<string> path = {beginWord};
+        dfs(nextMap, beginWord, endWord, path, paths);
+        
+        return paths;
+    }
+private:
+    
+    bool bfs(unordered_map<string, vector<string>>& nextMap, string beginWord, string endWord, unordered_set<string>& wordSet) {
+        unordered_set<string> currentSet;
+        currentSet.insert(beginWord);
+        while (!currentSet.empty()) {
+            // 由于是广度生成，遍历到 endWord 即可停止，本题要找出所有的最短转换序列，到这里已包含
+            if (currentSet.find(endWord) != currentSet.end()) {
+                return true;
+            }
+            // 从集合中移除当前层的 word
+            for (string word : currentSet) {
+                wordSet.erase(word);
+            }
+            // 计算下一层 word 集合 
+            unordered_set<string> temp;
+            for (string word : currentSet) {
+                string parent = word;
+                for (int i = 0; i < word.size(); i++) {
+                    char cur = word[i];
+                    for (char c = 'a'; c <= 'z'; c++) {
+                        word[i] = c;
+                        if (wordSet.find(word) != wordSet.end()) {
+                            temp.insert(word);
+                            nextMap[parent].push_back(word); // 插入映射表
+                        }
+                    }
+                    word[i] = cur;
+                }
+            }
+            currentSet = temp;
+        }
+        return false;   // 没有可转换到 endWord 的序列
+    }
+    
+    void dfs(unordered_map<string, vector<string>>& nextMap, string beginWord, string endWord, vector<string>& path, vector<vector<string>>& paths) {
+        if (beginWord == endWord) {
+            paths.push_back(path);
+            return;
+        }
+        for (string next : nextMap[beginWord]) {
+            path.push_back(next);
+            dfs(nextMap, next, endWord, path, paths);
+            path.pop_back();
+        }
+    }
+};
+
+
+```
+
+
+
+## 3.搜索插入位置（Leetcode 35）
 
 ```
 // C++
@@ -210,7 +292,7 @@ public:
 
 ```
 
-## 3.二叉树的后序遍历（Leetcode 145）
+## 4.二叉树的后序遍历（Leetcode 145）
 
 ```
 // C++
@@ -252,7 +334,7 @@ public:
 
 ```
 
-## 4.最长回文子串（Leetcode 5）
+## 5.最长回文子串（Leetcode 5）
 
 ```
 // C++
@@ -371,7 +453,7 @@ public:
 
 ```
 
-## 5.不同路径（Leetcode 62）
+## 6.不同路径（Leetcode 62）
 
 
 ```
@@ -438,7 +520,7 @@ public:
 
 ```
 
-## 6.不同路径II（Leetcode 63）
+## 7.不同路径II（Leetcode 63）
 
 
 ```
@@ -469,7 +551,7 @@ public:
 ```
 
 
-## 7.不同路径III（Leetcode 980）
+## 8.不同路径III（Leetcode 980）
 
 
 ```
@@ -569,7 +651,7 @@ private:
 
 ```
 
-## 8.青蛙过河（Leetcode 403）
+## 9.青蛙过河（Leetcode 403）
 
 ```
 // C++
@@ -631,7 +713,7 @@ public:
 
 ```
 
-## 9.最长公共子序列（Leetcode 1143）
+## 10.最长公共子序列（Leetcode 1143）
 
 ```
 // C++
@@ -657,7 +739,7 @@ public:
 
 ```
 
-## 10.爬楼梯（Leetcode 70）
+## 11.爬楼梯（Leetcode 70）
 
 
 ```
@@ -711,7 +793,7 @@ public:
 
 ```
 
-## 11.使用最小花费爬楼梯（Leetcode 746）
+## 12.使用最小花费爬楼梯（Leetcode 746）
 
 
 ```
@@ -734,7 +816,7 @@ public:
 
 ```
 
-## 12.三角形最小路径和（Leetcode 120）
+## 13.三角形最小路径和（Leetcode 120）
 
 
 ```
@@ -822,7 +904,7 @@ public:
 
 ```
 
-## 13.最大子序和（Leetcode 53）
+## 14.最大子序和（Leetcode 53）
 
 
 ```
@@ -847,7 +929,7 @@ public:
 
 ```
 
-## 14.乘积最大子数组（Leetcode 152）
+## 15.乘积最大子数组（Leetcode 152）
 
 
 ```
@@ -907,7 +989,7 @@ public:
 
 ```
 
-## 15.零钱兑换（Leetcode 322）
+## 16.零钱兑换（Leetcode 322）
 
 
 ```
@@ -959,7 +1041,7 @@ public:
 
 ```
 
-## 16.零钱兑换 II（Leetcode 518）
+## 17.零钱兑换 II（Leetcode 518）
 
 
 ```
@@ -1022,7 +1104,7 @@ public:
 
 ```
 
-## 17.打家劫舍（Leetcode 198）
+## 18.打家劫舍（Leetcode 198）
 
 
 ```
@@ -1109,7 +1191,7 @@ public:
 
 ```
 
-## 18.打家劫舍 II（Leetcode 213）
+## 19.打家劫舍 II（Leetcode 213）
 
 
 ```
@@ -1153,7 +1235,7 @@ public:
 
 ```
 
-## 19.打家劫舍 III（Leetcode 337）
+## 20.打家劫舍 III（Leetcode 337）
 
 
 ```
@@ -1255,7 +1337,7 @@ public:
 
 ```
 
-## 20.完全平方数（Leetcode 279）
+## 21.完全平方数（Leetcode 279）
 
 
 ```
