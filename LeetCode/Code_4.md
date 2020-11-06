@@ -399,3 +399,52 @@ public:
 };
 
 ```
+
+## 5.二进制矩阵中的最短路径（Leetcode 1091）
+
+
+```
+
+// C++
+// BFS
+
+
+class Solution {
+
+private:
+    struct Node {
+        int x;
+        int y; 
+        int step;
+        Node(int i, int j, int s): x(i), y(j), step(s) {}
+    };
+
+public:
+    int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+        int size = grid.size();
+        if(size == 0 || grid[0][0] || grid[size-1][size-1]) return -1; // 无节点 || 起始点被阻塞 || 结束点被阻塞
+
+        queue<struct Node> q;
+        q.push(Node(0, 0, 1));      // 起始节点 (0,0)
+        grid[0][0] = 1;             // 标记第一个节点，为已访问
+        
+        while(!q.empty()) {
+            Node node = q.front();
+            q.pop();
+            if(node.x == size-1 && node.y == size-1) return node.step; // 到达终点
+            for(int dx = -1; dx <= 1; dx++) {
+                for(int dy = -1; dy <= 1; dy++) {
+                    int i = node.x + dx;
+                    int j = node.y + dy;
+                    if(i < 0 || j < 0 || i >= size || j >= size || grid[i][j]) continue;    // 当前节点越界或阻塞，跳过
+                    q.push(Node(i, j, node.step + 1));                  // 放入队列
+                    grid[i][j] = 1;                                     // 标记为阻塞
+                }
+            }
+        }
+        return -1;
+    }
+};
+
+
+```
