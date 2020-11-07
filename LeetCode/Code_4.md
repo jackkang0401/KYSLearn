@@ -455,30 +455,37 @@ public:
 // C++
 // 2. DBFS
 
+struct Node {
+    int x;
+    int y; 
+    Node(int i, int j): x(i), y(j){}
+
+    bool operator<(const Node& node) const {       
+        if (x == node.x && y == node.y) return false;       // 去重
+        return x == node.x ? (y > node.y) : (x > node.x);   // 降序
+    }
+
+    bool operator==(const Node& node) const {               // set 查找使用
+        return x == node.x && y == node.y;
+    }
+};
+
+// 自定义哈希
+struct hashFunc {
+    size_t operator()(const Node& node) const{
+        return hash<int>()(node.x) ^ hash<int>()(node.y);
+    }
+};
+
 class Solution {
-private:
-    struct Node {
-        int x;
-        int y; 
-        Node(int i, int j): x(i), y(j){}
-
-        bool operator<(const Node& node) const {       
-            if (x == node.x && y == node.y) return false;       // 去重
-            return x == node.x ? (y > node.y) : (x > node.x);   // 降序
-        }
-
-        bool operator==(const Node& node) const {               // set 查找使用
-            return x == node.x && y == node.y;
-        }
-    };
 
 public:
     int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
         int size = grid.size();
         if(size == 0 || grid[0][0] || grid[size-1][size-1]) return -1; // 无节点 || 起始点被阻塞 || 结束点被阻塞
         if (1 == size) return 1 == grid[0][0] ? -1 : 1 ;
-        set<Node> beginSet; 
-        set<Node> endSet;
+        unordered_set<Node, hashFunc> beginSet; 
+        unordered_set<Node, hashFunc> endSet;
         beginSet.insert(Node(0, 0));
         grid[0][0] = 1;             // 标记第一个节点，为已访问
         endSet.insert(Node(size-1, size-1));
@@ -488,12 +495,12 @@ public:
         while(!beginSet.empty() && !endSet.empty()) {                   // 一层一层走，直接叠加层数即可
             // 如果起始集合比结束集合大，进行交换
             if (beginSet.size() > endSet.size()) {
-                set<Node> tempSet = beginSet;
+                unordered_set<Node, hashFunc> tempSet = beginSet;
                 beginSet = endSet;
                 endSet = tempSet;
             }
 
-            set<Node> nextSet;
+            unordered_set<Node, hashFunc> nextSet;
             for (Node node : beginSet) {
                 for(int dx = -1; dx <= 1; dx++) {
                     for(int dy = -1; dy <= 1; dy++) {
@@ -525,20 +532,20 @@ public:
 // 3. A* 启发式搜索
 
 
-class Solution {
-private:
-    struct Node {
-        int x;
-        int y; 
-        int step;
-        int size;   // 方形网格大小
-        Node(int i, int j, int step, int size): x(i), y(j), step(step), size(size){}
+struct Node {
+    int x;
+    int y; 
+    int step;
+    int size;   // 方形网格大小
+    Node(int i, int j, int step, int size): x(i), y(j), step(step), size(size){}
 
-        bool operator<(const Node& node) const {  // 降序，大顶堆
-            int maxIndex = size-1;
-            return max(maxIndex-x, maxIndex-y)+step > max(maxIndex-node.x, maxIndex-node.y)+node.step;
-        }
-    };
+    bool operator<(const Node& node) const {  // 降序，大顶堆
+        int maxIndex = size-1;
+        return max(maxIndex-x, maxIndex-y)+step > max(maxIndex-node.x, maxIndex-node.y)+node.step;
+    }
+};
+
+class Solution {
 
 public:
     int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
@@ -550,7 +557,6 @@ public:
         q.push(Node(0, 0, 1, size));        // 起始节点 (0,0)
         stepCount[0][0] = 1;                // 保存最小花费
 
-        
         while(!q.empty()) {
             Node node = q.top();
             q.pop();
