@@ -428,7 +428,7 @@ public:
         q.push(Node(0, 0, 1));      // 起始节点 (0,0)
         grid[0][0] = 1;             // 标记第一个节点，为已访问
         
-        while(!q.empty()) {
+        while(!q.empty()) {         // 一个一个走需要记深度
             Node node = q.front();
             q.pop();
             if(node.x == size-1 && node.y == size-1) return node.step; // 到达终点
@@ -485,7 +485,7 @@ public:
         grid[size-1][size-1] = 1;   // 标记最后一个节点，为已访问
 
         int step = 1;
-        while(!beginSet.empty() && !endSet.empty()) {
+        while(!beginSet.empty() && !endSet.empty()) {                   // 一层一层走，直接叠加层数即可
             // 如果起始集合比结束集合大，进行交换
             if (beginSet.size() > endSet.size()) {
                 set<Node> tempSet = beginSet;
@@ -575,3 +575,75 @@ public:
 
 
 ```
+
+
+## 6.滑动谜题（Leetcode 773）
+
+
+
+```
+
+// C++
+// BFS
+
+
+class Solution {
+
+public:
+    int slidingPuzzle(vector<vector<int>>& board) {
+    
+        if (board.size() == 0 || board[0].size() == 0) return -1;
+        int n = board.size(); 
+        int m = board[0].size();
+        // 转化成字符串
+        string start = "";
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                start.push_back(board[i][j]+'0');
+            }
+        }
+        string endStatus = "123450";
+
+        // 保存各个位置对应的索引变化
+        vector<vector<int>> neighbor = {
+            { 1, 3 },
+            { 0, 4, 2 },
+            { 1, 5 },
+            { 0, 4 },
+            { 3, 1, 5 },
+            { 4, 2 }
+        };
+        
+        queue<string> q;                    // bfs队列
+        unordered_set<string> visited;      // 已转换状态
+        q.push(start);
+        visited.insert(start);
+    
+        int step = 0;
+        while (!q.empty()) {                // 一层一层遍历
+            int currentLevelSize = q.size();
+            for (int i = 0; i < currentLevelSize; i++) {
+                string currentStatus = q.front(); 
+                q.pop();
+                if (endStatus == currentStatus) return step;
+                // 找到数字 0 的索引
+                int idx0 = 0;
+                while (currentStatus[idx0] != '0') idx0++;  // 查找 ‘0’ 的位置
+                for (int nextIndex : neighbor[idx0]) {      // 变换 ‘0’ 的位置
+                    string newStatus = currentStatus;
+                    swap(newStatus[nextIndex], newStatus[idx0]);
+                    if (!visited.count(newStatus)) {
+                        q.push(newStatus);                  // 放入队列
+                        visited.insert(newStatus);
+                    }
+                }
+            }
+            step++;
+        }
+        return -1;
+    }
+};
+
+
+```
+
