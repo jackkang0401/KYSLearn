@@ -406,7 +406,7 @@ public:
 ```
 
 // C++
-// BFS
+// 1. BFS
 
 
 class Solution {
@@ -441,6 +441,76 @@ public:
                     grid[i][j] = 1;                                     // 标记为阻塞
                 }
             }
+        }
+        return -1;
+    }
+};
+
+
+```
+
+
+```
+
+// C++
+// 2. DBFS
+
+class Solution {
+private:
+    struct Node {
+        int x;
+        int y; 
+        Node(int i, int j): x(i), y(j){}
+
+        bool operator<(const Node& node) const {       
+            if (x == node.x && y == node.y) return false;       // 去重
+            return x == node.x ? (y > node.y) : (x > node.x);   // 降序
+        }
+
+        bool operator==(const Node& node) const {               // set 查找使用
+            return x == node.x && y == node.y;
+        }
+    };
+
+public:
+    int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+        int size = grid.size();
+        if(size == 0 || grid[0][0] || grid[size-1][size-1]) return -1; // 无节点 || 起始点被阻塞 || 结束点被阻塞
+        if (1 == size) return 1 == grid[0][0] ? -1 : 1 ;
+        set<Node> beginSet; 
+        set<Node> endSet;
+        beginSet.insert(Node(0, 0));
+        grid[0][0] = 1;             // 标记第一个节点，为已访问
+        endSet.insert(Node(size-1, size-1));
+        grid[size-1][size-1] = 1;   // 标记最后一个节点，为已访问
+
+        int step = 1;
+        while(!beginSet.empty() && !endSet.empty()) {
+            // 如果起始集合比结束集合大，进行交换
+            if (beginSet.size() > endSet.size()) {
+                set<Node> tempSet = beginSet;
+                beginSet = endSet;
+                endSet = tempSet;
+            }
+
+            set<Node> nextSet;
+            for (Node node : beginSet) {
+                for(int dx = -1; dx <= 1; dx++) {
+                    for(int dy = -1; dy <= 1; dy++) {
+                        int i = node.x + dx;
+                        int j = node.y + dy;
+                        if(i < 0 || j < 0 || i >= size || j >= size) continue;// 当前节点越界跳过
+                        if (endSet.find(Node(i, j)) != endSet.end()) {
+                            return step+1;
+                        } 
+                        if(1 == grid[i][j]) continue;                   // 当前节点阻塞跳过
+                        nextSet.insert(Node(i, j));  // 放入队列
+                        grid[i][j] = 1;                                 // 标记为阻塞
+                    }
+                }
+            }
+            beginSet = nextSet;
+            step++;
         }
         return -1;
     }
