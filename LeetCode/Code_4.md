@@ -504,13 +504,70 @@ public:
                             return step+1;
                         } 
                         if(1 == grid[i][j]) continue;                   // 当前节点阻塞跳过
-                        nextSet.insert(Node(i, j));  // 放入队列
+                        nextSet.insert(Node(i, j));                     // 放入队列
                         grid[i][j] = 1;                                 // 标记为阻塞
                     }
                 }
             }
             beginSet = nextSet;
             step++;
+        }
+        return -1;
+    }
+};
+
+
+```
+
+```
+
+// C++
+// 3. A* 启发式搜索
+
+
+class Solution {
+private:
+    struct Node {
+        int x;
+        int y; 
+        int step;
+        int size;   // 方形网格大小
+        Node(int i, int j, int step, int size): x(i), y(j), step(step), size(size){}
+
+        bool operator<(const Node& node) const {  // 降序，大顶堆
+            int maxIndex = size-1;
+            return max(maxIndex-x, maxIndex-y)+step > max(maxIndex-node.x, maxIndex-node.y)+node.step;
+        }
+    };
+
+public:
+    int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+        int size = grid.size();
+        if(size == 0 || grid[0][0] || grid[size-1][size-1]) return -1; // 无节点 || 起始点被阻塞 || 结束点被阻塞
+
+        vector<vector<int>> stepCount(size, vector(size, 0));
+        priority_queue<struct Node> q;
+        q.push(Node(0, 0, 1, size));        // 起始节点 (0,0)
+        stepCount[0][0] = 1;                // 保存最小花费
+
+        
+        while(!q.empty()) {
+            Node node = q.top();
+            q.pop();
+            if(node.x == size-1 && node.y == size-1) return node.step; // 到达终点
+            for(int dx = -1; dx <= 1; dx++) {
+                for(int dy = -1; dy <= 1; dy++) {
+                    int i = node.x + dx;
+                    int j = node.y + dy;
+                    if(i < 0 || j < 0 || i >= size || j >= size || grid[i][j]) continue;    // 当前节点越界或阻塞，跳过
+                    // 没有到走过改点或者当前的路线更优
+                    if (0 == stepCount[i][j] || node.step+1 < stepCount[i][j]) {
+                        int curStep = node.step + 1;
+                        q.push(Node(i, j, curStep, size));
+                        stepCount[i][j] = curStep;
+                    }
+                }
+            }
         }
         return -1;
     }
