@@ -584,8 +584,7 @@ public:
 ```
 
 // C++
-// BFS
-
+// 1. BFS
 
 class Solution {
 
@@ -596,10 +595,10 @@ public:
         int n = board.size(); 
         int m = board[0].size();
         // 转化成字符串
-        string start = "";
+        string startStatus = "";
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                start.push_back(board[i][j]+'0');
+                startStatus.push_back(board[i][j]+'0');
             }
         }
         string endStatus = "123450";
@@ -616,8 +615,8 @@ public:
         
         queue<string> q;                    // bfs队列
         unordered_set<string> visited;      // 已转换状态
-        q.push(start);
-        visited.insert(start);
+        q.push(startStatus);
+        visited.insert(startStatus);
     
         int step = 0;
         while (!q.empty()) {                // 一层一层遍历
@@ -630,11 +629,11 @@ public:
                 int idx0 = 0;
                 while (currentStatus[idx0] != '0') idx0++;  // 查找 ‘0’ 的位置
                 for (int nextIndex : neighbor[idx0]) {      // 变换 ‘0’ 的位置
-                    string newStatus = currentStatus;
-                    swap(newStatus[nextIndex], newStatus[idx0]);
-                    if (!visited.count(newStatus)) {
-                        q.push(newStatus);                  // 放入队列
-                        visited.insert(newStatus);
+                    string nextStatus = currentStatus;
+                    swap(nextStatus[nextIndex], nextStatus[idx0]);
+                    if (visited.find(nextStatus) == visited.end()) {
+                        q.push(nextStatus);                 // 放入队列
+                        visited.insert(nextStatus);
                     }
                 }
             }
@@ -727,8 +726,6 @@ public:
         string endStatus = "123450";
         string wrongStatus = "123540";          // 如果进入这种状态是一定不能到达终点
 
-        if (startStatus == endStatus) return 0; // 无需变换
-
         // 保存各个位置对应的索引变化
         vector<vector<int>> neighbor = {
             { 1, 3 },
@@ -747,10 +744,10 @@ public:
         while (!q.empty()) {
             Node currentNode = q.top(); 
             q.pop();
+            if (currentNode.status == endStatus) return currentNode.step; // 已到最终结果，返回
             for (int nextIndex : neighbor[currentNode.zeroIndex]) { 
                 string nextStatus = currentNode.status;
                 swap(nextStatus[nextIndex], nextStatus[currentNode.zeroIndex]);
-                if (nextStatus == endStatus) return currentNode.step+1; // 已到最终结果，返回
                 if (nextStatus == wrongStatus) return -1;               // 无法到这终点
                 Node nextNode = Node(nextStatus, nextIndex, currentNode.step+1);
                 if (visited.find(nextNode) == visited.end()) {
