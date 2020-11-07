@@ -625,7 +625,7 @@ public:
             for (int i = 0; i < currentLevelSize; i++) {
                 string currentStatus = q.front(); 
                 q.pop();
-                if (endStatus == currentStatus) return step;
+                if (endStatus == currentStatus) return step;// 已到最终结果，返回
                 // 找到数字 0 的索引
                 int idx0 = 0;
                 while (currentStatus[idx0] != '0') idx0++;  // 查找 ‘0’ 的位置
@@ -647,3 +647,121 @@ public:
 
 ```
 
+
+```
+
+// C++
+// 2. A* 启发式搜索
+
+
+struct Node {
+    string status;      // 当前状态
+    int zeroIndex;      // ‘0’ 位置
+    int step;           // 已遍历层数
+    int distance;       // 距离终点距离
+    int f;              // 最终估价值 step + distance
+
+    Node(string status) {
+        this->status = status;
+        // 记录 ‘0’ 的位置
+        for (int i = 0, size = status.size(); i < size; i++) {
+            if ('0' == status[i]) {
+                zeroIndex = i;
+                break;
+            }
+        }
+        step = 0;
+        distance = calculateDistance();
+        f = step + distance; 
+    }
+
+    Node(string status, int zeroIndex, int step) {
+        this->status = status;
+        this->zeroIndex = zeroIndex;
+        this->step = step;
+        distance = calculateDistance();
+        f = step + distance; 
+    }
+
+    int calculateDistance() {
+        int n = 0;
+        // 计算每个坐标的当前位置到最终位置的距离（曼哈顿距离）
+        for (int i = 0, size = status.size(); i < size; i++) {
+            int endIndex = status[i] - '0' - 1; // 当前字符的最终位置
+            n += abs(endIndex/3 - i/3) + abs(endIndex%3-i%3);        
+        }
+        return n;
+    }
+
+    bool operator<(const Node& node) const {  // 降序，大顶堆
+        return f > node.f;
+    }
+
+    bool operator==(const Node& node) const { // 查找
+        return status == node.status;
+    }
+};
+
+// 自定义哈希
+struct hashFunc {
+    size_t operator()(const Node& node) const{
+        return hash<string>()(node.status);
+    }
+};
+
+class Solution {
+
+public:
+    int slidingPuzzle(vector<vector<int>>& board) {
+        
+        if (board.size() == 0 || board[0].size() == 0) return -1;
+        int n = board.size(); 
+        int m = board[0].size();
+        // 转化成字符串
+        string startStatus = "";
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                startStatus.push_back(board[i][j]+'0');
+            }
+        }
+        string endStatus = "123450";
+        string wrongStatus = "123540";          // 如果进入这种状态是一定不能到达终点
+
+        if (startStatus == endStatus) return 0; // 无需变换
+
+        // 保存各个位置对应的索引变化
+        vector<vector<int>> neighbor = {
+            { 1, 3 },
+            { 0, 4, 2 },
+            { 1, 5 },
+            { 0, 4 },
+            { 3, 1, 5 },
+            { 4, 2 }
+        };
+        
+        priority_queue<Node> q;                     // 优先队列
+        unordered_set<Node, hashFunc> visited;      // 已转换状态
+        q.push(Node(startStatus));
+        visited.insert(Node(startStatus));
+
+        while (!q.empty()) {
+            Node currentNode = q.top(); 
+            q.pop();
+            for (int nextIndex : neighbor[currentNode.zeroIndex]) { 
+                string nextStatus = currentNode.status;
+                swap(nextStatus[nextIndex], nextStatus[currentNode.zeroIndex]);
+                if (nextStatus == endStatus) return currentNode.step+1; // 已到最终结果，返回
+                if (nextStatus == wrongStatus) return -1;               // 无法到这终点
+                Node nextNode = Node(nextStatus, nextIndex, currentNode.step+1);
+                if (visited.find(nextNode) == visited.end()) {
+                    q.push(nextNode);                                   // 放入队列
+                    visited.insert(nextNode);
+                }
+            }
+        }
+        return -1;
+    }
+};
+
+
+```
