@@ -865,3 +865,26 @@ public:
 
 
 ```
+
+
+## 10. 比特位计数（Leetcode 338）
+
+
+```
+
+// C++
+// DP
+
+class Solution {
+public:
+    vector<int> countBits(int num) {
+        vector<int> bits(num+1, 0);
+        for (int i=1; i <= num; i++) {
+            bits[i] = bits[i & (i-1)] + 1;      // 清空最低位 + 1
+        }
+        return bits;
+    }
+};
+
+
+```
