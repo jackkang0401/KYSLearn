@@ -775,6 +775,7 @@ public:
 
 
 ```
+
 // C++
 // 位运算
 
@@ -787,6 +788,53 @@ public:
             n &= (n-1);     // 清空最低位的 1
         }
         return count;
+    }
+};
+
+
+```
+
+
+## 8. 2的幂（Leetcode 231）
+
+
+```
+
+// C++
+// 位运算
+
+
+class Solution {
+public:
+    bool isPowerOfTwo(int n) {
+        return (n > 0) && (0 == (n & (n - 1))); // 一个数的幂次方不会小于 0 && 清空最低位
+    }
+};
+
+
+```
+
+
+## 9. 颠倒二进制位（Leetcode 190）
+
+
+
+```
+
+// C++
+// 逐位颠倒
+
+
+class Solution {
+public:
+    uint32_t reverseBits(uint32_t n) {
+        uint32_t result = 0, power = 31;
+        while (n != 0) {
+            result += (n & 1) << power; // 颠倒到正确位置 (n & 1) << power，加入最终结果
+            n = n >> 1;                 // 左移
+            power--;                    // 对应颠倒位 -1
+        }
+        return result;
     }
 };
 
