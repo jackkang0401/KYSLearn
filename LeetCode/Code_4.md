@@ -768,3 +768,27 @@ public:
 
 
 ```
+
+
+## 7.位1的个数（Leetcode 191）
+
+
+
+```
+// C++
+// 位运算
+
+class Solution {
+public:
+    int hammingWeight(uint32_t n) {
+        int count = 0;
+        while(0 != n) {
+            count++;
+            n &= (n-1);     // 清空最低位的 1
+        }
+        return count;
+    }
+};
+
+
+```
