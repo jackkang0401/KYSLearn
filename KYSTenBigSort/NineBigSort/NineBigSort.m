@@ -15,7 +15,8 @@ void swap(int *x, int *y) {
     *x ^= *y;
 }
 
-#pragma mark 冒泡排序
+#pragma mark - 1.冒泡排序
+
 // 冒泡排序
 void bubbleSort(int* array, int length) {
     int i, j;
@@ -45,22 +46,8 @@ void improvedBubbleSort(int* array, int length) {
     }
 }
 
-#pragma mark 插入排序
-// 插入排序
-void insertSort(int* array, int length) {
-    int i, j, key;
-    for(i = 1; i < length; i++) {
-        j = i-1;
-        key = array[i];
-        while (j >= 0 && array[j] > key) {
-            array[j+1] = array[j];//元素后移
-            j--;
-        }
-        array[j+1]=key;
-    }
-}
+#pragma mark - 2.选择排序
 
-#pragma mark 选择排序
 // 选择排序
 void sectionSort(int* array, int length) {
     int i, j, min;
@@ -77,7 +64,41 @@ void sectionSort(int* array, int length) {
     }
 }
 
-#pragma mark 归并排序
+#pragma mark - 3.插入排序
+
+// 插入排序
+void insertSort(int* array, int length) {
+    int i, j, key;
+    for(i = 1; i < length; i++) {
+        j = i-1;
+        key = array[i];
+        while (j >= 0 && array[j] > key) {
+            array[j+1] = array[j];//元素后移
+            j--;
+        }
+        array[j+1]=key;
+    }
+}
+
+#pragma mark - 4.希尔排序
+
+//希尔排序
+void shellSort(int* array, int length){
+    for (int gap = length/2; gap > 0; gap = gap/2) {
+        for (int i = gap; i < length; i++) {
+            int j = i;
+            int current = array[i];
+            while ((j-gap)>=0 && current<array[j-gap]) {
+                array[j] = array[j-gap];
+                j = j-gap;
+            }
+            array[j] = current;
+        }
+    }
+}
+
+#pragma mark - 5.归并排序
+
 // 将有二个有序数列 a[first...mid] 和 a[mid+1...last] 合并
 void mergeArray(int *a, int first, int mid, int last, int *temp) {
     int i = first, m = mid;
@@ -109,7 +130,8 @@ void mergeSort(int *a, int first, int last, int *temp) {
     }
 }
 
-#pragma mark 快速排序
+#pragma mark - 6.快速排序
+
 // 快速排序
 void quickSort(int *s, int low, int high) {
     int i, j, key;
@@ -134,7 +156,8 @@ void quickSort(int *s, int low, int high) {
     }
 }
 
-#pragma mark 堆排序
+#pragma mark - 7.堆排序
+
 // 向下调整
 
 // 非递归实现
@@ -240,7 +263,8 @@ void heapSort(int *array,int length) {
     }
 }
 
-#pragma mark 计数排序
+#pragma mark - 8.计数排序
+
 // 计数排序
 void countSort(int *input, int *output, int length, int k) {// 时间复杂度为Ο(n+k)（其中k是整数的范围）
     // input为输入数组，output为输出数组，length表示数组长度，k表示有所输入数字都介于0到k之间
@@ -269,7 +293,8 @@ void countSort(int *input, int *output, int length, int k) {// 时间复杂度�
 }
 
 
-#pragma mark 基数排序
+#pragma mark - 9.基数排序
+
 // 找到num的从低到高的第pos位的数据
 int getNumInPosition(int num,int pos) {
     int temp = 1;

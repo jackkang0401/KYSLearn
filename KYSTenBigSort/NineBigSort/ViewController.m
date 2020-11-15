@@ -25,8 +25,9 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     _sortTypeArray=@[@{@"name":@"冒泡",@"type":@[@"冒泡排序",@"改进版冒泡排序"]},
-                     @{@"name":@"插入",@"type":@[@"插入排序"]},
                      @{@"name":@"选择",@"type":@[@"选择排序"]},
+                     @{@"name":@"插入",@"type":@[@"插入排序"]},
+                     @{@"name":@"希尔",@"type":@[@"希尔排序"]},
                      @{@"name":@"归并",@"type":@[@"归并排序"]},
                      @{@"name":@"快速",@"type":@[@"快速排序"]},
                      @{@"name":@"堆",@"type":@[@"堆排序"]},
@@ -101,21 +102,8 @@
             }
             printf("\n");
         }
-    //2.插入排序
+    //2.选择排序
     }else if (indexPath.section==1) {
-        if (indexPath.row==0) {
-            printf("插入排序：");
-            insertSort(array, 10);
-            for (int i=0; i < 10; i++)
-            {
-                printf("%d ", array[i]);
-            }
-            printf("\n");
-        }else if (indexPath.row==1) {
-
-        }
-    //3.选择排序
-    }else if (indexPath.section==2) {
         if (indexPath.row==0) {
             printf("选择排序：");
             sectionSort(array, 10);
@@ -127,8 +115,34 @@
         }else if (indexPath.row==1) {
             
         }
-    //4.归并排序
+    //3.插入排序
+    }else if (indexPath.section==2) {
+        if (indexPath.row==0) {
+            printf("插入排序：");
+            insertSort(array, 10);
+            for (int i=0; i < 10; i++)
+            {
+                printf("%d ", array[i]);
+            }
+            printf("\n");
+        }else if (indexPath.row==1) {
+
+        }
+    //4.希尔排序
     }else if (indexPath.section==3) {
+        if (indexPath.row==0) {
+            printf("希尔排序：");
+            shellSort(array, 10);
+            for (int i=0; i < 10; i++)
+            {
+                printf("%d ", array[i]);
+            }
+            printf("\n");
+        }else if (indexPath.row==1) {
+
+        }
+    //5.归并排序
+    }else if (indexPath.section==4) {
         if (indexPath.row==0) {
             int p[10];
             printf("归并排序：");
@@ -141,10 +155,10 @@
         }else if (indexPath.row==1) {
             
         }
-    //5.归并排序
-    }else if (indexPath.section==4) {
+    //6.快速排序
+    }else if (indexPath.section==5) {
         if (indexPath.row==0) {
-            printf("归并排序：");
+            printf("快速排序：");
             quickSort(array, 0, 9);
             for (int i=0; i < 10; i++)
             {
@@ -154,8 +168,8 @@
         }else if (indexPath.row==1) {
             
         }
-    //6.堆排序
-    }else if (indexPath.section==5) {
+    //7.堆排序
+    }else if (indexPath.section==6) {
         if (indexPath.row==0) {
             printf("创建堆：");
             createHeap(array,10);
@@ -188,8 +202,8 @@
         }else if (indexPath.row==1) {
             
         }
-    //7.计数排序
-    }else if (indexPath.section == 6) {
+    //8.计数排序
+    }else if (indexPath.section == 7) {
         int B[10];
         printf("计数排序：");
         countSort(array, B, 10, 89);
@@ -198,8 +212,8 @@
             printf("%d ", B[i]);
         }
         printf("\n");
-    //8.基数排序
-    }else if (indexPath.section==7){
+    //9.基数排序
+    }else if (indexPath.section==8){
         
         printf("基数排序：");
         radixSort(array, 10);
@@ -208,8 +222,8 @@
             printf("%d ", array[i]);
         }
         printf("\n");
-    //9.桶排序
-    }else if (indexPath.section==8){
+    //10.桶排序
+    }else if (indexPath.section==9){
         
         //printf("桶排序：");
         /*

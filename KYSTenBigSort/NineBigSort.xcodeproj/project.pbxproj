@@ -13,7 +13,6 @@
 		904E499C1B68DA9500F33D0F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 904E499A1B68DA9500F33D0F /* Main.storyboard */; };
 		904E499E1B68DA9500F33D0F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 904E499D1B68DA9500F33D0F /* Images.xcassets */; };
 		904E49A11B68DA9500F33D0F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 904E499F1B68DA9500F33D0F /* LaunchScreen.xib */; };
-		904E49AD1B68DA9500F33D0F /* NineBigSortTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 904E49AC1B68DA9500F33D0F /* NineBigSortTests.m */; };
 		F18CA53D1B6900A4005C24C2 /* NineBigSort.m in Sources */ = {isa = PBXBuildFile; fileRef = F18CA53C1B6900A4005C24C2 /* NineBigSort.m */; };
 /* End PBXBuildFile section */
 
@@ -39,8 +38,6 @@
 		904E499D1B68DA9500F33D0F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		904E49A01B68DA9500F33D0F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		904E49A61B68DA9500F33D0F /* NineBigSortTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NineBigSortTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		904E49AB1B68DA9500F33D0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		904E49AC1B68DA9500F33D0F /* NineBigSortTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NineBigSortTests.m; sourceTree = "<group>"; };
 		F18CA53B1B6900A4005C24C2 /* NineBigSort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NineBigSort.h; sourceTree = "<group>"; };
 		F18CA53C1B6900A4005C24C2 /* NineBigSort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NineBigSort.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -67,7 +64,6 @@
 			isa = PBXGroup;
 			children = (
 				904E498F1B68DA9500F33D0F /* NineBigSort */,
-				904E49A91B68DA9500F33D0F /* NineBigSortTests */,
 				904E498E1B68DA9500F33D0F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -102,23 +98,6 @@
 			children = (
 				904E49911B68DA9500F33D0F /* Info.plist */,
 				904E49921B68DA9500F33D0F /* main.m */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		904E49A91B68DA9500F33D0F /* NineBigSortTests */ = {
-			isa = PBXGroup;
-			children = (
-				904E49AC1B68DA9500F33D0F /* NineBigSortTests.m */,
-				904E49AA1B68DA9500F33D0F /* Supporting Files */,
-			);
-			path = NineBigSortTests;
-			sourceTree = "<group>";
-		};
-		904E49AA1B68DA9500F33D0F /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				904E49AB1B68DA9500F33D0F /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -243,7 +222,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				904E49AD1B68DA9500F33D0F /* NineBigSortTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
