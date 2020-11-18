@@ -56,7 +56,7 @@ public:
     int minDistance(string word1, string word2) {
 
         /*
-            dp[i][j]：word1 前 i+1 个字符转换为 word2 前 j+1 个字符的最小操作数
+            dp[i][j]：word1 前 i 个字符转换为 word2 前 j 个字符的最小操作数
                 word1[i-1] == word2[j-1]：dp[i][j] = dp[i-1][j-1]
                 word1[i-1] != word2[j-1]：dp[i][j] = min(dp[i][j-1], min(dp[i-1][j], min[i-1][j-1])) + 1
         */
