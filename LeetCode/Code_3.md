@@ -1148,8 +1148,8 @@ public:
             1.分治，子问题，最优子结构
             2.定义状态：dp[i][j]：硬币列表前 i 个硬币能够凑成总金额为 j 的组合数
             3.DP方程：
-                dp[i][j]= dp[i-1][j] (j-coins[i-1] < 0)
-                dp[i][j] = dp[i-1][j] + dp[i][j-coins[i-1]] (j-coins[i-1] >= 0)
+                dp[i][j]= dp[i-1][j] (j < coins[i-1])
+                dp[i][j] = dp[i-1][j] + dp[i][j-coins[i-1]] (j >= coins[i-1])
         */
         int size = coins.size();
         vector<vector<int>> dp(size+1, vector(amount+1, 0));
