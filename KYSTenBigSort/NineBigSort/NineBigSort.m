@@ -8,21 +8,28 @@
 
 #import "NineBigSort.h"
 
-// 交换
+// 交换（x, y 为同一指针时，会被置 0）
+//void swap(int *x, int *y) {
+//    *x ^= *y;
+//    *y ^= *x;
+//    *x ^= *y;
+//}
+
+
 void swap(int *x, int *y) {
-    *x ^= *y;
-    *y ^= *x;
-    *x ^= *y;
+    int tmp = *x;
+    *x = *y;
+    *y = tmp;
 }
+
 
 #pragma mark - 1.冒泡排序
 
 // 冒泡排序
 void bubbleSort(int* array, int length) {
-    int i, j;
-    for(i = 0; i < length; i++) {
-        for(j = 0; j < length-(i+1); j++) {
-            if(array[j] > array[j + 1]) { // 把大得换到最后（也可把小的换到最前）
+    for(int i = 0; i < length; i++) {
+        for(int j = 0; j < length-(i+1); j++) {
+            if(array[j] > array[j + 1]) { // 把大的移动到最后（也可把小的移动到最前）
                 swap(array+j,array+j+1);
             }
         }
@@ -31,13 +38,11 @@ void bubbleSort(int* array, int length) {
 
 // 改进冒泡排序
 void improvedBubbleSort(int* array, int length) {
-    bool flag=true;
-    int i, j;
-    for(i = 0; i < length; i++) {
+    bool flag = true;
+    for(int i = 0; i < length; i++) {
         if (false == flag) return;
         flag = false;
-        for(j = 0; j < length-(i+1); j++) {
-            //把大得换到最后（也可把小的换到最前）
+        for(int j = 0; j < length-(i+1); j++) {
             if(array[j] > array[j + 1]) {
                 swap(array+j,array+j+1);
                 flag = true;
@@ -50,15 +55,14 @@ void improvedBubbleSort(int* array, int length) {
 
 // 选择排序
 void sectionSort(int* array, int length) {
-    int i, j, min;
-    for(i = 0; i < length; i++) {
-        min=i;
-        for (j = i+1; j < length; j++) {
+    for(int i = 0; i < length; i++) {
+        int min = i;
+        for (int j = i+1; j < length; j++) {
             if (array[j] < array[min]) {
-                min=j;
+                min = j;
             }
         }
-        if (min!=i) {
+        if (min != i) {
             swap(array+i,array+min);
         }
     }
@@ -68,12 +72,11 @@ void sectionSort(int* array, int length) {
 
 // 插入排序
 void insertSort(int* array, int length) {
-    int i, j, key;
-    for(i = 1; i < length; i++) {
-        j = i-1;
-        key = array[i];
+    for( int i = 1; i < length; i++) {
+        int j = i-1;
+        int key = array[i];
         while (j >= 0 && array[j] > key) {
-            array[j+1] = array[j];//元素后移
+            array[j+1] = array[j];  // 元素后移
             j--;
         }
         array[j+1]=key;
@@ -84,15 +87,15 @@ void insertSort(int* array, int length) {
 
 //希尔排序
 void shellSort(int* array, int length){
-    for (int gap = length/2; gap > 0; gap = gap/2) {
-        for (int i = gap; i < length; i++) {
-            int j = i;
+    for (int gap = length/2; gap > 0; gap = gap/2) {    // 分割成 gap 个组
+        for (int i = gap; i < length; i++) {            // 分别进行直接插入排序（多个分组交替执行）
+            int j = i-gap;
             int current = array[i];
-            while ((j-gap)>=0 && current<array[j-gap]) {
-                array[j] = array[j-gap];
+            while (j>=0 && array[j]>current) {
+                array[j+gap] = array[j];
                 j = j-gap;
             }
-            array[j] = current;
+            array[j+gap] = current;
         }
     }
 }
@@ -121,38 +124,34 @@ void mergeArray(int *a, int first, int mid, int last, int *temp) {
 // 实现
 void mergeSort(int *a, int first, int last, int *temp) {
     if (first < last) {
-        //分割
         int mid = (first + last) / 2;
-        mergeSort(a, first, mid, temp);         // 左边有序
-        mergeSort(a, mid + 1, last, temp);      // 右边有序
-        //合并
-        mergeArray(a, first, mid, last, temp);  // 再将二个有序数列合并
+        mergeSort(a, first, mid, temp);         // 左边排序
+        mergeSort(a, mid + 1, last, temp);      // 右边排序
+        mergeArray(a, first, mid, last, temp);  // 合并
     }
 }
 
 #pragma mark - 6.快速排序
 
-// 快速排序
-void quickSort(int *s, int low, int high) {
-    int i, j, key;
-    if (low < high) {
-        i = low;
-        j = high;
-        key = s[i];
-        while (i < j) {
-            while(i < j && s[j] > key)
-                j--;    // 从右向左找第一个小于x的数
-            if(i < j)
-                s[i++] = s[j];
-            
-            while(i < j && s[i] < key)
-                i++;    // 从左向右找第一个大于x的数
-            if(i < j)
-                s[j--] = s[i];
+int partition(int *array, int left, int right) {
+    int pivot = left;
+    int index = pivot + 1;
+    for (int i = index; i <= right; i++) {
+        if (array[i] < array[pivot]) {
+            swap(array+i, array+index);
+            index++;
         }
-        s[i] = key;
-        quickSort(s, low, i-1);     // 递归调用
-        quickSort(s, i+1, high);
+    }
+    swap(array+pivot, array+index-1);
+    return index-1;
+}
+
+// 快速排序
+void quickSort(int *array, int left, int right) {
+    if (left < right) {
+        int mid = partition(array, left, right);
+        quickSort(array, left, mid-1);     // 递归调用
+        quickSort(array, mid+1, right);
     }
 }
 
