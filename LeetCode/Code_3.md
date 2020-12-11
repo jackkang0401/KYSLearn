@@ -754,10 +754,11 @@ public:
     bool canCross(vector<int>& stones) {
         int size = stones.size();
         /*
-            key 表示石头的位置，value 是一个包含 jumpSize 的集合，
-            jumpSize 为跳到 key 位置需要的跳跃距离
+            key：表示石头的位置，
+            value：跳到 key 位置需要的跳跃距离（jumpSize）的集合
         */
         unordered_map<int, set<int>> map;
+        
         map[0].insert(0);
         for(int i = 0; i < size; i++) {
             // 获取到达 stones[i] 的所有跳跃距离
