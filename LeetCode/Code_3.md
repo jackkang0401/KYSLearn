@@ -1361,9 +1361,9 @@ public:
     int rob(TreeNode* o) {
 
         /*
-            我们可以用 f(o)表示选择 o 节点的情况下，o 节点的子树上被选择的节点的最大权值和；
-            g(o) 表示不选择 o 节点的情况下，o 节点的子树上被选择的节点的最大权值和；
-            l 和 r 分别代表 o 的左右孩子。
+            f(o)：选择 o 节点的情况下，o 节点的子树上被选择的节点的最大权值和；
+            g(o)：不选择 o 节点的情况下，o 节点的子树上被选择的节点的最大权值和；
+            l 和 r 分别代表 o 的左右孩子
 
             1. 当 o 被选中时，o 的左右孩子都不能被选中，故 o 被选中情况下子树上被选中点的最大权值和
             为 l 和 r 不被选中的最大权值和相加，即 f(o) = o->val + g(l) + g(r)
@@ -1402,7 +1402,6 @@ struct SubtreeStatus {
 
 class Solution {
 public:
-    unordered_map <TreeNode*, int> f, g;
 
     // 后续遍历生成结果
     SubtreeStatus dfs(TreeNode* o) {
