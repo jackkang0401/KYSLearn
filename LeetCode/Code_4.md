@@ -472,7 +472,8 @@ struct Node {
 
 // 自定义哈希
 struct hashFunc {
-    size_t operator()(const Node& node) const{
+    // 仿函数：https://blog.csdn.net/jinzhu1911/article/details/101317367
+    size_t operator()(const Node& node) const {    
         return hash<int>()(node.x) ^ hash<int>()(node.y);
     }
 };
@@ -566,7 +567,7 @@ public:
                     int i = node.x + dx;
                     int j = node.y + dy;
                     if(i < 0 || j < 0 || i >= size || j >= size || grid[i][j]) continue;    // 当前节点越界或阻塞，跳过
-                    // 没有到走过改点或者当前的路线更优
+                    // 1.没有到走过该点 2.当前点的路线更优
                     if (0 == stepCount[i][j] || node.step+1 < stepCount[i][j]) {
                         int curStep = node.step + 1;
                         q.push(Node(i, j, curStep, size));
