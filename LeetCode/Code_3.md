@@ -1091,8 +1091,8 @@ public:
 
         for (int i = 1; i <= size; i++ ) {
             for (int j = 1; j <= amount; j++) {
-                if (j-coins[i-1] < 0) {
-                    // 当选择的第 i 个硬币的金额比想凑的金额大时，只能选择不装
+                if (coins[i-1] > j) {
+                    // 当选择的第 i 个硬币的金额 coins[i-1] 比想凑的金额 j 大时，只能选择不装
                     dp[i][j] = dp[i-1][j];
                 } else {
                     // dp[i][j] 是共有多少种凑法，所以 dp[i][j] = 不装 + 装
