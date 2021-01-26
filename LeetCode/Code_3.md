@@ -686,20 +686,17 @@ public:
         int size = stones.size();
         /*
             key：表示石头的位置，
-            value：跳到 key 位置需要的跳跃距离（jumpSize）的集合
+            value：跳到 key 位置需要的跳跃距离的集合
         */
         unordered_map<int, set<int>> map;
-        
         map[0].insert(0);
         for(int i = 0; i < size; i++) {
-            // 获取到达 stones[i] 的所有跳跃距离
-            for(int k : map[stones[i]]) { 
-                // 计算当前可跳距离
-                for (int jumpSize = k - 1; jumpSize <= k + 1; jumpSize++) {
+            int currentStone = stones[i];                                   // 当前石头位置
+            for(int k : map[currentStone]) {                                // 遍历到达 currentStone 的所有跳跃距离 
+                for (int jumpSize = k - 1; jumpSize <= k + 1; jumpSize++) { // 遍历当前所有可跳跃距离
                     if (jumpSize > 0) {
-                        // stones[i]：石头位置，stones[i]+jumpSize：落点位置（可能为水里）
-                        // 记录可跳到的位置及其对应距离
-                        map[stones[i]+jumpSize].insert(jumpSize); 
+                        int jumpLocation = stones[i]+jumpSize;              // 跳跃落点位置（可能为水里）
+                        map[jumpLocation].insert(jumpSize);                 // 添加落点位置对应的跳跃距离
                     }
                 }
             }
