@@ -632,8 +632,7 @@ public:
                 string currentStatus = q.front(); 
                 q.pop();
                 if (endStatus == currentStatus) return step;// 已到最终结果，返回
-                // 找到数字 0 的索引
-                int idx0 = 0;
+                int idx0 = 0;                               // 用于记录数字 0 的位置
                 while (currentStatus[idx0] != '0') idx0++;  // 查找 ‘0’ 的位置
                 for (int nextIndex : neighbor[idx0]) {      // 变换 ‘0’ 的位置
                     string nextStatus = currentStatus;
