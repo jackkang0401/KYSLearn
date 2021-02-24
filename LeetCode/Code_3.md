@@ -760,7 +760,54 @@ public:
 
 ```
 
-## 11.爬楼梯（Leetcode 70）
+
+## 11.不同的子序列（Leetcode 115）
+
+
+```
+
+// DP
+
+class Solution {
+public:
+    int numDistinct(string s, string t) {
+        /*
+            dp[i][j]：以 i-1 为结尾的 s 子序列中出现以 j-1 为结尾的 t 的个数
+
+            DP公式：
+                dp[i][j] = dp[i-1][j-1] + dp[i-1][j]  （s[i] == t[j]）
+                dp[i][j] = dp[i-1][j]                  (s[i] != t[j])  
+
+            例如，s：bagg 和 t：bag
+            s[3] 与 t[2]相同，s 可以不用 s[3] 来匹配，即 s[0]s[1]s[2] 组成的 bag。也可以用 s[3] 来匹配，即：s[0]s[1]s[3] 组成的 bag。
+            当 s[i-1] 与 t[j-1] 相等时，可以选择用 s[i-1] 来匹配，也可以选择不用，dp[i][j] = dp[i-1][j-1] + dp[i-1][j];
+            当 s[i-1] 与 t[j-1] 不相等时，只能选择不用 s[i-1] 来匹配，dp[i][j] = dp[i-1][j];
+
+        */
+
+        int sSize = s.size();
+        int tSize = t.size();
+        vector<vector<long>> dp(sSize+1, vector<long>(tSize+1));
+        for (int i = 0; i <= sSize; i++) dp[i][0] = 1;              // t 长度为 0
+        for (int j = 1; j <= tSize; j++) dp[0][j] = 0;              // s 长度为 0    
+        for (int i = 1; i <= sSize; i++) {
+            for (int j = 1; j <= tSize; j++) {
+                if (s[i - 1] == t[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j];
+                } else {
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+        return dp[sSize][tSize];
+    }
+};
+
+
+```
+
+
+## 12.爬楼梯（Leetcode 70）
 
 
 ```
@@ -814,7 +861,8 @@ public:
 
 ```
 
-## 12.使用最小花费爬楼梯（Leetcode 746）
+
+## 13.使用最小花费爬楼梯（Leetcode 746）
 
 
 ```
@@ -837,7 +885,8 @@ public:
 
 ```
 
-## 13.三角形最小路径和（Leetcode 120）
+
+## 14.三角形最小路径和（Leetcode 120）
 
 
 ```
@@ -925,7 +974,8 @@ public:
 
 ```
 
-## 14.最大子序和（Leetcode 53）
+
+## 15.最大子序和（Leetcode 53）
 
 
 ```
@@ -950,7 +1000,8 @@ public:
 
 ```
 
-## 15.乘积最大子数组（Leetcode 152）
+
+## 16.乘积最大子数组（Leetcode 152）
 
 
 ```
@@ -1010,7 +1061,8 @@ public:
 
 ```
 
-## 16.零钱兑换（Leetcode 322）
+
+## 17.零钱兑换（Leetcode 322）
 
 
 ```
@@ -1062,7 +1114,8 @@ public:
 
 ```
 
-## 17.零钱兑换 II（Leetcode 518）
+
+## 18.零钱兑换 II（Leetcode 518）
 
 
 ```
@@ -1125,7 +1178,8 @@ public:
 
 ```
 
-## 18.打家劫舍（Leetcode 198）
+
+## 19.打家劫舍（Leetcode 198）
 
 
 ```
@@ -1212,7 +1266,8 @@ public:
 
 ```
 
-## 19.打家劫舍 II（Leetcode 213）
+
+## 20.打家劫舍 II（Leetcode 213）
 
 
 ```
@@ -1256,7 +1311,8 @@ public:
 
 ```
 
-## 20.打家劫舍 III（Leetcode 337）
+
+## 21.打家劫舍 III（Leetcode 337）
 
 
 ```
