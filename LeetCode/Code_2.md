@@ -722,7 +722,61 @@ private:
 
 ```
 
-## 10.最长上升子序列（Leetcode 300）
+
+## 10.通配符匹配（Leetcode 44）
+
+```
+
+class Solution {
+public:
+    bool isMatch(string s, string p) {
+
+        /*
+            dp[i][j]：表示字符串 p 的前 i 个字符和模式 s 的前 j 个字符是否能匹配
+            
+            对于 s = "abc", p = "ab*"，当判断 p 的最后一个字符 * 与 s 的最后一个字符 c 是否匹配时，我们有两个选择：
+                1.不使用这个 * 来匹配（* 匹配空字符串）
+            p 就要回退一个字符，判断以 p 的上一个字符 b 为结尾的字符串和当前 s 是否匹配即可，所以状态就是从 dp[i-1][j] 转移来
+                2.使用这个 * 来匹配（* 匹配一个或多个字符）
+            s 就要回退一个字符，因为 p 的星号已经和 s 的最后一个字符匹配 c 过了，我们只需要考虑 s 之前的字符的匹配问题即可，所以状态就是从 dp[i][j-1] 转移来
+
+            DP方程：
+                dp[i][j] = dp[i−1][j−1]（s[i] == p[j] || p[j] == '?'）
+                dp[i][j] = dp[i][j−1] || dp[i−1][j] （p[j] == '*'）
+                dp[i][j] = false (其他情况)
+        */
+
+        int n = p.size();
+        int m = s.size();
+        vector<vector<int>> dp(n + 1, vector<int>(m + 1));              // 默认全为 flase
+        dp[0][0] = true;
+        for (int i = 1; i <= n; ++i) {
+            if (p[i - 1] == '*') {
+                dp[i][0] = true;
+            }
+            else {
+                break;                                                  // 只要存在不为 * 的，后边全为 false    
+            }
+        }
+        for (int i = 1; i <= n; ++i) {
+            for (int j = 1; j <= m; ++j) {
+                if (p[i - 1] == '*') {
+                    dp[i][j] = dp[i][j-1] || dp[i-1][j];
+                }
+                else if (p[i-1] == '?' || s[j-1] == p[i-1]) {
+                    dp[i][j] = dp[i-1][j-1];
+                }
+            }
+        }
+        return dp[n][m];
+    }
+};
+
+
+```
+
+
+## 11.最长上升子序列（Leetcode 300）
 
 ```
 // C++
