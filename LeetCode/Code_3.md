@@ -1418,7 +1418,7 @@ public:
 
 ```
 // C++
-// DP
+// 1. DP
 
 class Solution {
 public:
@@ -1436,6 +1436,42 @@ public:
             }
         }
         return dp[n];
+    }
+};
+
+
+```
+
+
+```
+
+// C++
+// 2. 贪心枚举
+
+class Solution {
+public:
+    int numSquares(int n) {
+        /*
+            从一个数字到多个数字的组合开始，一旦我们找到一个可以组合成给定数字 n 的组合，
+            那么我们可以说我们找到了最小的组合
+        */
+        set<int> allSquareNums;
+        for (int i = 1; i*i <= n; i++) {
+            allSquareNums.insert(i*i);
+        } 
+        for (int count = 1; count <= n; count++) {
+            if (isDividedBy(n, count, allSquareNums)) return count;
+        }
+        return n;
+    }
+
+private:
+    bool isDividedBy(int n, int count, set<int> &allSquareNums) {
+        if (count == 1) return allSquareNums.find(n) != allSquareNums.end();
+        for (int square : allSquareNums) {
+            if (isDividedBy(n-square, count-1, allSquareNums)) return true;
+        }
+        return false;
     }
 };
 
