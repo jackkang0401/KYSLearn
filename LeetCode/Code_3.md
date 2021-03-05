@@ -1446,7 +1446,7 @@ public:
 ```
 
 // C++
-// 2. 贪心枚举
+// 2. 贪心枚举(最快，其他两种方法差不太多，方法 3 比较耗内存)
 
 class Solution {
 public:
@@ -1475,5 +1475,52 @@ private:
     }
 };
 
+
+```
+
+
+```
+
+// C++
+// 3. 贪心+BFS
+
+class Solution {
+public:
+    int numSquares(int n) {
+        /*
+                给定一个 N 元树，其中每个节点表示数字 n 的余数减去一个完全平方数的组合，
+            我们的任务是在树中找到一个节点，该节点满足两个条件：
+                (1) 节点的值（即余数）也是一个完全平方数
+                (2) 在满足条件（1）的所有节点中，节点和根之间的距离应该最小
+        */
+
+        vector<int> squareNums;
+        for (int i = 1; i*i <= n; i++) {
+            squareNums.push_back(i*i);
+        } 
+
+        set<int> beginSet;
+        beginSet.insert(n);
+
+        int level = 0;
+        while(!beginSet.empty()) {
+            level ++;
+            set<int> nextSet;
+            for (int current : beginSet) {
+                for (int square : squareNums) {
+                    if (current == square) {
+                        return level;
+                    } else if (current < square) {
+                        break;
+                    } else {
+                        nextSet.insert(current-square);
+                    }
+                }
+            }
+            beginSet = nextSet;
+        }
+        return n;
+    }
+};
 
 ```
