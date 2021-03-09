@@ -135,3 +135,41 @@ public:
 
 
 ```
+
+
+```
+
+// C++
+// 2. 滑动窗口+双指针
+
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        int n = s.length(), m = p.length();
+        vector<int> result;
+        if (n < m) return result;
+
+        vector<int> pHashTable(26, 0);
+        for (int i = 0; i < m; i++ ) {
+            pHashTable[p[i]-'a'] ++;
+        }
+        
+        vector<int> sHashTable(26, 0);
+        int left = 0;
+        for (int right = 0; right < n; right++) {
+            int curRight = s[right] - 'a';
+            sHashTable[curRight] ++;
+            while(sHashTable[curRight] > pHashTable[curRight]) {
+                int curLeft = s[left] - 'a';
+                sHashTable[curLeft] --;
+                left ++;
+            }
+            if (right-left+1 == m) result.push_back(left);
+        }
+        return result;
+    }
+};
+
+
+
+```
