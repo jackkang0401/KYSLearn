@@ -101,3 +101,37 @@ public:
 
 
 ```
+
+
+## 4.找到字符串中所有字母异位词（Leetcode 438）
+
+
+```
+
+// C++
+// 1. 滑动窗口+数组
+
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        int n = s.length(), m = p.length();
+        vector<int> result;
+        if (n < m) return result;
+        vector<int> sHashTable(26, 0);
+        vector<int> pHashTable(26, 0);
+        for (int i = 0; i < m; i++ ) {
+            sHashTable[s[i]-'a'] ++;
+            pHashTable[p[i]-'a'] ++;
+        }
+        if (pHashTable == sHashTable) result.push_back(0);
+        for (int i = m; i < n; i++) {
+            sHashTable[s[i-m]-'a'] --;
+            sHashTable[s[i]-'a'] ++;
+            if (pHashTable == sHashTable) result.push_back(i-m+1);
+        }
+        return result;
+    }
+};
+
+
+```
