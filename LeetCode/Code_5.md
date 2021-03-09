@@ -38,3 +38,28 @@ private:
 ```
 
 
+## 2.有效的字母异位词（Leetcode 242）
+
+
+```
+
+// C++
+// hash 表（也可排序比较，耗时较长）
+
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        if (s.length() != t.length()) return false;
+        vector<int> hashTable(26, 0);
+        for (auto &c : s) {
+            hashTable[c-'a'] ++;
+        }
+        for (auto &c : t) {
+            hashTable[c-'a'] --;
+            if (hashTable[c-'a'] < 0) return false;
+        }
+        return true;
+    }
+};
+
+```
