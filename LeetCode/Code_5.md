@@ -182,7 +182,7 @@ public:
 ```
 
 // C++
-// 1. 类似双指针
+// 1. 双指针
 
 class Solution {
 public:
