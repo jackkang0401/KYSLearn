@@ -173,3 +173,35 @@ public:
 
 
 ```
+
+
+
+## 5.仅仅反转字母（Leetcode 917）
+
+
+```
+
+// C++
+// 1. 类似双指针
+
+class Solution {
+public:
+    string reverseOnlyLetters(string S) {
+        int begin = 0, end = S.length()-1;
+        while(begin < end) {
+            if(false == isalpha(S[begin])) {
+                begin++;
+            }
+            if(false == isalpha(S[end])) { 
+                end--;
+            }
+            if(isalpha(S[begin]) && isalpha(S[end])) {
+                swap(S[begin++], S[end--]);
+            }
+        }
+        return S;
+    }
+};
+
+
+```
