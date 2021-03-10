@@ -205,3 +205,31 @@ public:
 
 
 ```
+
+```
+// C++
+// 2. 栈
+
+class Solution {
+public:
+    string reverseOnlyLetters(string S) {
+        stack<char> strStack;
+        for (auto &c : S) {
+            if (isalpha(c)) strStack.push(c);
+        } 
+
+        string result = string();
+        for (auto &c : S) {
+            if (isalpha(c)) {
+                char cur = strStack.top();
+                result += cur;
+                strStack.pop();
+            } else {
+                result += c;
+            }
+        } 
+        return result;
+    }
+};
+
+```
