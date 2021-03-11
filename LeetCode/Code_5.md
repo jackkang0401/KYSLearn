@@ -233,3 +233,36 @@ public:
 };
 
 ```
+
+
+## 6.翻转字符串里的单词（Leetcode 151）
+
+
+```
+
+// C++
+
+class Solution {
+public:
+    string reverseWords(string s) {
+        reverse(s.begin(), s.end());                                // 反转整个字符串
+        int n = s.size();
+        int idx = 0;
+        for (int start = 0; start < n; ++start) {
+            if (s[start] != ' ') {
+                if (idx != 0) s[idx++] = ' ';                       // 填一个空白字符后，将 idx 移动到下一个单词的开头
+                int end = start;        
+                while (end < n && s[end] != ' ') {                  // 循环遍历至当前单词的末尾
+                    s[idx++] = s[end++];                            // 向前移动单词            
+                }
+                reverse(s.begin()+idx-(end-start), s.begin()+idx);  // 反转整个单词
+                start = end;                                        // 更新 start 向后移动，去找下一个单词
+            }
+        }
+        s.erase(s.begin()+idx, s.end());                            // 删除后边的字符
+        return s;
+    }
+};
+
+
+```
