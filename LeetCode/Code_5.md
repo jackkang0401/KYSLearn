@@ -401,7 +401,7 @@ public:
 
 ```
 // C++
-// 哈希表-存储索引
+// 2. 哈希表-存储索引
 
 class Solution {
 public:
@@ -427,5 +427,31 @@ public:
     }
 };
 
+```
+
+```
+// C++
+// 3. 哈希表-存储索引 + 队列
+
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        unordered_map<char, int> positionMap;
+        queue<pair<char, int>> q;
+        int n = s.size();
+        for (int i = 0; i < n; ++i) {
+            if (0 == positionMap.count(s[i])) {
+                positionMap[s[i]] = i;          // 标记为只出现一次（存放索引）
+                q.emplace(s[i], i);             // 字符未出现过，将字符与索引作为一个二元组放入队尾
+            } else {
+                positionMap[s[i]] = -1;         // 标记为出现多次
+                while (!q.empty() && positionMap[q.front().first] == -1) {
+                    q.pop();                    // 队列头部元素不是只出现一次（值为 -1），弹出队列
+                }
+            }
+        }
+        return q.empty() ? -1 : q.front().second;
+    }
+};
 
 ```
