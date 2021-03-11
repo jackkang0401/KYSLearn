@@ -384,7 +384,7 @@ public:
 class Solution {
 public:
     int firstUniqChar(string s) {
-        unordered_map<int, int> frequencyMap;
+        unordered_map<char, int> frequencyMap;
         for (char ch: s) {
             frequencyMap[ch] ++;
         }
@@ -397,19 +397,16 @@ public:
     }
 };
 
-
 ```
 
-
 ```
-
 // C++
 // 哈希表-存储索引
 
 class Solution {
 public:
     int firstUniqChar(string s) {
-        unordered_map<int, int> positionMap;
+        unordered_map<char, int> positionMap;
         int n = s.size();
         for (int i = 0; i < n; ++i) {
             if (positionMap.count(s[i])) {
