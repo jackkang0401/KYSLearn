@@ -399,3 +399,36 @@ public:
 
 
 ```
+
+
+```
+
+// C++
+// 哈希表-存储索引
+
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        unordered_map<int, int> positionMap;
+        int n = s.size();
+        for (int i = 0; i < n; ++i) {
+            if (positionMap.count(s[i])) {
+                positionMap[s[i]] = -1;
+            } else {
+                positionMap[s[i]] = i;
+            }
+        }
+        int first = n;
+        for (auto [_, pos]: positionMap) {
+            if (pos == -1) continue;
+            first = min(pos, first);
+        }
+        if (first == n) {
+            return -1;
+        }
+        return first;
+    }
+};
+
+
+```
