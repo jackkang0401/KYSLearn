@@ -371,3 +371,31 @@ public:
 
 
 ```
+
+
+## 9.字符串中的第一个唯一字符（Leetcode 387）
+
+
+```
+
+// C++
+// 1. 哈希表-存储频数
+
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        unordered_map<int, int> frequencyMap;
+        for (char ch: s) {
+            frequencyMap[ch] ++;
+        }
+        for (int i = 0, size = s.size(); i < size; ++i) {
+            if (frequencyMap[s[i]] == 1) {
+                return i;
+            }
+        }
+        return -1;
+    }
+};
+
+
+```
