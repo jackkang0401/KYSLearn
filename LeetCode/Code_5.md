@@ -266,3 +266,35 @@ public:
 
 
 ```
+
+
+## 7.最长公共前缀（Leetcode 14）
+
+
+```
+
+// C++
+// 纵向扫描
+
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        if (!strs.size()) {
+            return "";
+        }
+        int length = strs[0].size();                                // 第一个字符长度
+        int count = strs.size();
+        for (int i = 0; i < length; ++i) {
+            char c = strs[0][i];
+            for (int j = 1; j < count; ++j) {
+                if (i == strs[j].size() || strs[j][i] != c) {       // 超出当前字符串长度或当前位置字符不等
+                    return strs[0].substr(0, i);
+                }
+            }
+        }
+        return strs[0];                                             // 第一个字符串最短
+    }
+};
+
+
+```
