@@ -298,3 +298,76 @@ public:
 
 
 ```
+
+
+## 8.字符串转换整数 (atoi)（Leetcode 8）
+
+
+```
+
+// C++
+// 自动机
+
+class Automaton {
+public:
+    int sign = 1;
+    long ans = 0;
+
+    string get(char c) {
+        state = table[state][get_col(c)];
+        if (state == "in_number") {
+            ans = ans*10 + c-'0';
+            ans = sign == 1 ? min(ans, (long)INT_MAX) : min(ans, -(long)INT_MIN);
+        } else if (state == "signed") {
+            sign = c == '+' ? 1 : -1;
+        }
+        return state;
+    }
+
+private:
+    // 定义状态
+    string state = "start";
+    unordered_map<string, vector<string>> table = {
+        {
+            "start", {"start", "signed", "in_number", "end"}
+        },
+        {
+            "signed", {"end", "end", "in_number", "end"}
+        },
+        {
+            "in_number", {"end", "end", "in_number", "end"}
+        },
+        {
+            "end", {"end", "end", "end", "end"}
+        }
+    };
+
+    // 获取对应状态下标
+    int get_col(char c) {
+        if (isspace(c)) {
+            return 0;               // 空格
+        }
+        if (c == '+' or c == '-') { 
+            return 1;               // 符号
+        }
+        if (isdigit(c)) {
+            return 2;               // 数字
+        }
+        return 3;                   // 其他
+    }
+};
+
+class Solution {
+public:
+    int myAtoi(string s) {
+        Automaton automaton;
+        for (char c : s) {
+          string state = automaton.get(c);
+          if (state == "end") break;
+        }
+        return automaton.sign * automaton.ans;
+    }
+};
+
+
+```
