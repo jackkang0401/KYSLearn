@@ -455,3 +455,32 @@ public:
 };
 
 ```
+
+
+## 10.最后一个单词的长度（Leetcode 58）
+
+
+```
+// C++
+
+class Solution {
+public:
+    int lengthOfLastWord(string s) {
+        int lastLength = 0;
+        int currentLength = 0;
+        for (auto c : s) {
+            if (' ' == c) {
+                if (currentLength != 0 ) {
+                    lastLength = currentLength; // 记录上一个单词的长度，处理末尾全是空格问题
+                }
+                currentLength = 0;
+            } else {
+                currentLength ++;
+            }
+        }
+        // 如果当前单词长度大于 0，去当前单词长度，否则，取上一个单词长度
+        return currentLength > 0 ? currentLength : lastLength; 
+    }
+};
+
+```
