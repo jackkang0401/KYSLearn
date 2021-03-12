@@ -409,78 +409,12 @@ public:
 
 ```
 
+
 ## 7.N皇后（Leetcode 51）
 
 ```
 // C++
-// 1. 回溯 生成中间结果，各个皇后的位置
-
-class Solution {
-public:
-    vector<vector<string>> solveNQueens(int n) {
-        if (n <= 0) return vector<vector<string>>();
-        vector<vector<int>> result;
-        vector<int> currentState(n, -1);    // 下标代表皇后所在行，值代表列
-        set<int> cols;                      // '|' 列
-        set<int> slashs;                    // '/' row + column
-        set<int> backslashs;                // '\' row - column
-        dfs(n, 0, cols, slashs, backslashs, currentState, result);
-        return generateResult(n, result);
-    }
-
-private:
-    void dfs(int n, int row, set<int> &cols, set<int> &slashs, set<int> &backslashs, vector<int> &currentState, vector<vector<int>> &result) {
-        if (row >= n) {
-            result.push_back(currentState);
-            return;
-        }
-        for (int col = 0; col < n; col++) {
-            if (hasContain(row, col, cols, slashs, backslashs)) continue;
-            cols.insert(col);
-            slashs.insert(row + col);
-            backslashs.insert(row - col);
-
-            currentState[row] = col; 
-            dfs(n, row + 1, cols, slashs, backslashs, currentState, result);
-            currentState[row] = -1; // 这行可以省略，后续会直接替换该位置
-
-            cols.erase(col);
-            slashs.erase(row + col);
-            backslashs.erase(row - col);
-        }
-    }
-
-    // 检测是否发生冲突
-    bool hasContain(int row, int col, set<int> &cols, set<int> &slashs, set<int> &backslashs) {
-        if (cols.find(col) != cols.end() || 
-            slashs.find(row + col) != slashs.end() ||
-            backslashs.find(row - col) != backslashs.end()) {
-            return true;
-        }
-        return false;
-    }
-
-    // 生成结果
-    vector<vector<string>> generateResult(int n, vector<vector<int>> result) {
-        vector<vector<string>> generateResult;
-        for (int i = 0, size = result.size(); i < size; i++) {
-            vector<int> currentState = result[i];
-            vector<string> currentStateStr(n, string(n, '.'));
-            for (int j = 0, curSize = currentState.size(); j < curSize; j++) {
-                currentStateStr[j][currentState[j]] = 'Q';
-            }
-            generateResult.push_back(currentStateStr);
-        }
-        return generateResult;
-    }
-};
-
-```
-
-```
-
-// C++
-// 2. 回溯 直接生成结果
+// 1. 回溯
 
 class Solution {
 public:
@@ -532,7 +466,7 @@ private:
 
 ```
 // C++
-// 3. 回溯 位运算
+// 2. 回溯 - 位运算
 
 class Solution {
 public:
