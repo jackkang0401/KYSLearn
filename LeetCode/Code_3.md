@@ -678,7 +678,7 @@ private:
 
 ```
 // C++
-// 1.DP
+// 1. DP
 
 class Solution {
 public:
@@ -695,7 +695,7 @@ public:
             for(int k : map[currentStone]) {                                // 遍历到达 currentStone 的所有跳跃距离 
                 for (int jumpSize = k - 1; jumpSize <= k + 1; jumpSize++) { // 遍历当前所有可跳跃距离
                     if (jumpSize > 0) {
-                        int jumpLocation = stones[i]+jumpSize;              // 跳跃落点位置（可能为水里）
+                        int jumpLocation = currentStone + jumpSize;         // 跳跃落点位置（可能为水里）
                         map[jumpLocation].insert(jumpSize);                 // 添加落点位置对应的跳跃距离
                     }
                 }
@@ -717,7 +717,7 @@ public:
     bool canCross(vector<int>& stones) {
         int size = stones.size();
         if(stones[1] != 1) return false;                                    // 第一步只能跳 1 单元格
-        vector<vector<bool>> dp = vector(size, vector(size+1, false));      // dp[i][k] 表示能否由 i 前面的某一个石头 j 通过跳 k 步到达 i
+        vector<vector<bool>> dp = vector(size, vector(size+1, false));      // dp[i][k] 表示能否由 i 前面的某一个石头通过跳 k 步到达 i
         dp[0][0] = true;
         for(int i = 1; i < size; i++){
             for(int j = 0; j < i; j++){                                     // 遍历之前的所有石头位置
