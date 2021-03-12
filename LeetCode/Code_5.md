@@ -515,3 +515,31 @@ public:
 };
 
 ```
+
+```
+// C++
+// 2. 栈
+
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        int maxLength = 0;
+        stack<int> stk;
+        stk.push(-1);                       // 放入一个值为 -1 的元素，初始化「最后一个没有被匹配的右括号的下标」
+        for (int i = 0, length = s.length(); i < length; i++) {
+            if (s[i] == '(') {
+                stk.push(i);
+            } else {
+                stk.pop();
+                if (stk.empty()) {
+                    stk.push(i);            // 当前的右括号为没有被匹配的右括号，更新「最后一个没有被匹配的右括号的下标」
+                } else {
+                    maxLength = max(maxLength, i-stk.top());
+                }
+            }
+        }
+        return maxLength;
+    }
+};
+
+```
