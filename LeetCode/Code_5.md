@@ -543,3 +543,45 @@ public:
 };
 
 ```
+
+```
+// C++
+// 3. 遍历
+
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        int left = 0, right = 0, maxlength = 0;
+        int length = s.length();
+        // 从左往右遍历
+        for (int i = 0; i < length; i++) {
+            if (s[i] == '(') {
+                left++;
+            } else {
+                right++;
+            }
+            if (left == right) {
+                maxlength = max(maxlength, 2 * right);  // 计算并更新当前有效字符串的长度
+            } else if (right > left) {
+                left = right = 0;                       // 计数置 0
+            }
+        }
+        // 处理 "(()" 情况（left 一直大于 right），从右往左遍历，判断条件反过来即可
+        left = right = 0;
+        for (int i = length-1; i >= 0; i--) {
+            if (s[i] == '(') {
+                left++;
+            } else {
+                right++;
+            }
+            if (left == right) {
+                maxlength = max(maxlength, 2 * left);
+            } else if (left > right) {
+                left = right = 0;
+            }
+        }
+        return maxlength;
+    }
+};
+
+```
