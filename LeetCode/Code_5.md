@@ -586,11 +586,13 @@ public:
 
 ```
 
+
 ## 12.柱状图中最大的矩形（Leetcode 84）
 
 ```
+
 // C++
-// 暴力 枚举【宽】(超时)
+// 1. 暴力 枚举【宽】(超时)
 
 class Solution {
 public:
@@ -603,6 +605,39 @@ public:
                 minHeight = min(minHeight, heights[right]);
                 result = max(result, (right - left + 1) * minHeight);
             }
+        }
+        return result;
+    }
+};
+
+```
+
+
+```
+
+// C++
+// 2. 暴力 枚举【高】(超时)
+
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        /*
+              我们可以使用一重循环枚举某一根柱子，将其固定为矩形的高度 height。
+            随后我们从这跟柱子开始向两侧延伸，直到遇到高度小于 height 的柱子，
+            就确定了矩形的左右边界，便可计算出当前面积
+        */
+        int n = heights.size();
+        int result = 0;
+        for (int mid = 0; mid < n; ++mid) {
+            int height = heights[mid];                          // 固定高
+            int left = mid, right = mid;
+            while (left-1 >= 0 && heights[left-1] >= height) {  // 确定左边界
+                --left;
+            }
+            while (right+1 < n && heights[right+1] >= height) { // 确定右边界
+                ++right;
+            }
+            result = max(result, (right-left+1)*height);        // 计算面积
         }
         return result;
     }
