@@ -604,13 +604,13 @@ public:
         vector<int> dp(target+1, INT_MAX);
         dp[0] = 0;
         for (int i = 1; i <= target; i++) {
-            for (int k = 1; (1<<k)-1 < 2*i; k++) {      // 向前走 k 个 A 指令
-                int s = (1<<k) - 1;                     // k 个 A 指令到达位置
-                if (s == i) {                           // 可直接到达
+            for (int k = 1; (1<<k)-1 < 2*i; k++) {          // 向前走 k 个 A 指令
+                int s = (1<<k) - 1;                         // k 个 A 指令到达位置
+                if (s == i) {                               // 可直接到达
                     dp[i] = k;
-                } else if (s > i) {                     // 走过 i，往回走
-                    dp[i] = min(dp[i], k+1+dp[s-i]);    // +1 代表 R
-                } else {                                // 没走过 i，往回走，再往前走
+                } else if (s > i) {                         // 走过 i，往回走
+                    dp[i] = min(dp[i], k + 1 + dp[s-i]);    // +1 代表 R
+                } else {                                    // 没走过 i，往回走，再往前走
                     for (int back = 0; back < k; back++) {
                         int distabce = i - s + (1<<back)-1;
                         dp[i] = min(dp[i], k + 1 + back + 1 + dp[distabce]);
