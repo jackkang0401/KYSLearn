@@ -608,9 +608,9 @@ public:
                 int s = (1<<k) - 1;                         // k 个 A 指令到达位置
                 if (s == i) {                               // 可直接到达
                     dp[i] = k;
-                } else if (s > i) {                         // 走过 i，往回走
+                } else if (s > i) {                         // 越过 i: 往回走
                     dp[i] = min(dp[i], k + 1 + dp[s-i]);    // +1 代表 R
-                } else {                                    // 没走过 i，往回走，再往前走
+                } else {                                    // 没越过 i: 往回走，再往前走
                     for (int back = 0; back < k; back++) {
                         int distabce = i - s + (1<<back)-1;
                         dp[i] = min(dp[i], k + 1 + back + 1 + dp[distabce]);
@@ -625,6 +625,7 @@ public:
 ```
 
 ```
+
 // C++
 // 2. DP 记录 k 个 A 指令到达位置（省去一个往上迭代 k 个 A 指令到达的位置）
 
@@ -637,20 +638,19 @@ public:
         if (target <= 0) return 0;
         vector<int> dp(target+2, INT_MAX);
         dp[0] = 0; dp[1] = 1; dp[2] = 4;
-        int k = 2; // A 指令个数
-        int s = (1<<k) - 1;  // k 个 A 指令到达的位置 s
+        int k = 2;                                          // 记录 A 指令个数
+        int s = (1<<k) - 1;                                 // 记录 k 个 A 指令到达的位置 s
         for (int i = 3; i <= target; i++) {
             if (i == s) {
-                dp[i] = k++;  //           
+                dp[i] = k++;                                // k 后移（增加一条 A 指令）         
                 s = (1<<k) - 1;
             } else {
-                // 1.前进 k 个 -> 回退
-                if ((s-i) < i) {
-                    dp[i] = k + 1 + dp[s-i];
-                }
-                // 2.前进 k-1 个 -> 回退 -> 回退 back 个 -> 前进
-                for (int back = 0; back <= (k-2); back++) {
-                    int distance = i + (1<<back) - (1<<(k-1));
+                // 1.越过 i: 前进 k 个 -> 回退
+                dp[i] = k + 1 + dp[s-i];                    // 此时 k 个指令 A 对应移动距离 s 越过 i 
+
+                // 2.未越过 i: 前进 k-1 个 -> 回退 -> 回退 back 个 -> 前进
+                for (int back = 0; back < (k-1); back++) {  // k-1 个指令 A 一定没越过 i
+                    int distance = i + ((1<<back)-1) - ((1<<(k-1))-1);
                     dp[i] = min(dp[i], (k-1)+1+back+1+dp[distance]);
                 }
             }
