@@ -715,3 +715,53 @@ public:
 };
 
 ```
+
+
+## 13.最大矩形（Leetcode 85）
+
+```
+
+// C++
+// 1. 柱状图
+
+class Solution {
+public:
+    int maximalRectangle(vector<vector<char>>& matrix) {
+        int n = matrix.size();
+        if (n == 0) {
+            return 0;
+        }
+        int m = matrix[0].size();
+
+        // 计算出矩阵的每个元素的左边连续 1 的数量
+        vector<vector<int>> left(n, vector<int>(m, 0));
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (matrix[i][j] == '1') {
+                    left[i][j] = (j == 0 ? 0: left[i][j-1]) + 1;
+                }
+            }
+        }
+
+        // 将输入转化成了一系列的柱状图，计算每个柱状图最大面积
+        int result = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (matrix[i][j] == '0') {
+                    continue;
+                }
+                // 枚举以该点为右下角的全 1 矩形
+                int width = left[i][j];
+                int area = width;
+                for (int k = i - 1; k >= 0; k--) {
+                    width = min(width, left[k][j]);
+                    area = max(area, (i-k+1) * width);
+                }
+                result = max(result, area);
+            }
+        }
+        return result;
+    }
+};
+
+```
