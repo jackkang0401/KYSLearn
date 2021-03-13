@@ -722,7 +722,7 @@ public:
 ```
 
 // C++
-// 1. 柱状图
+// 1. 柱状图 + 全部遍历
 
 class Solution {
 public:
@@ -758,6 +758,56 @@ public:
                     area = max(area, (i-k+1) * width);
                 }
                 result = max(result, area);
+            }
+        }
+        return result;
+    }
+};
+
+```
+
+
+```
+
+// C++
+// 2. 柱状图 + 确定上下边界
+
+class Solution {
+public:
+    int maximalRectangle(vector<vector<char>>& matrix) {
+        int n = matrix.size();
+        if (n == 0) {
+            return 0;
+        }
+        int m = matrix[0].size();
+
+        // 计算出矩阵的每个元素的左边连续 1 的数量
+        vector<vector<int>> left(n, vector<int>(m, 0));
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (matrix[i][j] == '1') {
+                    left[i][j] = (j == 0 ? 0: left[i][j-1]) + 1;
+                }
+            }
+        }
+
+        // 将输入转化成了一系列的柱状图(竖直方向的 m 个柱状图))，计算每个柱状图最大面积
+        int result = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (matrix[i][j] == '0') {
+                    continue;
+                }
+                // 枚举以该点为右下角的全 1 矩形
+                int width = left[i][j];
+                int top = i, bottom = i;
+                while (top-1 >= 0 && left[top-1][j] >= width) {     // 确定上边界
+                    --top;
+                }
+                while (bottom+1 < n && left[bottom+1][j] >= width) {// 确定下边界
+                    ++bottom;
+                }
+                result = max(result, (bottom-top+1)*width);
             }
         }
         return result;
