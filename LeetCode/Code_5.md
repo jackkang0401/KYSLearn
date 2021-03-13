@@ -598,7 +598,7 @@ class Solution {
 public:
     int racecar(int target) {
         /*
-            dp[i]：到达 i 需要的最小步数
+            dp[i]：走距离 i 需要的最小步数
         */
         if (target <= 0) return 0;
         vector<int> dp(target+1, INT_MAX);
