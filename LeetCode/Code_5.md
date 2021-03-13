@@ -585,3 +585,27 @@ public:
 };
 
 ```
+
+## 12.柱状图中最大的矩形（Leetcode 84）
+
+```
+// C++
+// 暴力 枚举【宽】(超时)
+
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        int n = heights.size();
+        int result = 0;
+        for (int left = 0; left < n; ++left) {              // 左边界
+            int minHeight = INT_MAX;
+            for (int right = left; right < n; ++right) {    // 右边界
+                minHeight = min(minHeight, heights[right]);
+                result = max(result, (right - left + 1) * minHeight);
+            }
+        }
+        return result;
+    }
+};
+
+```
