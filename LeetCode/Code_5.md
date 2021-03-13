@@ -592,7 +592,7 @@ public:
 ```
 
 // C++
-// DP
+// 1. DP
 
 class Solution {
 public:
@@ -623,6 +623,42 @@ public:
     }
 };
 
+```
+
+```
+// C++
+// 2. DP 记录 k 个 A 指令到达位置（省去一个往上迭代 k 个 A 指令到达的位置）
+
+class Solution {
+public:
+    int racecar(int target) {
+        /*
+            dp[i]：走距离 i 需要的最小步数
+        */
+        if (target <= 0) return 0;
+        vector<int> dp(target+2, INT_MAX);
+        dp[0] = 0; dp[1] = 1; dp[2] = 4;
+        int k = 2; // A 指令个数
+        int s = (1<<k) - 1;  // k 个 A 指令到达的位置 s
+        for (int i = 3; i <= target; i++) {
+            if (i == s) {
+                dp[i] = k++;  //           
+                s = (1<<k) - 1;
+            } else {
+                // 1.前进 k 个 -> 回退
+                if ((s-i) < i) {
+                    dp[i] = k + 1 + dp[s-i];
+                }
+                // 2.前进 k-1 个 -> 回退 -> 回退 back 个 -> 前进
+                for (int back = 0; back <= (k-2); back++) {
+                    int distance = i + (1<<back) - (1<<(k-1));
+                    dp[i] = min(dp[i], (k-1)+1+back+1+dp[distance]);
+                }
+            }
+        }
+        return dp[target];
+    }
+};
 
 ```
 
