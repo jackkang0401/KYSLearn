@@ -745,15 +745,15 @@ public:
 
         // 将输入转化成了一系列的柱状图(每一列为一个柱状图)，计算每个柱状图最大面积           
         int result = 0;
-        for (int j = 0; j < m; j++) {// 对于每一列，使用基于柱状图的算法
-            for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {               // 对于每一列，使用基于柱状图的算法
+            for (int i = 0; i < n; i++) {           // 下边界
                 if (matrix[i][j] == '0') {
                     continue;
                 }
                 // 枚举以该点为右下角的全 1 矩形
                 int width = left[i][j];
                 int area = width;
-                for (int k = i - 1; k >= 0; k--) {
+                for (int k = i - 1; k >= 0; k--) {  // 上边界
                     width = min(width, left[k][j]);
                     area = max(area, (i-k+1) * width);
                 }
@@ -793,7 +793,7 @@ public:
 
         // 将输入转化成了一系列的柱状图(每一列为一个柱状图)，计算每个柱状图最大面积          
         int result = 0;
-        for (int j = 0; j < m; j++) {   // 对于每一列，使用基于柱状图的算法
+        for (int j = 0; j < m; j++) {               // 对于每一列，使用基于柱状图的算法
             for (int mid = 0; mid < n; mid++) {
                 if (matrix[mid][j] == '0') {
                     continue;
