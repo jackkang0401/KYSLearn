@@ -819,7 +819,7 @@ public:
 ```
 
 // C++
-// 2. 单调栈
+// 2. 柱状图 + 单调栈
 
 class Solution {
 public:
@@ -874,5 +874,56 @@ public:
     }
 };
 
+
+```
+
+```
+
+// C++
+// 4. 柱状图 + 单调栈 + 常数优化
+
+class Solution {
+public:
+    int maximalRectangle(vector<vector<char>>& matrix) {
+        int n = matrix.size();
+        if (n == 0) {
+            return 0;
+        }
+        int m = matrix[0].size();
+
+        // 计算出矩阵的每个元素的左边连续 1 的数量
+        vector<vector<int>> left(n, vector<int>(m, 0));
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (matrix[i][j] == '1') {
+                    left[i][j] = (j == 0 ? 0: left[i][j-1]) + 1;
+                }
+            }
+        }
+
+        // 将输入转化成了一系列的柱状图(每一列为一个柱状图)，计算每个柱状图最大面积
+        int result = 0;
+        for (int j = 0; j < m; j++) {               // 对于每一列，使用基于柱状图的算法
+            vector<int> up(n, 0), down(n, n);
+
+            // 确定上下边界
+            stack<int> topStack;
+            for (int i = 0; i < n; i++) {
+                while (!topStack.empty() && left[topStack.top()][j] >= left[i][j]) {
+                    down[topStack.top()] = i;
+                    topStack.pop();
+                }
+                up[i] = topStack.empty() ? -1 : topStack.top();
+                topStack.push(i);
+            }
+
+            // 计算最大面积
+            for (int i = 0; i < n; i++) {
+                result = max(result, (down[i]-up[i]-1) * left[i][j]);
+            }
+        }
+        return result;
+    }
+};
 
 ```
