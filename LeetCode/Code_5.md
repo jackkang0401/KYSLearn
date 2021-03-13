@@ -677,7 +677,38 @@ public:
         // 计算最大面积
         int result = 0;
         for (int i = 0; i < n; ++i) {
-            result = max(result, (right[i] - left[i] - 1) * heights[i]);
+            result = max(result, (right[i]-left[i]-1) * heights[i]);
+        }
+        return result;
+    }
+};
+
+```
+
+```
+
+// C++
+// 4. 单调栈 + 常数优化
+
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        int n = heights.size();
+        vector<int> left(n), right(n, n);
+        // 确定左右边界
+        stack<int> leftStack;               // 单调递减栈
+        for (int i = 0; i < n; ++i) {
+            while (!leftStack.empty() && heights[leftStack.top()] >= heights[i]) {
+                right[leftStack.top()] = i;
+                leftStack.pop();
+            }
+            left[i] = (leftStack.empty() ? -1 : leftStack.top());
+            leftStack.push(i);
+        }
+        // 计算最大面积
+        int result = 0;
+        for (int i = 0; i < n; ++i) {
+            result = max(result, (right[i]-left[i]-1) * heights[i]);
         }
         return result;
     }
