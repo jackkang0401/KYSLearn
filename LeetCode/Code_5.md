@@ -662,8 +662,45 @@ public:
 ```
 
 
+## 13.最大正方形
 
-## 13.柱状图中最大的矩形（Leetcode 84）
+```
+// C++
+// DP
+
+class Solution {
+public:
+    int maximalSquare(vector<vector<char>>& matrix) {
+        /*
+            dp[i][j] 表示以 (i,j) 为右下角，且只包含 1 的正方形的边长最大值
+        */
+        int n = matrix.size();
+        if (n == 0) return 0;
+        int m = matrix[0].size();
+        if (m == 0) return 0;
+
+        int maxSide = 0;
+        vector<vector<int>> dp(n, vector<int>(m, 0));
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (matrix[i][j] == '1') {
+                    if (i == 0 || j == 0) {
+                        dp[i][j] = 1;
+                    } else {
+                        dp[i][j] = min(min(dp[i-1][j], dp[i][j-1]), dp[i-1][j-1])+1;
+                    }
+                    maxSide = max(maxSide, dp[i][j]);   // 记录最大边长
+                }
+            }
+        }
+        return maxSide * maxSide;
+    }
+};
+
+```
+
+
+## 14.柱状图中最大的矩形（Leetcode 84）
 
 ```
 
@@ -793,7 +830,7 @@ public:
 ```
 
 
-## 14.最大矩形（Leetcode 85）
+## 15.最大矩形（Leetcode 85）
 
 ```
 
