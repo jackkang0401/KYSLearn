@@ -603,7 +603,7 @@ public:
             int minHeight = INT_MAX;
             for (int right = left; right < n; ++right) {    // 右边界
                 minHeight = min(minHeight, heights[right]);
-                result = max(result, (right - left + 1) * minHeight);
+                result = max(result, (right-left+1) * minHeight);
             }
         }
         return result;
@@ -637,7 +637,7 @@ public:
             while (right+1 < n && heights[right+1] >= height) { // 确定右边界
                 ++right;
             }
-            result = max(result, (right-left+1)*height);        // 计算面积
+            result = max(result, (right-left+1) * height);        // 计算面积
         }
         return result;
     }
@@ -743,10 +743,10 @@ public:
             }
         }
 
-        // 将输入转化成了一系列的柱状图(竖直方向的 m 个柱状图)，计算每个柱状图最大面积
+        // 将输入转化成了一系列的柱状图(每一列为一个柱状图)，计算每个柱状图最大面积           
         int result = 0;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
+        for (int j = 0; j < m; j++) {// 对于每一列，使用基于柱状图的算法
+            for (int i = 0; i < n; i++) {
                 if (matrix[i][j] == '0') {
                     continue;
                 }
@@ -791,16 +791,16 @@ public:
             }
         }
 
-        // 将输入转化成了一系列的柱状图(竖直方向的 m 个柱状图)，计算每个柱状图最大面积
+        // 将输入转化成了一系列的柱状图(每一列为一个柱状图)，计算每个柱状图最大面积          
         int result = 0;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (matrix[i][j] == '0') {
+        for (int j = 0; j < m; j++) {   // 对于每一列，使用基于柱状图的算法
+            for (int mid = 0; mid < n; mid++) {
+                if (matrix[mid][j] == '0') {
                     continue;
                 }
                 // 枚举以该点为右下角的全 1 矩形
-                int width = left[i][j];
-                int top = i, bottom = i;
+                int width = left[mid][j];
+                int top = mid, bottom = mid;
                 while (top-1 >= 0 && left[top-1][j] >= width) {     // 确定上边界
                     --top;
                 }
