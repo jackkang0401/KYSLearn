@@ -604,17 +604,16 @@ public:
         vector<int> dp(target+1, INT_MAX);
         dp[0] = 0;
         for (int i = 1; i <= target; i++) {
-            // 向前走 forward 步
-            for (int forward = 1; (1<<forward)-1 < 2*i; forward++) {
-                int forwardDisrance = (1<<forward) - 1;
-                if (forwardDisrance == i) {             // 直接到达
-                    dp[i] = forward;
-                } else if (forwardDisrance > i) {       // 走过 i，往回走
-                    dp[i] = min(dp[i], forward+1+dp[forwardDisrance-i]); // +1 代表 R
+            for (int k = 1; (1<<k)-1 < 2*i; k++) {      // 向前走 k 个 A 指令
+                int s = (1<<k) - 1;                     // k 个 A 指令到达位置
+                if (s == i) {                           // 可直接到达
+                    dp[i] = k;
+                } else if (s > i) {                     // 走过 i，往回走
+                    dp[i] = min(dp[i], k+1+dp[s-i]);    // +1 代表 R
                 } else {                                // 没走过 i，往回走，再往前走
-                    for (int backward = 0; backward < forward; backward++) {
-                        int backwardDistabce = (1<<backward) - 1;
-                        dp[i] = min(dp[i], forward+1+backward+1+dp[i-forwardDisrance+backwardDistabce]);
+                    for (int back = 0; back < k; back++) {
+                        int distabce = i - s + (1<<back)-1;
+                        dp[i] = min(dp[i], k + 1 + back + 1 + dp[distabce]);
                     }
                 }
             }
