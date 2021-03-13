@@ -147,34 +147,34 @@ public:
 private:
     
     bool bfs(string beginWord, string endWord, unordered_set<string>& wordSet, unordered_map<string, vector<string>>& nextMap) {
-        unordered_set<string> currentSet;
-        currentSet.insert(beginWord);
-        while (!currentSet.empty()) {
+        unordered_set<string> currentLevelSet;
+        currentLevelSet.insert(beginWord);
+        while (!currentLevelSet.empty()) {
             // 由于是广度生成，遍历到 endWord 即可停止，本题要找出所有的最短转换序列，到这里已包含
-            if (currentSet.find(endWord) != currentSet.end()) {
+            if (currentLevelSet.find(endWord) != currentLevelSet.end()) {
                 return true;
             }
             // 从集合中移除当前层的 word
-            for (string word : currentSet) {
+            for (string word : currentLevelSet) {
                 wordSet.erase(word);
             }
             // 计算下一层 word 集合 
-            unordered_set<string> temp;
-            for (string word : currentSet) {
+            unordered_set<string> nextLevelSet;
+            for (string word : currentLevelSet) {
                 string parent = word;
                 for (int i = 0; i < word.size(); i++) {
                     char cur = word[i];
                     for (char c = 'a'; c <= 'z'; c++) {
                         word[i] = c;
                         if (wordSet.find(word) != wordSet.end()) {
-                            temp.insert(word);
+                            nextLevelSet.insert(word);
                             nextMap[parent].push_back(word); // 插入映射表
                         }
                     }
                     word[i] = cur;
                 }
             }
-            currentSet = temp;
+            currentLevelSet = nextLevelSet;
         }
         return false;   // 没有可转换到 endWord 的序列
     }
@@ -240,34 +240,34 @@ public:
 private:
     
     bool bfs(string beginWord, string endWord,unordered_set<string>& wordSet, unordered_map<string, vector<string>>& wordMap, unordered_map<string, vector<string>>& nextMap) {
-        unordered_set<string> currentSet;
-        currentSet.insert(beginWord);
-        while (!currentSet.empty()) {
+        unordered_set<string> currentLevelSet;
+        currentLevelSet.insert(beginWord);
+        while (!currentLevelSet.empty()) {
             // 由于是广度生成，遍历到 endWord 即可停止，本题要找出所有的最短转换序列，到这里已包含
-            if (currentSet.find(endWord) != currentSet.end()) {
+            if (currentLevelSet.find(endWord) != currentLevelSet.end()) {
                 return true;
             }
             // 从集合中移除当前层的 word
-            for (string word : currentSet) {
+            for (string word : currentLevelSet) {
                 wordSet.erase(word);
             }
             // 计算下一层 word 集合 
-            unordered_set<string> temp;
-            for (string word : currentSet) {
+            unordered_set<string> nextLevelSet;
+            for (string word : currentLevelSet) {
                 string parent = word;
                 for (int i = 0; i < word.size(); i++) {
                     char cur = word[i];
                     word[i] = '*';
                     for (auto w : wordMap[word]) {
                         if (wordSet.find(w) != wordSet.end()) {
-                            temp.insert(w);
+                            nextLevelSet.insert(w);
                             nextMap[parent].push_back(w); // 插入映射表
                         }
                     }
                     word[i] = cur;
                 }
             }
-            currentSet = temp;
+            currentLevelSet = nextLevelSet;
         }
         return false;   // 没有可转换到 endWord 的序列
     }
