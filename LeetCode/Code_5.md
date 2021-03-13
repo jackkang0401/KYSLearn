@@ -587,7 +587,48 @@ public:
 ```
 
 
-## 12.柱状图中最大的矩形（Leetcode 84）
+## 12.赛车（Leetcode 818）
+
+```
+
+// C++
+// DP
+
+class Solution {
+public:
+    int racecar(int target) {
+        /*
+            dp[i]：到达 i 需要的最小步数
+        */
+        if (target <= 0) return 0;
+        vector<int> dp(target+1, INT_MAX);
+        dp[0] = 0;
+        for (int i = 1; i <= target; i++) {
+            // 向前走 forward 步
+            for (int forward = 1; (1<<forward)-1 < 2*i; forward++) {
+                int forwardDisrance = (1<<forward) - 1;
+                if (forwardDisrance == i) {             // 直接到达
+                    dp[i] = forward;
+                } else if (forwardDisrance > i) {       // 走过 i，往回走
+                    dp[i] = min(dp[i], forward+1+dp[forwardDisrance-i]); // +1 代表 R
+                } else {                                // 没走过 i，往回走，再往前走
+                    for (int backward = 0; backward < forward; backward++) {
+                        int backwardDistabce = (1<<backward) - 1;
+                        dp[i] = min(dp[i], forward+1+backward+1+dp[i-forwardDisrance+backwardDistabce]);
+                    }
+                }
+            }
+        }
+        return dp[target];
+    }
+};
+
+
+```
+
+
+
+## 13.柱状图中最大的矩形（Leetcode 84）
 
 ```
 
@@ -717,7 +758,7 @@ public:
 ```
 
 
-## 13.最大矩形（Leetcode 85）
+## 14.最大矩形（Leetcode 85）
 
 ```
 
