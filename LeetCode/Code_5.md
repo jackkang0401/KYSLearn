@@ -644,3 +644,43 @@ public:
 };
 
 ```
+
+
+```
+
+// C++
+// 3. 单调栈
+
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        int n = heights.size();
+        vector<int> left(n), right(n);
+        // 确定左边界
+        stack<int> leftStack;           // 单调递减栈
+        for (int i = 0; i < n; ++i) {
+            while (!leftStack.empty() && heights[leftStack.top()] >= heights[i]) {
+                leftStack.pop();
+            }
+            left[i] = (leftStack.empty() ? -1 : leftStack.top());
+            leftStack.push(i);
+        }
+        // 确定右边界
+        stack<int> rightStack;          // 单调递减栈
+        for (int i = n - 1; i >= 0; --i) {
+            while (!rightStack.empty() && heights[rightStack.top()] >= heights[i]) {
+                rightStack.pop();
+            }
+            right[i] = (rightStack.empty() ? n : rightStack.top());
+            rightStack.push(i);
+        }
+        // 计算最大面积
+        int result = 0;
+        for (int i = 0; i < n; ++i) {
+            result = max(result, (right[i] - left[i] - 1) * heights[i]);
+        }
+        return result;
+    }
+};
+
+```
