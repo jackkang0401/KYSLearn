@@ -865,7 +865,7 @@ public:
                 }
                 // 枚举以该点为右下角的全 1 矩形
                 int width = left[i][j];
-                int area = width;
+                int area = width;                   // k = i 时的面积
                 for (int k = i - 1; k >= 0; k--) {  // 上边界
                     width = min(width, left[k][j]);
                     area = max(area, (i-k+1) * width);
