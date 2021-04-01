@@ -851,7 +851,7 @@ public:
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 if (matrix[i][j] == '1') {
-                    left[i][j] = (j == 0 ? 0: left[i][j-1]) + 1;
+                    left[i][j] = (j == 0 ? 0 : left[i][j-1]) + 1;
                 }
             }
         }
@@ -899,7 +899,7 @@ public:
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 if (matrix[i][j] == '1') {
-                    left[i][j] = (j == 0 ? 0: left[i][j-1]) + 1;
+                    left[i][j] = (j == 0 ? 0 : left[i][j-1]) + 1;
                 }
             }
         }
@@ -948,7 +948,7 @@ public:
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 if (matrix[i][j] == '1') {
-                    left[i][j] = (j == 0 ? 0: left[i][j-1]) + 1;
+                    left[i][j] = (j == 0 ? 0 : left[i][j-1]) + 1;
                 }
             }
         }
@@ -1009,7 +1009,7 @@ public:
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 if (matrix[i][j] == '1') {
-                    left[i][j] = (j == 0 ? 0: left[i][j-1]) + 1;
+                    left[i][j] = (j == 0 ? 0 : left[i][j-1]) + 1;
                 }
             }
         }
