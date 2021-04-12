@@ -635,8 +635,8 @@ public:
         /*
             dp[i]：走距离 i 需要的最小步数
         */
-        if (target <= 0) return 0;
-        vector<int> dp(target+2, INT_MAX);
+        if (target <= 1) return target;
+        vector<int> dp(target+1, INT_MAX);
         dp[0] = 0; dp[1] = 1; dp[2] = 4;
         int k = 2;                                          // 记录 A 指令个数
         int s = (1<<k) - 1;                                 // 记录 k 个 A 指令到达的位置 s
