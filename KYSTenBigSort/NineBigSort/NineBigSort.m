@@ -29,8 +29,8 @@ void swap(int *x, int *y) {
 void bubbleSort(int* array, int length) {
     for(int i = 0; i < length; i++) {
         for(int j = 0; j < length-(i+1); j++) {
-            if(array[j] > array[j + 1]) { // 把大的移动到最后（也可把小的移动到最前）
-                swap(array+j,array+j+1);
+            if(array[j] > array[j+1]) {         // 把大的移动到最后（也可把小的移动到最前）
+                swap(array+j, array+j+1);
             }
         }
     }
@@ -43,8 +43,8 @@ void improvedBubbleSort(int* array, int length) {
         if (false == flag) return;
         flag = false;
         for(int j = 0; j < length-(i+1); j++) {
-            if(array[j] > array[j + 1]) {
-                swap(array+j,array+j+1);
+            if(array[j] > array[j+1]) {
+                swap(array+j, array+j+1);
                 flag = true;
             }
         }
@@ -63,7 +63,7 @@ void sectionSort(int* array, int length) {
             }
         }
         if (min != i) {
-            swap(array+i,array+min);
+            swap(array+i, array+min);
         }
     }
 }
@@ -138,7 +138,7 @@ int partition(int *array, int left, int right) {
     int index = pivot + 1;
     for (int i = index; i <= right; i++) {
         if (array[i] < array[pivot]) {
-            swap(array+i, array+index);
+            if (i != index) swap(array+i, array+index);
             index++;
         }
     }
