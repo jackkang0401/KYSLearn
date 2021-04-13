@@ -77,8 +77,8 @@ public:
         beginSet.insert(beginWord);
         endSet.insert(endWord);
 
-        int length = 1;
-        while(!beginSet.empty() && !endSet.empty()) {   // 注意是 &&，使用 || 结果也是正确的，但会超时
+        int level = 1;
+        while(!beginSet.empty() && !endSet.empty()) {
             // 如果起始集合比结束集合大，进行交换
             if (beginSet.size() > endSet.size()) {
                 set<string> tempSet = beginSet;
@@ -94,7 +94,7 @@ public:
                         if (cur == c) continue;
                         word[i] = c;
                         if (wordSet.find(word) != wordSet.end()) {
-                            if (endSet.find(word) != endSet.end()) return length + 1;
+                            if (endSet.find(word) != endSet.end()) return level + 1;
                             if (visited.find(word) == visited.end()) {
                                 nextSet.insert(word);
                                 visited.insert(word);
@@ -105,7 +105,7 @@ public:
                 }
             }
             beginSet = nextSet;
-            length ++;
+            level ++;
         }
         return 0;
     }
