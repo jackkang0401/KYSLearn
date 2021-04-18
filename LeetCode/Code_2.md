@@ -12,24 +12,21 @@ public:
     int numDecodings(string s) {
 
         /*
-            dp[n]：代表 s 前 n 个字符的解码方法总数
+            dp[i]：代表 s 前 i 个字符（第 i-1 个为最后一个字符串）的解码方法总数
         */
 
         int size = s.size();
-        if (0 == size || '0' == s[0]) return 0; // 首位为 0，不可解码
+        if (0 == size || '0' == s[0]) return 0;     // 首位为 0，不可解码
         vector<int> dp(size+1);
         dp[0] = dp[1] = 1;                      
         for (int i = 2; i <= size; i++) {
-            if ('0' == s[i-1]) {                // dp 第 i 个对应 s 的第 i-1 个           
-                if ('1' == s[i-2] || '2' == s[i-2]){
-                    dp[i] = dp[i-2];            // 当前位为 0，上一位必须是 1 或 2 才能解码
-                } else {
-                    return 0;
-                } 
+            if ('0' == s[i-1]) {                           
+                if (false == ('1'==s[i-2] || '2' == s[i-2])) return 0;
+                dp[i] = dp[i-2];                    // 当前位为 0，上一位必须是 1 或 2 才能解码
             } else if (s[i-1] <= '6') {
-                dp[i] = dp[i-1] + (('1' == s[i-2] || '2' == s[i-2]) ? dp[i-2] : 0);
+                dp[i] = dp[i-1] + (('1'==s[i-2] || '2'==s[i-2]) ? dp[i-2] : 0);
             } else {
-                dp[i] = dp[i-1] + (('1' == s[i-2]) ? dp[i-2] : 0);
+                dp[i] = dp[i-1] + (('1'==s[i-2]) ? dp[i-2] : 0);
             }
         }
         return dp[size];
