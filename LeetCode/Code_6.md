@@ -35,10 +35,11 @@ public:
 
 ## 2.数组的相对排序（Leetcode 1122）
 
+
 ```
 
 // C++
-// 自定义排序规则
+// 1. 自定义排序规则
 
 class Solution {
 public:
@@ -64,5 +65,39 @@ public:
     }
 };
 
+```
+
+```
+
+// C++
+// 2. 计数排序
+
+class Solution {
+public:
+    vector<int> relativeSortArray(vector<int>& arr1, vector<int>& arr2) {
+        // 计算最大值，优化 frequency 空间
+        int upper = *max_element(arr1.begin(), arr1.end());
+        // 记录各个值的频次
+        vector<int> frequency(upper+1);
+        for (int x : arr1) {
+            ++frequency[x];
+        }
+        // 将 arr2 中的值根据频次插入到结果
+        vector<int> ans;
+        for (int x : arr2) {
+            for (int i = 0; i < frequency[x]; i++) {
+                ans.push_back(x);
+            }
+            frequency[x] = 0;
+        }
+        // 将不在 arr2 中的值根据频次插入到结果
+        for (int x = 0; x <= upper; ++x) {
+            for (int i = 0; i < frequency[x]; i++) {
+                ans.push_back(x);
+            }
+        }
+        return ans;
+    }
+};
 
 ```
