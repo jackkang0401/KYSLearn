@@ -526,7 +526,7 @@ private:
 ```
 
 // C++
-// 回溯
+// 1. 回溯
 
 class Solution {
 public:
@@ -571,6 +571,44 @@ private:
     }
 };
 
+```
+
+```
+
+// C++
+// 2. 回溯 - 位运算
+
+class Solution {
+public:
+    int totalNQueens(int n) {
+        if (n <= 0) return 0;
+        int count = 0;
+        dfs(n, 0, 0, 0, 0, count);
+        return count;
+    }
+
+private:
+    void dfs(int n, int row, int cols, int slashs, int backslashs, int &count) {
+        if (row >= n) {
+            count++;
+            return;
+        }
+        /*
+         1. cls | slash | backslashs 得到所有可以放置皇后的列，对应位为 0
+         2. ~ 取反将可放皇后的位置改为 1
+         3. & ((1 << n) - 1) 清空高位多余的 1
+        */
+        int placeColBits = (~(cols | slashs | backslashs)) & ((1 << n) - 1);
+        while (placeColBits) {
+            // 负数的补码等于原码的尾数的第一个 1 及其右边的 0 保持不变，左边的各位按位取反，符号位不变
+            int p = placeColBits & -placeColBits;               // 取出最低位的 1（可放置皇后位置）
+            placeColBits = placeColBits & (placeColBits - 1);   // 清除最低位 1
+            
+            // (slashs | p) << 1 与 (backslashs | p) >> 1 都是下一行不可放置的列
+            dfs(n, row + 1, cols | p, (slashs | p) << 1, (backslashs | p) >> 1, count);
+        }
+    }
+};
 
 ```
 
