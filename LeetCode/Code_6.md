@@ -101,3 +101,40 @@ public:
 };
 
 ```
+
+
+## 3.合并区间（Leetcode 56）
+
+```
+
+// C++
+// 排序
+
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        if (intervals.size() == 0) {
+            return {};
+        }
+        // 按照区间的左端点排序
+        sort(intervals.begin(), intervals.end(), [&](vector<int> x, vector<int> y) {
+            return x[0] < y[0];
+        });
+        vector<vector<int>> merged;
+        for (int i = 0; i < intervals.size(); ++i) {
+            int l = intervals[i][0];
+            int r = intervals[i][1];
+            if (!merged.size() || merged.back()[1] < l) {           // 当前区间的左端点在 merged 中最后一个区间的右端点之后
+                merged.push_back({l, r});       
+            } else {
+                merged.back()[1] = max(merged.back()[1], r);        // 合并，取右端点较大值
+            }
+        }
+        return merged;
+    }
+};
+
+```
+
+
+
