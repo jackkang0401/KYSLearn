@@ -28,7 +28,7 @@ void swap(int *x, int *y) {
 // 冒泡排序
 void bubbleSort(int* array, int length) {
     for(int i = 0; i < length; i++) {
-        for(int j = 0; j < length-(i+1); j++) {
+        for(int j = 0; j < (length-1)-i; j++) {
             if(array[j] > array[j+1]) {         // 把大的移动到最后（也可把小的移动到最前）
                 swap(array+j, array+j+1);
             }
@@ -42,7 +42,7 @@ void improvedBubbleSort(int* array, int length) {
     for(int i = 0; i < length; i++) {
         if (false == flag) return;
         flag = false;
-        for(int j = 0; j < length-(i+1); j++) {
+        for(int j = 0; j < (length-1)-i; j++) {
             if(array[j] > array[j+1]) {
                 swap(array+j, array+j+1);
                 flag = true;
