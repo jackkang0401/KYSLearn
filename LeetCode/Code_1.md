@@ -708,25 +708,7 @@ public:
 };
 ```
 
-## 13.买卖股票的最佳时机 II（Leetcode 122）
-
-```
-// C
-
-int maxProfit(int* prices, int pricesSize){
-    if (pricesSize<=1) return 0;
-    int total = 0;
-    for (int i=0; i<pricesSize-1; i++) {
-        if (prices[i+1] > prices[i]) {
-            total += (prices[i+1] - prices[i]);
-        }
-    }
-    return total;
-}
-
-```
-
-## 14.搜索旋转排序数组（Leetcode 33）
+## 13.搜索旋转排序数组（Leetcode 33）
 
 ```
 // C
@@ -774,7 +756,7 @@ public:
 
 ```
 
-## 15.四数之和（Leetcode 18）
+## 14.四数之和（Leetcode 18）
 
 
 ```
@@ -814,7 +796,7 @@ public:
 
 ```
 
-## 16.跳跃游戏 II（Leetcode 45）
+## 15.跳跃游戏 II（Leetcode 45）
 
 ```
 // C
@@ -859,7 +841,7 @@ public:
 
 ```
 
-## 17.最小路径和（Leetcode 64）
+## 16.最小路径和（Leetcode 64）
 
 ```
 // C++

@@ -189,7 +189,7 @@ private:
 ```
 
 
-## 买卖股票的最佳时机（Leetcode 121）
+## 5.买卖股票的最佳时机（Leetcode 121）
 
 ```
 
@@ -206,5 +206,23 @@ public:
         return maxProfit;
     }
 };
+
+```
+
+## 6.买卖股票的最佳时机 II（Leetcode 122）
+
+```
+// C
+
+int maxProfit(int* prices, int pricesSize){
+    if (pricesSize<=1) return 0;
+    int total = 0;
+    for (int i=0; i<pricesSize-1; i++) {
+        if (prices[i+1] > prices[i]) {
+            total += (prices[i+1] - prices[i]);
+        }
+    }
+    return total;
+}
 
 ```
