@@ -188,3 +188,23 @@ private:
 
 ```
 
+
+## 买卖股票的最佳时机（Leetcode 121）
+
+```
+
+// C++
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int minPrice = 10000, maxProfit = 0;
+        for (int price : prices) {
+            maxProfit = max(maxProfit, price-minPrice);     // 当前价格减去历史最低价格后更新最大收益
+            minPrice = min(price, minPrice);                // 记录历史最低价格
+        }
+        return maxProfit;
+    }
+};
+
+```
