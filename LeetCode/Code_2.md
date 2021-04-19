@@ -520,7 +520,63 @@ private:
 
 ```
 
-## 8.LRU缓存机制（Leetcode 146）
+
+## 8 N皇后 II（Leetcode 52）
+
+```
+
+// C++
+// 回溯
+
+class Solution {
+public:
+    int totalNQueens(int n) {
+        if (n <= 0) return 0;
+        int count = 0;
+        set<int> cols;                      // '|' 列
+        set<int> slashs;                    // '/' row + column
+        set<int> backslashs;                // '\' row - column
+        dfs(n, 0, cols, slashs, backslashs, count);
+        return count;
+    }
+
+private:
+    void dfs(int n, int row, set<int> &cols, set<int> &slashs, set<int> &backslashs, int &count) {
+        if (row >= n) {
+            count++;
+            return;
+        }
+        for (int col = 0; col < n; col++) {
+            if (hasContain(row, col, cols, slashs, backslashs)) continue;
+            cols.insert(col);
+            slashs.insert(row + col);
+            backslashs.insert(row - col);
+
+            dfs(n, row + 1, cols, slashs, backslashs, count);
+
+            cols.erase(col);
+            slashs.erase(row + col);
+            backslashs.erase(row - col);
+        }
+    }
+
+    // 检测是否发生冲突
+    bool hasContain(int row, int col, set<int> &cols, set<int> &slashs, set<int> &backslashs) {
+        if (cols.find(col) != cols.end() || 
+            slashs.find(row + col) != slashs.end() ||
+            backslashs.find(row - col) != backslashs.end()) {
+            return true;
+        }
+        return false;
+    }
+};
+
+
+```
+
+
+## 9.LRU缓存机制（Leetcode 146）
+
 
 ```
 // C++
@@ -616,7 +672,7 @@ private:
  
 ```
 
-## 9. 正则表达式匹配（Leetcode 10）
+## 10. 正则表达式匹配（Leetcode 10）
 
 ```
 // C++
@@ -663,7 +719,7 @@ private:
 ```
 
 
-## 10.通配符匹配（Leetcode 44）
+## 11.通配符匹配（Leetcode 44）
 
 ```
 
@@ -715,7 +771,7 @@ public:
 ```
 
 
-## 11.最长递增子序列（Leetcode 300）
+## 12.最长递增子序列（Leetcode 300）
 
 ```
 // C++
