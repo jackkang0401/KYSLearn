@@ -244,7 +244,7 @@ public:
                     2.第一次卖出
                     3.第二次买入
                     4.第二次卖出
-                dp[i][j]: 表示第 i 天状态 j 所剩最大现金（i 为第i天，j 为 [0,4] 五个状态）
+                dp[i][j]: 表示第 i 天状态 j 拥有现金（i 为第i天，j 为 [0,4] 五个状态）
 
             二、dp 公式
                 dp[i][1] 表示的是第 i 天买入股票的状态，并不是说一定要第 i 天买入股票，也可能是之前某天买的股票
@@ -264,7 +264,7 @@ public:
                     dp[i][4] = max(dp[i - 1][4], dp[i - 1][3] + prices[i]);
 
             三、初始状态
-                初始最大剩余现金为 0 即可
+                初始拥有现金为 0 即可
                 第 0 天无操作，dp[0][0] = 0;
                 第 0 天第一次买入的操作，dp[0][1] = 0-prices[0];
                 第 0 天第一次卖出的操作，dp[0][2] = 0;（第 0 天不可能卖，之前也不可能存在买）
@@ -308,6 +308,35 @@ public:
             dp[4] = max(dp[4], dp[3]+prices[i]);
         }
         return dp[4];
+    }
+};
+
+```
+
+
+## 8.买卖股票的最佳时机 IV（Leetcode 188）
+
+
+```
+// C++
+// DP 空间优化
+
+class Solution {
+public:
+    int maxProfit(int k, vector<int>& prices) {
+        if (prices.size() == 0) return 0;
+        vector<int> dp(2*k+1, 0);
+        // 初始状态，i = 0 无操作，i 为奇数买入，i 为偶数卖出
+        for (int i = 1, size= dp.size(); i < size; i+=2) {
+            dp[i] = -prices[0];
+        }
+        for (int i = 1; i < prices.size(); i++) {
+            for (int j = 1, size= dp.size(); j < size; j+=2) {
+                dp[j] = max(dp[j], dp[j-1]-prices[i]);          // 奇数买入
+                dp[j+1] = max(dp[j+1], dp[j]+prices[i]);        // 偶数卖出
+            }
+        }
+        return dp[2*k];
     }
 };
 
