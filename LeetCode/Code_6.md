@@ -226,3 +226,89 @@ int maxProfit(int* prices, int pricesSize){
 }
 
 ```
+
+## 7.买卖股票的最佳时机 III（Leetcode 123）
+
+```
+// C++
+// DP
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        /*
+            一、dp 数组以及下标的含义
+                一天有五个状态：
+                    0.没有操作
+                    1.第一次买入
+                    2.第一次卖出
+                    3.第二次买入
+                    4.第二次卖出
+                dp[i][j]: 表示第 i 天状态 j 所剩最大现金（i 为第i天，j 为 [0,4] 五个状态）
+
+            二、dp 公式
+                dp[i][1] 表示的是第 i 天买入股票的状态，并不是说一定要第 i 天买入股票，也可能是之前某天买的股票
+                
+                达到 dp[i][1] (第 i 天处在第一次买入状态)，有两个具体操作：
+                    操作一：第 i 天买入股票，那么dp[i][1] = dp[i-1][0] - prices[i]
+                    操作二：第 i 天没有操作，而是沿用前一天买入的状态，即：dp[i][1] = dp[i-1][1]
+                取较大值，所以 dp[i][1] = max(dp[i-1][0] - prices[i], dp[i-1][1])
+
+                达到 dp[i][2] (第 i 天处在第一次卖出状态)，也有两个操作：
+                    操作一：第 i 天卖出股票，那么dp[i][2] = dp[i - 1][1] + prices[i]
+                    操作二：第 i 天没有操作，沿用前一天卖出股票的状态，即：dp[i][2] = dp[i-1][2]
+                取较大值，所以 dp[i][2] = max(dp[i-1][1] + prices[i], dp[i-1][2])
+
+                同理可推出剩下状态部分：
+                    dp[i][3] = max(dp[i - 1][3], dp[i - 1][2] - prices[i]);
+                    dp[i][4] = max(dp[i - 1][4], dp[i - 1][3] + prices[i]);
+
+            三、初始状态
+                初始最大剩余现金为 0 即可
+                第 0 天无操作，dp[0][0] = 0;
+                第 0 天第一次买入的操作，dp[0][1] = 0-prices[0];
+                第 0 天第一次卖出的操作，dp[0][2] = 0;（第 0 天不可能卖，之前也不可能存在买）
+                第 0 天第二次买入的操作，dp[0][3] = 0-prices[0];（存在买就减去即可）
+                第 0 天第二次卖出的操作，dp[0][4] = 0;（第 0 天不可能卖，跟不用说第二次卖，之前也不可能存在买）
+        */
+
+
+        if (prices.size() == 0) return 0;
+        vector<vector<int>> dp(prices.size(), vector<int>(5, 0));
+        dp[0][1] = -prices[0];
+        dp[0][3] = -prices[0];
+        for (int i = 1; i < prices.size(); i++) {
+            dp[i][0] = dp[i - 1][0];
+            dp[i][1] = max(dp[i - 1][1], dp[i - 1][0] - prices[i]);
+            dp[i][2] = max(dp[i - 1][2], dp[i - 1][1] + prices[i]);
+            dp[i][3] = max(dp[i - 1][3], dp[i - 1][2] - prices[i]);
+            dp[i][4] = max(dp[i - 1][4], dp[i - 1][3] + prices[i]);
+        }
+        return dp[prices.size() - 1][4];
+    }
+};
+
+```
+
+```
+// C++
+// DP 空间优化
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        if (prices.size() == 0) return 0;
+        vector<int> dp(5, 0);
+        dp[1] = -prices[0];
+        dp[3] = -prices[0];
+        for (int i = 1; i < prices.size(); i++) {
+            dp[1] = max(dp[1], dp[0]-prices[i]);
+            dp[2] = max(dp[2], dp[1]+prices[i]);
+            dp[3] = max(dp[3], dp[2]-prices[i]);
+            dp[4] = max(dp[4], dp[3]+prices[i]);
+        }
+        return dp[4];
+    }
+};
+
+```
