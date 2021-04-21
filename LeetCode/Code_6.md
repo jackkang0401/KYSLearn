@@ -231,7 +231,7 @@ int maxProfit(int* prices, int pricesSize){
 
 ```
 // C++
-// DP
+// 1.DP
 
 class Solution {
 public:
@@ -292,7 +292,7 @@ public:
 
 ```
 // C++
-// DP 空间优化
+// 2.DP 空间优化
 
 class Solution {
 public:
@@ -347,7 +347,7 @@ public:
 
 ```
 // C++
-// DP
+// 1.DP
 
 class Solution {
 public:
@@ -388,7 +388,7 @@ public:
 
 ```
 // C++
-// DP 空间优化
+// 2.DP 空间优化
 
 class Solution {
 public:
@@ -414,7 +414,7 @@ public:
 
 ```
 // C++
-// DP
+// 1.DP
 
 class Solution {
 public:
@@ -446,7 +446,7 @@ public:
 
 ```
 // C++
-// DP 空间优化
+// 2.DP 空间优化
 
 class Solution {
 public:
@@ -470,7 +470,7 @@ public:
 ```
 
 // C++
-// 贪心
+// 3.贪心
 
 class Solution {
 public:
