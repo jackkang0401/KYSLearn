@@ -194,6 +194,7 @@ private:
 ```
 
 // C++
+// 1.贪心
 
 class Solution {
 public:
@@ -204,6 +205,39 @@ public:
             minPrice = min(price, minPrice);                // 记录历史最低价格
         }
         return maxProfit;
+    }
+};
+
+```
+
+```
+// C++
+// 2.DP（股票 6 道通用解法）
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        /*
+            因为 dp[i][0][0] = 0，所以，对于 dp[i][1][0] 和 dp[i][1][1] 状态转移方程如下：
+                dp[i][1][0] = max(dp[i-1][1][0], dp[i-1][1][1]+prices[i])
+                dp[i][1][1] = max(dp[i-1][1][1], dp[i-1][0][0]-prices[i]) = max(dp[i-1][1][1], -prices[i])
+            
+            去除 k 项对应的 1：
+                dp[i][0] = max(dp[i-1][0], dp[i-1][1]+prices[i])
+                dp[i][1] = max(dp[i-1][1], -prices[i])
+        */
+        int size = prices.size();
+        if (size == 0) return 0;
+        int k = 1;
+        vector<vector<int>> dp(size, vector<int>(2, 0));
+        dp[0][1] = -prices[0];
+        for (int i = 1; i < size; i++) {
+            for (int j = 1; j <= k; j++) {
+                dp[i][1] = max(dp[i-1][1], -prices[i]);
+                dp[i][0] = max(dp[i-1][0], dp[i-1][1]+prices[i]); 
+            }
+        }
+        return dp[size-1][0];
     }
 };
 
