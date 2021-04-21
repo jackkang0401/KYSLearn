@@ -270,9 +270,9 @@ public:
 // 1.贪心
 
 int maxProfit(int* prices, int pricesSize){
-    if (pricesSize<=1) return 0;
+    if (pricesSize <= 1) return 0;
     int total = 0;
-    for (int i=0; i<pricesSize-1; i++) {
+    for (int i=0; i < pricesSize-1; i++) {
         if (prices[i+1] > prices[i]) {
             total += (prices[i+1] - prices[i]);
         }
@@ -594,6 +594,48 @@ private:
             dp = newDp;
         }
         return dp[0];
+    }
+};
+
+```
+
+```
+// C++
+// 3.DP + 贪心
+
+class Solution {
+public:
+    int maxProfit(int k, vector<int>& prices) {
+        int size = prices.size();
+        if (size == 0) return 0;
+        if (k > size/2) {                           // 交易的数量最多为 size/2
+            return maxProfit(prices);
+        }
+        vector<vector<int>> dp(k+1, vector<int>(2, 0));
+        // 初始化
+        for (int i = 1; i <= k; i++) {
+            dp[i][1] = -prices[0];               // 买入一定要减去价格，第 0 天不存在卖
+        }
+        for (int i = 1; i < size; i++) {
+            for (int j = 1; j <= k; j++) {
+                dp[j][1] = max(dp[j][1], dp[j-1][0]-prices[i]);
+                dp[j][0] = max(dp[j][0], dp[j][1]+prices[i]); 
+            }
+        }
+        return dp[k][0];
+    }
+
+private:
+    int maxProfit(vector<int>& prices) {
+        int size = prices.size();
+        if (size == 0) return 0;
+        int total = 0;
+        for (int i=0; i < size-1; i++) {
+            if (prices[i+1] > prices[i]) {
+                total += (prices[i+1] - prices[i]);
+            }
+        }
+        return total;
     }
 };
 
