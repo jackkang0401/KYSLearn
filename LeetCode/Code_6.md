@@ -237,7 +237,7 @@ class Solution {
 public:
     int maxProfit(vector<int>& prices) {
         /*
-            一、dp 数组以及下标的含义
+            一、DP 数组以及下标的含义
                 一天有五个状态：
                     0.没有操作
                     1.第一次买入
@@ -246,7 +246,7 @@ public:
                     4.第二次卖出
                 dp[i][j]: 表示第 i 天状态 j 获取的最大利润（i 为第 i 天，j 为 [0,4] 五个状态）
 
-            二、dp 方程
+            二、DP 方程
                 dp[i][1] 表示的是第 i 天买入股票的状态，并不是说一定要第 i 天买入股票，也可能是之前某天买的股票
                 
                 达到 dp[i][1] (第 i 天处在第一次买入状态)，有两个具体操作：
@@ -353,14 +353,14 @@ class Solution {
 public:
     int maxProfit(vector<int>& prices) {
         /*
-            一、dp 数组以及下标的含义
+            一、DP 数组以及下标的含义
                 每天有三种状态
                     1.买入
                     2.卖出 （当天卖出，第二天处于冷冻期）
                     3.卖出 （之前某天卖出，第二天不处于冷冻期）
                 dp[i][j]: 表示第 i 天状态 j 获取的最大利润（i 为第 i 天，j 为 [0,2] 表示三种状态）
 
-            二、dp 方程
+            二、DP 方程
                 dp[i][0] = max(dp[i-1][0], dp[i-1][2]-price[i]);
                 dp[i][1] = dp[i-1][0] + prices[i];
                 dp[i][2] = max(dp[i-1][1], dp[i-1][2]);
@@ -405,6 +405,40 @@ public:
             dp = newDp;  
         }
         return max(dp[0],max(dp[1],dp[2]));
+    }
+};
+
+```
+
+## 10.买卖股票的最佳时机含手续费（Leetcode 714）
+
+```
+// C++
+// DP
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices, int fee) {
+        /*
+            每天有二种状态
+                1.买入
+                2.卖出
+            dp[i][j]: 表示第 i 天状态 j 获取的最大利润（i 为第 i 天，j 为 0 表示买入状态，j 为 1 表示卖出状态）
+
+            DP 方程
+                dp[i][0] = max(dp[i-1][0], dp[i-1][1]-prices[i]);           
+                dp[i][1] = max(dp[i-1][1], dp[i-1][0]+prices[i]-fee);       
+
+        */
+        int size = prices.size();
+        if (size == 0) return 0;
+        vector<vector<int>> dp(size, vector<int>(2, 0));
+        dp[0][0] = -prices[0];
+        for (int i = 1; i < size; ++i) {
+            dp[i][0] = max(dp[i-1][0], dp[i-1][1]-prices[i]);           // 处于买入状态
+            dp[i][1] = max(dp[i-1][1], dp[i-1][0]+prices[i]-fee);       // 处于卖出状态
+        }
+        return dp[size-1][1];
     }
 };
 
