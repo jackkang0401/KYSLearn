@@ -319,7 +319,7 @@ public:
 
 ```
 // C++
-// DP
+// 1.DP（股票 6 道通用解法）
 
 class Solution {
 public:
@@ -370,7 +370,7 @@ public:
 
 ```
 // C++
-// DP 空间优化
+// 2.DP 空间优化（股票 6 道通用解法）
 
 class Solution {
 public:
