@@ -213,6 +213,7 @@ public:
 
 ```
 // C
+// 1.贪心
 
 int maxProfit(int* prices, int pricesSize){
     if (pricesSize<=1) return 0;
@@ -224,6 +225,36 @@ int maxProfit(int* prices, int pricesSize){
     }
     return total;
 }
+
+```
+
+```
+// C++
+// 2.DP（股票 6 道通用解法）
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        /*
+            因为这里 k 可以看作正无穷大，所以 k 和 k - 1 可以看成是相同的，可得到如下状态转移方程：
+                dp[i][k][1] = max(dp[i-1][k][1], dp[i-1][k-1][0]-prices[i]) = max(dp[i-1][k][1], dp[i-1][k][0]-prices[i])
+                dp[i][k][0] = max(dp[i-1][k][0], dp[i-1][k][1]+prices[i])
+            
+            去除 k 项可简化为：
+                dp[i][1] = max(dp[i-1][1], dp[i-1][0]-prices[i])
+                dp[i][0] = max(dp[i-1][0], dp[i-1][1]+prices[i])
+        */
+        int size = prices.size();
+        if (size == 0) return 0;
+        vector<vector<int>> dp(size, vector<int>(2, 0));
+        dp[0][1] = -prices[0];
+        for(int i = 1; i < size; i++) {
+            dp[i][1] = max(dp[i-1][1], dp[i-1][0]-prices[i]);
+            dp[i][0] = max(dp[i-1][0], dp[i-1][1]+prices[i]);
+        }
+        return dp[size-1][0];
+    }
+};
 
 ```
 
