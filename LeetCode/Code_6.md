@@ -383,4 +383,29 @@ public:
         return max(dp[size-1][0],max(dp[size-1][1],dp[size-1][2]));
     }
 };
+
+```
+
+```
+// C++
+// DP 空间优化
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int size = prices.size();
+        if (size == 0) return 0;
+        vector<int>dp(3, 0);
+        dp[0] = -prices[0];
+        for(int i = 1; i < size ; i++){
+            vector<int>newDp(3, 0);
+            newDp[0] = max(dp[0], dp[2]-prices[i]);
+            newDp[1] = dp[0] + prices[i];    
+            newDp[2] = max(dp[1], dp[2]);   
+            dp = newDp;  
+        }
+        return max(dp[0],max(dp[1],dp[2]));
+    }
+};
+
 ```
