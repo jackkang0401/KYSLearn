@@ -443,3 +443,26 @@ public:
 };
 
 ```
+
+```
+// C++
+// DP 空间优化
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices, int fee) {
+        int size = prices.size();
+        if (size == 0) return 0;
+        vector<int> dp(2, 0);
+        dp[0] = -prices[0];
+        for (int i = 1; i < size; ++i) {
+            vector<int> newDp(2, 0);
+            newDp[0] = max(dp[0], dp[1]-prices[i]);      
+            newDp[1] = max(dp[1], dp[0]+prices[i]-fee);  
+            dp = newDp;
+        }
+        return dp[1];
+    }
+};
+
+```
