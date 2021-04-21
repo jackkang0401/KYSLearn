@@ -466,3 +466,45 @@ public:
 };
 
 ```
+
+```
+
+// C++
+// 贪心
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices, int fee) {
+        /*
+            将手续费放在买入时进行计算，可得到一种基于贪心的方法
+        
+                1.如果当前的股票价格 prices[i] 加上手续费 fee 小于 buy，我们以 prices[i]+fee 的价格购买股票，
+            因此 buy 更新为 prices[i]+fee
+
+                2.如果当前的股票价格 prices[i] 大于 buy，那么我们直接卖出股票并且获得 prices[i]−buy 的收益。
+            但实际上，我们此时卖出股票可能并不是全局最优的（例如下一天股票价格继续上升），因此我们可以提供一个反悔操
+            作，看成当前手上拥有一支买入价格为 prices[i] 的股票，将 buy 更新为 prices[i]。这样一来，如果下一天
+            股票价格继续上升，会获得 prices[i+1]−prices[i] 的收益，加上 prices[i]−buy 的收益，恰好就等于在这
+            一天不进行任何操作，而在下一天卖出股票的收益
+
+                3.对于其余的情况，prices[i] 落在区间 [buy−fee,buy] 内，它的价格没有低到我们放弃手上的股票去选
+            择它，也没有高到我们可以通过卖出获得收益，因此我们不进行任何操作
+        */
+
+        int size = prices.size();
+        if (size == 0) return 0;
+        int buy = prices[0] + fee;
+        int profit = 0;
+        for (int i = 1; i < size; ++i) {
+            if (prices[i]+fee < buy) {
+                buy = prices[i] + fee;
+            } else if (prices[i] > buy) {
+                profit += prices[i] - buy;
+                buy = prices[i];
+            }
+        }
+        return profit;
+    }
+};
+
+```
