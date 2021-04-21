@@ -258,6 +258,29 @@ public:
 
 ```
 
+```
+// C++
+// 3.DP 空间优化（股票 6 道通用解法）
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int size = prices.size();
+        if (size == 0) return 0;
+        vector<int> dp(2, 0);
+        dp[1] = -prices[0];
+        for(int i = 1; i < size; i++) {
+            vector<int> newDp(2, 0);
+            newDp[1] = max(dp[1], dp[0]-prices[i]);
+            newDp[0] = max(dp[0], dp[1]+prices[i]);
+            dp = newDp;
+        }
+        return dp[0];
+    }
+};
+
+```
+
 ## 7.买卖股票的最佳时机 III（Leetcode 123）
 
 ```
