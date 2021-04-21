@@ -564,6 +564,9 @@ public:
     int maxProfit(int k, vector<int>& prices) {
         int size = prices.size();
         if (size == 0) return 0;
+        if (k > size/2) {                           // 交易的数量最多为 size/2
+            return maxProfit(prices);
+        }
         vector<vector<int>> dp(k+1, vector<int>(2, 0));
         // 初始化
         for (int i = 1; i <= k; i++) {
@@ -576,6 +579,21 @@ public:
             }
         }
         return dp[k][0];
+    }
+
+private:
+    int maxProfit(vector<int>& prices) {
+        int size = prices.size();
+        if (size == 0) return 0;
+        vector<int> dp(2, 0);
+        dp[1] = -prices[0];
+        for(int i = 1; i < size; i++) {
+            vector<int> newDp(2, 0);
+            newDp[1] = max(dp[1], dp[0]-prices[i]);
+            newDp[0] = max(dp[0], dp[1]+prices[i]);
+            dp = newDp;
+        }
+        return dp[0];
     }
 };
 
