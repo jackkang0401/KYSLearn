@@ -244,9 +244,9 @@ public:
                     2.第一次卖出
                     3.第二次买入
                     4.第二次卖出
-                dp[i][j]: 表示第 i 天状态 j 拥有现金（i 为第i天，j 为 [0,4] 五个状态）
+                dp[i][j]: 表示第 i 天状态 j 拥有现金（i 为第 i 天，j 为 [0,4] 五个状态）
 
-            二、dp 公式
+            二、dp 方程
                 dp[i][1] 表示的是第 i 天买入股票的状态，并不是说一定要第 i 天买入股票，也可能是之前某天买的股票
                 
                 达到 dp[i][1] (第 i 天处在第一次买入状态)，有两个具体操作：
@@ -260,8 +260,8 @@ public:
                 取较大值，所以 dp[i][2] = max(dp[i-1][1] + prices[i], dp[i-1][2])
 
                 同理可推出剩下状态部分：
-                    dp[i][3] = max(dp[i - 1][3], dp[i - 1][2] - prices[i]);
-                    dp[i][4] = max(dp[i - 1][4], dp[i - 1][3] + prices[i]);
+                    dp[i][3] = max(dp[i-1][3], dp[i-1][2] - prices[i]);
+                    dp[i][4] = max(dp[i-1][4], dp[i-1][3] + prices[i]);
 
             三、初始状态
                 初始拥有现金为 0 即可
@@ -340,4 +340,47 @@ public:
     }
 };
 
+```
+
+## 9.最佳买卖股票时机含冷冻期（Leetcode 309）
+
+
+```
+// C++
+// DP
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        /*
+            一、dp 数组以及下标的含义
+                每天有三种状态
+                    1.买入
+                    2.卖出 （当天卖出，第二天处于冷冻期）
+                    3.卖出 （之前某天卖出，第二天不处于冷冻期）
+                dp[i][j]: 表示第 i 天状态 j 拥有现金（i 为第 i 天，j 为 [0,2] 表示三种状态）
+
+            二、dp 方程
+                dp[i][0] = max(dp[i-1][0], dp[i-1][2]-price[i]);
+                dp[i][1] = dp[i-1][0] + prices[i];
+                dp[i][2] = max(dp[i-1][1], dp[i-1][2]);
+
+            三、初始状态
+                dp[0][0] = -price[i];
+                dp[0][1] = 0;
+                dp[0][2] = 0;
+
+        */
+        int size = prices.size();
+        if (size == 0) return 0;
+        vector<vector<int>>dp (size, vector<int>(3, 0));
+        dp[0][0] = -prices[0];
+        for(int i = 1; i < size ; i++){
+            dp[i][0] = max(dp[i-1][0], dp[i-1][2]-prices[i]);
+            dp[i][1] = dp[i-1][0] + prices[i];          //当天卖出，第 i+1 天处于冷冻期
+            dp[i][2] = max(dp[i-1][1], dp[i-1][2]);     //之前某天卖出，第 i+1 天不处于冷冻期
+        }
+        return max(dp[size-1][0],max(dp[size-1][1],dp[size-1][2]));
+    }
+};
 ```
