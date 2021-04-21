@@ -319,24 +319,50 @@ public:
 
 ```
 // C++
-// DP 空间优化
+// DP
 
 class Solution {
 public:
     int maxProfit(int k, vector<int>& prices) {
-        if (prices.size() == 0) return 0;
-        vector<int> dp(2*k+1, 0);
-        // 初始状态，i = 0 无操作，i 为奇数买入，i 为偶数卖出
-        for (int i = 1, size= dp.size(); i < size; i+=2) {
-            dp[i] = -prices[0];
+        /*
+            一、DP 数组以及下标的含义
+                
+                一天有五个状态：
+                    0.没有操作
+                    1.买入
+                    2.卖出
+
+                一次交易包含：买->卖
+
+                用户只能持有 0 份或 1 分股票且为全额购买
+                dp[i][k][c]：i 表示天数；k 表示交易次数； c 表示持有 c 份股票，值为 [0,1]
+                dp[i][k][0]：表示第 i 天结束，最多进行 k 次交易持有 0 份股票(已卖出)的情况下获得的最大收益
+                dp[i][k][1]：表示第 i 天结束，最多进行 k 次交易持有 1 份股票(已买入)的情况下获得的最大收益
+            
+            二、DP 方程
+
+                因为每次交易包含两次成对的操作，买入和卖出。只有买入操作会改变允许的最大交易次数
+
+                对于 dp[i][k][1]，第 i 天进行的操作只能是休息(之前买过))或买入
+                对于 dp[i][k][0]，第 i 天进行的操作只能是休息(之前卖过)或卖出
+
+                dp[i][j][1] = max(dp[i-1][j][1], dp[i-1][j-1][0]-prices[i]);    // 持有 1 份(买过) 
+                dp[i][j][0] = max(dp[i-1][j][0], dp[i-1][j][1]+prices[i]);      // 持有 0 份(已卖) 
+        */
+        int size = prices.size();
+        if (size == 0) return 0;
+        vector<vector<vector<int>>> dp(size, vector<vector<int>>(k+1, vector<int>(2, 0)));
+        // 初始化
+        for (int i = 1; i <= k; i++) {
+            dp[0][i][1] = -prices[0];               // 买入一定要减去价格，第 0 天不存在卖
         }
-        for (int i = 1; i < prices.size(); i++) {
-            for (int j = 1, size= dp.size(); j < size; j+=2) {
-                dp[j] = max(dp[j], dp[j-1]-prices[i]);          // 奇数买入
-                dp[j+1] = max(dp[j+1], dp[j]+prices[i]);        // 偶数卖出
+        for (int i = 1; i < size; i++) {
+            for (int j = 1; j <= k; j++) {
+                dp[i][j][1] = max(dp[i-1][j][1], dp[i-1][j-1][0]-prices[i]);
+                dp[i][j][0] = max(dp[i-1][j][0], dp[i-1][j][1]+prices[i]); 
             }
         }
-        return dp[2*k];
+        return dp[size-1][k][0];
     }
 };
 
