@@ -368,6 +368,32 @@ public:
 
 ```
 
+```
+// C++
+// DP 空间优化
+
+class Solution {
+public:
+    int maxProfit(int k, vector<int>& prices) {
+        int size = prices.size();
+        if (size == 0) return 0;
+        vector<vector<int>> dp(k+1, vector<int>(2, 0));
+        // 初始化
+        for (int i = 1; i <= k; i++) {
+            dp[i][1] = -prices[0];               // 买入一定要减去价格，第 0 天不存在卖
+        }
+        for (int i = 1; i < size; i++) {
+            for (int j = 1; j <= k; j++) {
+                dp[j][1] = max(dp[j][1], dp[j-1][0]-prices[i]);
+                dp[j][0] = max(dp[j][0], dp[j][1]+prices[i]); 
+            }
+        }
+        return dp[k][0];
+    }
+};
+
+```
+
 ## 9.最佳买卖股票时机含冷冻期（Leetcode 309）
 
 
