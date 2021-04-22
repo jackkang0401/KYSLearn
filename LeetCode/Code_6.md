@@ -646,13 +646,13 @@ private:
 
 ```
 // C++
-// 1.DP
+// 1.DP（股票 6 道通用解法）
 
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
         /*
-             此情况和【买卖股票的最佳时机 II】非常相似，不同之处在于有「冷却时间」的限制，
+             此情况和【买卖股票的最佳时机 II】非常相似，交易次数不限，不同之处在于有「冷却时间」，
             因此需要对状态转移方程进行一些修改
 
             【买卖股票的最佳时机 II】的状态转移方程如下：
@@ -666,8 +666,7 @@ public:
              状态转移方程其他项保持不变，新状态转移方程如下：
                 dp[i][k][1] = max(do[i-1][k][1], dp[i-2][k][0]-prices[i])
                 dp[i][k][0] = max(dp[i-1][k][0], dp[i-1][k][1]+prices[i])
-            
-            去掉 k 可简化为：
+             由于对 k 无限制，可去掉 k 可简化为：
                 dp[i][1] = max(dp[i-1][1], dp[i-2][0]-prices[i]) // i >= 2 否则为 0
                 dp[i][0] = max(dp[i-1][0], dp[i-1][1]+prices[i])
         */
@@ -687,7 +686,7 @@ public:
 
 ```
 // C++
-// 2.DP 空间优化
+// 2.DP 空间优化（股票 6 道通用解法）
 
 class Solution {
 public:
@@ -714,63 +713,7 @@ public:
 
 ```
 // C++
-// 1.DP
-
-class Solution {
-public:
-    int maxProfit(vector<int>& prices, int fee) {
-        /*
-            每天有二种状态
-                1.买入
-                2.卖出
-            dp[i][j]: 表示第 i 天状态 j 获取的最大利润（i 为第 i 天，j 为 0 表示买入状态，j 为 1 表示卖出状态）
-
-            DP 方程
-                dp[i][0] = max(dp[i-1][0], dp[i-1][1]-prices[i]);           
-                dp[i][1] = max(dp[i-1][1], dp[i-1][0]+prices[i]-fee);       
-
-        */
-        int size = prices.size();
-        if (size == 0) return 0;
-        vector<vector<int>> dp(size, vector<int>(2, 0));
-        dp[0][0] = -prices[0];
-        for (int i = 1; i < size; ++i) {
-            dp[i][0] = max(dp[i-1][0], dp[i-1][1]-prices[i]);           // 处于买入状态
-            dp[i][1] = max(dp[i-1][1], dp[i-1][0]+prices[i]-fee);       // 处于卖出状态
-        }
-        return dp[size-1][1];
-    }
-};
-
-```
-
-```
-// C++
-// 2.DP 空间优化
-
-class Solution {
-public:
-    int maxProfit(vector<int>& prices, int fee) {
-        int size = prices.size();
-        if (size == 0) return 0;
-        vector<int> dp(2, 0);
-        dp[0] = -prices[0];
-        for (int i = 1; i < size; ++i) {
-            vector<int> newDp(2, 0);
-            newDp[0] = max(dp[0], dp[1]-prices[i]);      
-            newDp[1] = max(dp[1], dp[0]+prices[i]-fee);  
-            dp = newDp;
-        }
-        return dp[1];
-    }
-};
-
-```
-
-```
-
-// C++
-// 3.贪心
+// 1.贪心
 
 class Solution {
 public:
@@ -804,6 +747,75 @@ public:
             }
         }
         return profit;
+    }
+};
+
+```
+
+```
+// C++
+// 2.DP（股票 6 道通用解法）
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices, int fee) {
+        /*
+             此情况和【买卖股票的最佳时机 II】非常相似，交易次数不限，不同之处在于有「手续费」，
+            因此需要对状态转移方程进行一些修改
+
+            【买卖股票的最佳时机 II】的状态转移方程如下：
+                dp[i][k][1] = max(do[i-1][k][1], dp[i-1][k][0]-prices[i])
+                dp[i][k][0] = max(dp[i-1][k][0], dp[i-1][k][1]+prices[i])
+
+             由于需要对每次交易付手续费，因此在每次买入或卖出股票之后的收益需要扣除手续费，
+            新的状态转移方程有两种表示方法。
+
+             第一种表示方法，在每次买入股票时扣除手续费：
+                dp[i][k][1] = max(dp[i-1][k][1], dp[i-1][k][0]-prices[i]-fee)
+                dp[i][k][0] = max(dp[i-1][k][0], dp[i-1][k][1]+prices[i])
+             由于对 k 无限制，可去掉 k 可简化为：
+                dp[i][1] = max(dp[i-1][1], dp[i-1][0]-prices[i]-fee)
+                dp[i][0] = max(dp[i-1][0], dp[i-1][1]+prices[i])
+
+             第二种表示方法，在每次卖出股票时扣除手续费：
+                dp[i][k][1] = max(dp[i-1][k][1], dp[i-1][k][0]-prices[i])
+                dp[i][k][0] = max(dp[i-1][k][0], dp[i-1][k][1]+prices[i]-fee)
+             由于对 k 无限制，可去掉 k 可简化为：
+                dp[i][1] = max(dp[i-1][1], dp[i-1][0]-prices[i])
+                dp[i][0] = max(dp[i-1][0], dp[i-1][1]+prices[i]-fee)
+        */
+        int size = prices.size();
+        if (size == 0) return 0;
+        vector<vector<int>> dp(size, vector<int>(2, 0));
+        dp[0][1] = -prices[0];
+        for(int i = 1; i < size ; i++){
+            dp[i][1] = max(dp[i-1][1], dp[i-1][0]-prices[i]);
+            dp[i][0] = max(dp[i-1][0], dp[i-1][1]+prices[i]-fee);  // 这里选择卖出时扣除手续费 
+        }
+        return dp[size-1][0];
+    }
+};
+
+```
+
+```
+// C++
+// 3.DP 空间优化（股票 6 道通用解法）
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices, int fee) {
+        int size = prices.size();
+        if (size == 0) return 0;
+        vector<int> dp(2, 0);
+        dp[1] = -prices[0];
+        for(int i = 1; i < size ; i++){
+            vector<int> newDp(2, 0);
+            newDp[1] = max(dp[1], dp[0]-prices[i]);
+            newDp[0] = max(dp[0], dp[1]+prices[i]-fee);  // 这里选择卖出时扣除手续费 
+            dp = newDp;
+        }
+        return dp[0];
     }
 };
 
