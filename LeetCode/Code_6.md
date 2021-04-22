@@ -694,16 +694,17 @@ public:
     int maxProfit(vector<int>& prices) {
         int size = prices.size();
         if (size == 0) return 0;
-        vector<int>dp(3, 0);
-        dp[0] = -prices[0];
+        vector<int> preDp(2, 0);        // 上一个
+        vector<int> dp(2, 0);           // 当前
+        dp[1] = -prices[0];
         for(int i = 1; i < size ; i++){
-            vector<int>newDp(3, 0);
-            newDp[0] = max(dp[0], dp[2]-prices[i]);
-            newDp[1] = dp[0] + prices[i];    
-            newDp[2] = max(dp[1], dp[2]);   
-            dp = newDp;  
+            vector<int> nextDp(2, 0);
+            nextDp[1] = max(dp[1], (i>=2 ? preDp[0] : 0)-prices[i]);
+            nextDp[0] = max(dp[0], dp[1]+prices[i]);
+            preDp = dp;                 // 后移
+            dp = nextDp;                
         }
-        return max(dp[0],max(dp[1],dp[2]));
+        return dp[0];
     }
 };
 
