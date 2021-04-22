@@ -690,7 +690,7 @@ public:
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 if (2 == grid[i][j] || 0 == grid[i][j]) {
-                    cnt |= (1 << (i * col + j));            // 将可以走的位置计入 cnt（包含结束位置）
+                    cnt |= (1 << (i * col + j));                // 将可以走的位置计入 cnt（包含结束位置）
                 } else if (grid[i][j] == 1) {
                     x = i, y = j;
                 }
@@ -716,9 +716,8 @@ private:
             int b = y + dy[i];
             if((a >= 0 && a < row) && (b >= 0 && b < col)) {
                 int cur = 1 << (a * col + b);
-                if (cnt & cur) {                            // 查看当前位置是否已走
-                    // 不需要记录状态，因为每个位置都是当前状态，从未走过的（与 N 皇后的位运算解法有点像）
-                    dfs(a, b, row, col, cnt^cur, grid, ans);
+                if (cnt & cur) {                                // 查看当前位置是否已走
+                    dfs(a, b, row, col, cnt^cur, grid, ans);    // cur 的值前后无变化，不需要修改与恢复状态
                 }
             }
         }
