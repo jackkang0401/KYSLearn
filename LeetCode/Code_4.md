@@ -8,7 +8,6 @@
 // C++
 // 1. 递归
 
-
 class Solution {
 public:
     unordered_map<string,int> memo;
@@ -18,7 +17,7 @@ public:
             return size1 + size2;
         }
 
-        string key = to_string(size1) + to_string(size2);
+        string key = to_string(size1) + "_" + to_string(size2);
         if (memo.find(key) != memo.end()) {
             return memo[key];
         }
@@ -40,7 +39,6 @@ public:
         return val;
     }
 };
-
 
 ```
 
