@@ -652,34 +652,34 @@ class Solution {
 public:
     int maxProfit(vector<int>& prices) {
         /*
-            一、DP 数组以及下标的含义
-                每天有三种状态
-                    1.买入
-                    2.卖出 （当天卖出，第二天处于冷冻期）
-                    3.卖出 （之前某天卖出，第二天不处于冷冻期）
-                dp[i][j]: 表示第 i 天状态 j 获取的最大利润（i 为第 i 天，j 为 [0,2] 表示三种状态）
+             此情况和【买卖股票的最佳时机 II】非常相似，不同之处在于有「冷却时间」的限制，
+            因此需要对状态转移方程进行一些修改
 
-            二、DP 方程
-                dp[i][0] = max(dp[i-1][0], dp[i-1][2]-price[i]);
-                dp[i][1] = dp[i-1][0] + prices[i];
-                dp[i][2] = max(dp[i-1][1], dp[i-1][2]);
+            【买卖股票的最佳时机 II】的状态转移方程如下：
+                dp[i][k][1] = max(do[i-1][k][1], dp[i-1][k][0]-prices[i])
+                dp[i][k][0] = max(dp[i-1][k][0], dp[i-1][k][1]+prices[i])
 
-            三、初始状态
-                dp[0][0] = -price[i];
-                dp[0][1] = 0;
-                dp[0][2] = 0;
+             在有「冷却时间」的情况下，如果在第 i-1 天卖出了股票，就不能在第 i 天买入股票。
+            因此，如果要在第 i 天买入股票，第二个状态转移方程中就不能使用 dp[i-1][k][0]，
+            而应该使用 dp[i-2][k][0]。
 
+             状态转移方程其他项保持不变，新状态转移方程如下：
+                dp[i][k][1] = max(do[i-1][k][1], dp[i-2][k][0]-prices[i])
+                dp[i][k][0] = max(dp[i-1][k][0], dp[i-1][k][1]+prices[i])
+            
+            去掉 k 可简化为：
+                dp[i][1] = max(dp[i-1][1], dp[i-2][0]-prices[i]) // i >= 2 否则为 0
+                dp[i][0] = max(dp[i-1][0], dp[i-1][1]+prices[i])
         */
         int size = prices.size();
         if (size == 0) return 0;
-        vector<vector<int>>dp (size, vector<int>(3, 0));
-        dp[0][0] = -prices[0];
+        vector<vector<int>> dp(size, vector<int>(2, 0));
+        dp[0][1] = -prices[0];
         for(int i = 1; i < size ; i++){
-            dp[i][0] = max(dp[i-1][0], dp[i-1][2]-prices[i]);
-            dp[i][1] = dp[i-1][0] + prices[i];          //当天卖出，第 i+1 天处于冷冻期
-            dp[i][2] = max(dp[i-1][1], dp[i-1][2]);     //之前某天卖出，第 i+1 天不处于冷冻期
+             dp[i][1] = max(dp[i-1][1], (i>=2 ? dp[i-2][0] : 0)-prices[i]);
+             dp[i][0] = max(dp[i-1][0], dp[i-1][1]+prices[i]); 
         }
-        return max(dp[size-1][0],max(dp[size-1][1],dp[size-1][2]));
+        return dp[size-1][0];
     }
 };
 
