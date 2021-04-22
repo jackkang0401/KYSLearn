@@ -579,7 +579,7 @@ public:
 
 ```
 // C++
-// 1
+// 1.回溯 DFS
 
 class Solution {
 public:
@@ -605,6 +605,9 @@ private:
         if(grid[x][y] == 2) {
             if(0 == cnt) ans++;     // 经过所有的0 才算一条合法路径
             return;                 
+        }
+        if (cnt <= 0) {
+            return;
         }
         int cur = grid[x][y];       // 保存当前值
         grid[x][y] = 3;             // 标记为已遍历
