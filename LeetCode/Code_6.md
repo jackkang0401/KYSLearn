@@ -478,6 +478,8 @@ public:
 
 ## 8.买卖股票的最佳时机 IV（Leetcode 188）
 
+#### 1. [股票问题系列通解（转载翻译）](https://leetcode-cn.com/circle/article/qiAgHn/)
+#### 2. [一个方法团灭 6 道股票问题（动态规划）](https://blog.csdn.net/b515833/article/details/93927055)
 
 ```
 // C++
