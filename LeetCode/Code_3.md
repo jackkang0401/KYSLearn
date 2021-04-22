@@ -677,6 +677,56 @@ private:
 
 ```
 
+```
+// C++
+// 3.方法 2 不用缓存
+
+class Solution {
+public:
+    int uniquePathsIII(vector<vector<int>>& grid) {
+        int ans = 0;
+        int row = grid.size(), col = grid[0].size();
+        int x = 0, y = 0, cnt = 0;
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (2 == grid[i][j] || 0 == grid[i][j]) {
+                    cnt |= (1 << (i * col + j));            // 将可以走的位置计入 cnt（包含结束位置）
+                } else if (grid[i][j] == 1) {
+                    x = i, y = j;
+                }
+            }
+        }
+        dfs(x, y, row, col, cnt, grid, ans);
+        return ans;
+    }
+
+private:
+    void dfs(int x, int y, int row, int col, int cnt, vector<vector<int>>& grid, int& ans) {
+        if(grid[x][y] == 2){
+            if(cnt == 0) ans++;
+            return;
+        } 
+        if(cnt <= 0) {
+            return;
+        }
+
+        int dx[4] = {1, 0, -1, 0}, dy[4] = {0, 1, 0, -1};
+        for(int i = 0; i < 4; i++) {
+            int a = x + dx[i];
+            int b = y + dy[i];
+            if((a >= 0 && a < row) && (b >= 0 && b < col)) {
+                int cur = 1 << (a * col + b);
+                if (cnt & cur) {                            // 查看当前位置是否已走
+                    // 不需要记录状态，因为每个位置都是当前状态，从未走过的（与 N 皇后的位运算解法有点像）
+                    dfs(a, b, row, col, cnt^cur, grid, ans);
+                }
+            }
+        }
+    }
+};
+
+```
+
 ## 9.青蛙过河（Leetcode 403）
 
 ```
