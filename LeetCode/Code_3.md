@@ -1031,6 +1031,33 @@ public:
 
 
 ```
+// C++
+// 1.DP
+
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        /*
+         dp[i] 代表以第 i 个数为结尾的连续子数组的最大和的值
+         DP方程：dp[i] = max(dp[i-1], 0) + nums[i]
+        */
+        int size = nums.size();
+        vector<int> dp(size, 0);     
+        dp[0] = nums[0];
+        int maxValue = dp[0];
+        for (int i = 1; i < size; i++) {
+            dp[i] = max(dp[i-1], 0) + nums[i];
+            maxValue = max(dp[i], maxValue);        // 记录最大值
+        }
+        return maxValue;
+    }
+};
+
+```
+
+```
+// C++
+// 2.DP 空间优化
 
 class Solution {
 public:
@@ -1043,12 +1070,11 @@ public:
         int maxValue = pre;
         for (int i = 1, size = nums.size(); i < size; i++) {
             pre = max(pre, 0) + nums[i];
-            maxValue = max(pre, maxValue); // 记录最大值
+            maxValue = max(pre, maxValue);          // 记录最大值
         }
         return maxValue;
     }
 };
-
 
 ```
 
