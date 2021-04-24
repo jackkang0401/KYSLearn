@@ -197,3 +197,47 @@ private:
 };
 
 ```
+
+## 2.分割数组的最大值（Leetcode 410）
+
+
+```
+// C++
+// DP
+
+class Solution {
+public:
+    int splitArray(vector<int>& nums, int m) {
+        /*
+             dp[i][k]：表示将前缀区间 [0,i] 分成 k 段的各自和的最大值的最小值。那么，前缀区间 [0,j]（j<i）
+            被分成 k-1 段各自和的最大值的最小值为 dp[j][k-1]。
+             即，第一维是区间 [0,i] 的 k 个分割，第二维是分割的区间 [0,i]。
+
+             由于区间 [0,j] 一定要分成 k-1 个非空连续子数组；j 的意义是：第 k-1 个分割的最后一个元素的下标；
+            下标 k-1 的前面（不包括 k-1），一共有 k-1 个元素（这一条只要是下标从 0 开始均成立）；故 j 的枚举
+            从 k-2 开始，到 i-1 结束，因为第 k 个分割至少要有 1 个元素
+
+             状态转移方程：（sub[i]-sub[k] 为区间 [k+1, i] 的和，）
+                dp[i][j] = min(dp[i][j], max(dp[k][j-1], sub[i]-sub[k]))
+        */
+
+        int n = nums.size();
+        vector<vector<int>> dp(n+1, vector<int>(m+1, INT_MAX));
+        vector<int> sub(n+1, 0);                        // 用于计算 nums 中区间 [j+1,i] 的数值和
+        for (int i = 0; i < n; i++) {
+            sub[i+1] = sub[i] + nums[i];
+        }
+        dp[0][0] = 0;
+        for (int i = 1; i <= n; i++) {                  // 当前待分割的数据前缀区间 [0,i] 
+            for (int k = 1; k <= min(i, m); k++) {      // 分割数
+                for (int j = 0; j < i; j++) {           // 枚举 i 之前各个区间的 k-1 个分割，取最小值 
+                    // sub[i]-sub[k] 为区间 [k+1, i] 的和
+                    dp[i][k] = min(dp[i][k], max(dp[j][k-1], sub[i]-sub[j])); 
+                }
+            }
+        }
+        return dp[n][m];
+    }
+};
+
+```
