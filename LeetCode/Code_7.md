@@ -295,10 +295,56 @@ public:
 
 ## 2.学生出勤记录 II（Leetcode 552）
 
+```
+// C++
+// 1.DFS
+
+class Solution {
+public:
+    int checkRecord(int n) {
+        if (n <= 0) return 0;
+        if (n == 1) return 3;
+        int mod = 1000000007;
+        int result = 0;
+        dfs("", n, result);
+        return result;
+    }
+
+private:
+    void dfs(string s, int n, int &result) {
+        if (n == 0 && checkRecord(s)) {
+            result++;
+            return;
+        }
+        dfs(s+'A', n-1, result);
+        dfs(s+'P', n-1, result);
+        dfs(s+'L', n-1, result);
+    }
+    bool checkRecord(string &s) {
+        int size = s.size();
+        if (size <= 0) return false;
+        int countA = 0;
+        for (int i = 0; i<size; i++) {
+            if ( s[i] == 'A' ) {
+                countA++;
+                if (countA >= 2) {
+                    return false;
+                } 
+            } else if ( s[i] == 'L') {
+                if (i < (size-2) && s[i+1] == 'L' && s[i+2] == 'L') {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+};
+
+```
 
 ```
 // C++
-// 1.DP (超限)
+// 2.DP (超限)
 
 class Solution {
 public:
@@ -359,7 +405,7 @@ public:
 
 ```
 // C++
-// 2.DP 空间优化
+// 3.DP 空间优化
 
 class Solution {
 public:
