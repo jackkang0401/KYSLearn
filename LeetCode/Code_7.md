@@ -293,7 +293,7 @@ public:
 
 ```
 
-## 2.学生出勤记录 II（Leetcode 552）
+## 3.学生出勤记录 II（Leetcode 552）
 
 ```
 // C++
@@ -445,6 +445,64 @@ public:
             }
         }
         return result;
+    }
+};
+
+```
+
+
+## 4.最小覆盖子串（Leetcode 76）
+
+```
+// C++
+// 双指针
+
+class Solution {
+public:
+    string minWindow(string s, string t) {
+
+        if(s.size()<=0 || t.size()<= 0) return ""; 
+        // 生成 t 的 hash 表
+        unordered_map <char, int> hashMapT;
+        for (auto &c: t) {
+            hashMapT[c]++;
+        }
+
+        int l = 0, r = 0;
+        int minIndex = -1, minLength = INT_MAX;     // 记录最小覆盖的下标与长度
+        int sizeS = s.size();
+
+        unordered_map <char, int> hashMapS;
+        while (r < sizeS) {
+            if (hashMapT.find(s[r]) != hashMapT.end()) {
+                hashMapS[s[r]]++;
+            }
+            while (check(hashMapT, hashMapS) && l <= r) {
+                int currentLength = r - l + 1;
+                if (currentLength < minLength) {
+                    minLength = currentLength;
+                    minIndex = l;
+                }
+                if (hashMapT.find(s[l]) != hashMapT.end()) {
+                    --hashMapS[s[l]];
+                }
+                l++;                                // 左边指针后移
+            }
+            r++;                                    // 右边指针后移
+        }
+
+        return minIndex == -1 ? "" : s.substr(minIndex, minLength);
+    }
+
+private:
+    // hashMapT 中每一个 key 在 hashMapS 中的值都大于等于在 hashMapT 中的值，返回 true，否则返回 false
+    bool check(unordered_map <char, int> &hashMapT, unordered_map <char, int> &hashMapS) {
+        for (auto &p: hashMapT) {
+            if (hashMapS[p.first] < p.second) { 
+                return false;
+            }
+        }
+        return true;
     }
 };
 
