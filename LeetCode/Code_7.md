@@ -292,3 +292,114 @@ public:
 };
 
 ```
+
+## 2.学生出勤记录 II（Leetcode 552）
+
+
+```
+// C++
+// 1.DP (超限)
+
+class Solution {
+public:
+    int checkRecord(int n) {
+        /*
+            状态定义：
+                i：字符串中字符数
+                a：'A' 的数量，值为 0，1
+                l: 字符串中结尾 ‘L’ 的数量，值为 0，1，2
+                dp[i][a][l]：表示 i 个字符，a 个 'A'，l 个以 ‘L’ 结尾状态下的所有可被视为可奖励的出勤记录的数量
+
+            状态转移方程：
+                dp[i][0][0] = dp[i-1][0][0] + dp[i-1][0][1] + dp[i-1][0][2] (末尾都加 ‘P’)
+                dp[i][0][1] = dp[i-1][0][0] (末尾加 ‘L’)  
+                dp[i][0][2] = dp[i-1][0][1] (末尾加 ‘L’) 
+                dp[i][1][0] = dp[i-1][0][0] + dp[i-1][0][1] + dp[i-1][0][2]+dp[i-1][1][0] + dp[i-1][1][1] + dp[i-1][1][2] (前三个末尾加 ‘A’，后 3 个末尾加‘P’)
+                dp[i][1][1] = dp[i-1][1][0] (末尾加 ‘L’)  
+                dp[i][1][2] = dp[i-1][1][1] (末尾加 ‘L’) 
+        */
+        if (n <= 0) return 0;
+        if (n == 1) return 3;
+        int mod = 1000000007;
+        vector<vector<vector<int>>> dp(n+1, vector<vector<int>>(2, vector<int>(3, 0)));
+        // 初始化（1 个字符）
+        dp[1][0][0] = 1;        // 'P'
+        dp[1][0][1] = 1;        // 'L'
+        dp[1][1][0] = 1;        // 'A'  
+        for(int i = 2; i <= n; i++) {
+            //dp[i][0][0] = (dp[i-1][0][0] + dp[i-1][0][1] + dp[i-1][0][2]) % mod;
+            // 每一次都单独加算并对 mod 取模，处理 int 越界问题
+            dp[i][0][0] = 0;
+            for (int l = 0; l < 3; l++) {
+                dp[i][0][0] = (dp[i][0][0] + dp[i-1][0][l]) % mod;
+            }
+            dp[i][0][1] = dp[i-1][0][0];
+            dp[i][0][2] = dp[i-1][0][1];
+            //dp[i][1][0] = (dp[i-1][0][0] + dp[i-1][0][1] + dp[i-1][0][2] + dp[i-1][1][0] + dp[i-1][1][1] + dp[i-1][1][2]) % mod;
+            // 每一次都单独加算并对 mod 取模，处理 int 越界问题
+            dp[i][1][0] = dp[i][0][0];
+            for (int l = 0; l < 3; l++) {
+                dp[i][1][0] = (dp[i][1][0] + dp[i-1][1][l]) % mod;
+            }
+            dp[i][1][1] = dp[i-1][1][0];
+            dp[i][1][2] = dp[i-1][1][1];
+        }
+
+        int result = 0;
+        for (int a = 0; a < 2; a++) {
+            for (int l = 0; l < 3; l++) {
+                result = (result + dp[n][a][l]) % mod;
+            }
+        }
+        return result;
+    }
+};
+
+```
+
+```
+// C++
+// 2.DP 空间优化
+
+class Solution {
+public:
+    int checkRecord(int n) {
+        if (n <= 0) return 0;
+        if (n == 1) return 3;
+        int mod = 1000000007;
+        vector<vector<int>> dp(2, vector<int>(3, 0));
+        // 初始化（1 个字符）
+        dp[0][0] = 1;           // 'P'
+        dp[0][1] = 1;           // 'L'
+        dp[1][0] = 1;           // 'A'  
+        // 空间可重复利用，不用循环每次都申请空间（需要注意某些位置需要重置原有值的），如果每次循环都申请空间会超出时间限制
+        vector<vector<int>> newDp(2, vector<int>(3, 0));
+        for(int i = 2; i <= n; i++) {
+            // 每一次都单独加算并对 mod 取模，处理 int 越界问题
+            newDp[0][0] = 0;
+            for (int l = 0; l < 3; l++) {
+                newDp[0][0] = (newDp[0][0] + dp[0][l]) % mod;
+            }
+            newDp[0][1] = dp[0][0];
+            newDp[0][2] = dp[0][1];
+            // 每一次都单独加算并对 mod 取模，处理 int 越界问题
+            newDp[1][0] = newDp[0][0];
+            for (int l = 0; l < 3; l++) {
+                newDp[1][0] = (newDp[1][0] + dp[1][l]) % mod;
+            }
+            newDp[1][1] = dp[1][0];
+            newDp[1][2] = dp[1][1];
+            dp = newDp;
+        }
+
+        int result = 0;
+        for (int a = 0; a < 2; a++) {
+            for (int l = 0; l < 3; l++) {
+                result = (result + dp[a][l]) % mod;
+            }
+        }
+        return result;
+    }
+};
+
+```
