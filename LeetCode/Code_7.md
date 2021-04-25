@@ -6,7 +6,7 @@
 ```
 
 // C++
-// 1.DP + 暴力（超时）
+// 1.DP+暴力（超时）
 
 class Solution {
 public:
@@ -41,7 +41,7 @@ public:
 
 ```
 // C++
-// 2.DP + 暴力 + 状态压缩（超时）
+// 2.DP+暴力+状态压缩（超时）
 
 class Solution {
 public:
@@ -79,7 +79,7 @@ public:
 
 ```
 // C++
-// 3.二维抽象成一维 + 最大子序和 + 暴力 O(n^2m^2) 应考虑 n、m 大小情况
+// 3.二维抽象成一维+最大子序和+暴力 O(n^2m^2) 应考虑 n、m 大小情况
 
 class Solution {
 public:
@@ -135,7 +135,7 @@ private:
 
 ```
 // C++
-// 4.二维抽象成一维 + 最大子序和 + 有序集合（二分）O(n^2mlogm) 应考虑 n、m 大小情况
+// 4.二维抽象成一维+最大子序和+有序集合（二分）O(n^2mlogm) 应考虑 n、m 大小情况
 
 class Solution {
 public:
@@ -203,7 +203,7 @@ private:
 
 ```
 // C++
-// DP
+// 1.DP
 
 class Solution {
 public:
@@ -237,6 +237,57 @@ public:
             }
         }
         return dp[n][m];
+    }
+};
+
+```
+
+```
+// C++
+// 2.二分查找+贪心
+
+class Solution {
+public:
+    int splitArray(vector<int>& nums, int m) {
+        int maxValue = 0;                       // 下界为数组 nums 中所有元素的最大值
+        int sum = 0;                            // 上界为数组 nums 中所有元素的和
+        for (int num : nums) {
+            maxValue = max(maxValue, num);
+            sum += num;                     
+        }
+
+        // 使用「二分查找」确定一个恰当的「子数组各自的和的最大值」，使得它对应的「子数组的分割数」等于 m
+        int left = maxValue;
+        int right = sum;
+        while (left <= right) {
+            int mid = left + (right-left) / 2;
+            int splits = split(nums, mid);      // 计算当前分割数
+            if (splits > m) {   
+                left = mid + 1; // 分割数超过 m，说明当前选择的「子数组各自的和的最大值」太小，需要调大
+            } else {
+                /*
+                     如果分割数为 m 不能放弃搜索，因为要使得「子数组各自的和的最大值」最小化，还应继续尝试
+                    缩小这个值，最后一个一个符合条件的值即为所求值
+                     注意 二分查找如果结束条件为 while (left = right) 此时调整范围需写为 right = mid
+                */
+                right = mid - 1;    // 分割数未超过 m，说明当前选择的「子数组各自的和的最大值」太大，需要调小
+            }
+        }
+        return left;
+    }
+
+    // 按连续子数组和的最大值不超过 maxIntervalSum 进行划分，可以分割的非空的连续子数组的个数
+    int split(vector<int>& nums, int maxIntervalSum) {
+        int splits = 1;                                     // 至少是一个分割
+        int curIntervalSum = 0;                             // 当前区间的和
+        for (int num : nums) {
+            if (curIntervalSum+num > maxIntervalSum) {      // 如果超过最大和
+                curIntervalSum = 0; 
+                splits++;                                   // 分割数 +1                                  
+            }
+            curIntervalSum += num;
+        }
+        return splits;
     }
 };
 
