@@ -570,3 +570,68 @@ private:
 
 
 ```
+
+## 5.戳气球（Leetcode 312）
+
+```
+// C++
+// 分治
+
+class Solution {
+public:
+    int maxCoins(vector<int>& nums) {
+
+        /*
+            1.回溯法
+             对于 [3,1,5,8] 的最大得分，第一次戳破气球有4种情况，假设首先戳破一个气球 5，则，问题变成了求 [3,1,8]的最大得分，
+            问题规模减小一个元素。我们可以想到，采用递归的方法，减而治之，无球可戳后再回溯，当我们回溯完所有的戳法之后，就能找出
+            最大得分。但是该回溯法的时间复杂度为 O(n!)，而气球个数的取值为 [0,500]，必然会超时。
+
+            2.分治法
+             对于 [3,1,5,8]，假设最后戳爆 5，则问题就被划分为如下图所示的两个子问题和一个 O(1) 的问题
+
+                              [1,3,1,5,8,1]
+                             ↙      ↓      ↘  
+                     [1,3,1,5]   [1,5,1]   [5,8,1]
+
+             其中，左右两端的元素表示不可戳，仅供计分的“虚拟气球”，而且其的值仅与位置有关。这里假设 f(start,end) 表示从第 start 
+            到 end 个气球的最大得分，nums[i] 表示气球上的值，nums[start-1] 和 nums[end+1] 是“虚拟气球”，则有：
+
+                f(start,end) = max(f(start,i-1) + nums[start-1]*nums[i]*nums[end+1] + f(i+1,end))
+                
+             其中 i 取值为 [start,end]
+        */
+        int size = nums.size();
+        if (size == 0) return 0;
+        int n = size + 2;
+        vector<int> val(n, 1);
+        for (int i = 1; i <= size; i++) {
+            val[i] = nums[i-1];
+        }
+        vector<vector<int>> memo(n, vector<int>(n, -1));
+        return solve(0, n-1, val, memo);
+    }
+
+private:
+        int solve(int left, int right, vector<int> &val, vector<vector<int>> &memo) {
+        // 小于等于 2 个元素
+        if (right-left <= 1) {
+            return 0;
+        }
+        // 如果已缓存直接返回结果
+        if (memo[left][right] != -1) {
+            return memo[left][right];
+        }
+        // 递归求得结果
+        int maxCoin = 0;                        // 区间 [left, right] 能获得的最大硬币数
+        for (int i = left+1; i < right; i++) {  // 迭代所有子情况
+            // 计算当前情况能获得的最大硬币数
+            int sum = solve(left,i,val,memo) + val[left]*val[i]*val[right] + solve(i,right,val,memo);   
+            maxCoin = max(maxCoin, sum);        // 记录最大值
+        }
+        memo[left][right] = maxCoin;
+        return maxCoin;
+    }
+};
+
+```
