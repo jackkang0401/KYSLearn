@@ -613,23 +613,23 @@ public:
     }
 
 private:
-        int solve(int left, int right, vector<int> &val, vector<vector<int>> &memo) {
+        int solve(int start, int end, vector<int> &val, vector<vector<int>> &memo) {
         // 小于等于 2 个元素
-        if (right-left <= 1) {
+        if (end-start <= 1) {
             return 0;
         }
         // 如果已缓存直接返回结果
-        if (memo[left][right] != -1) {
-            return memo[left][right];
+        if (memo[start][end] != -1) {
+            return memo[start][end];
         }
         // 递归求得结果
-        int maxCoin = 0;                        // 区间 [left, right] 能获得的最大硬币数
-        for (int i = left+1; i < right; i++) {  // 迭代所有子情况
+        int maxCoin = 0;                        // 区间 [start, end] 能获得的最大硬币数
+        for (int i = start+1; i < end; i++) {   // 迭代所有子情况
             // 计算当前情况能获得的最大硬币数
-            int sum = solve(left,i,val,memo) + val[left]*val[i]*val[right] + solve(i,right,val,memo);   
+            int sum = solve(start,i,val,memo) + val[start]*val[i]*val[end] + solve(i,end,val,memo);   
             maxCoin = max(maxCoin, sum);        // 记录最大值
         }
-        memo[left][right] = maxCoin;
+        memo[start][end] = maxCoin;
         return maxCoin;
     }
 };
