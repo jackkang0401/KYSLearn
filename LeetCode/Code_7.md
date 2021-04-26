@@ -455,7 +455,7 @@ public:
 
 ```
 // C++
-// 双指针
+// 1.双指针
 
 class Solution {
 public:
@@ -505,5 +505,68 @@ private:
         return true;
     }
 };
+
+```
+
+```
+// C++
+// 2.双指针+预处理 s
+
+class Solution {
+public:
+    string minWindow(string s, string t) {
+
+        if(s.size()<=0 || t.size()<= 0) return ""; 
+        // 生成 t 的 hash 表
+        unordered_map <char, int> hashMapT;
+        for (auto &c: t) {
+            hashMapT[c]++;
+        }
+        // 去除 t 中没出现的字符，并记录剩余字符索引
+        vector<pair<char, int>> p;
+        for (int i = 0, size = s.size(); i < size; i++) {
+            if (hashMapT.find(s[i]) != hashMapT.end()) {
+                p.push_back(make_pair(s[i], i));
+            }
+        }
+
+        int l = 0, r = 0;
+        int minIndex = -1, minLength = INT_MAX;                     // 记录最小覆盖的下标与长度
+        int sizeP = p.size();
+
+        unordered_map <char, int> hashMapS;
+        while (r < sizeP) {
+            if (hashMapT.find(p[r].first) != hashMapT.end()) {
+                hashMapS[p[r].first]++;
+            }
+            while (check(hashMapT, hashMapS) && l <= r) {
+                int currentLength = p[r].second - p[l].second + 1;  // 利用下标计算 s 涵盖 t 的长度
+                if (currentLength < minLength) {
+                    minLength = currentLength;
+                    minIndex = p[l].second;
+                }
+                if (hashMapT.find(p[l].first) != hashMapT.end()) {
+                    --hashMapS[p[l].first];
+                }
+                l++;                                                // 左边指针后移
+            }
+            r++;                                                    // 右边指针后移
+        }
+
+        return minIndex == -1 ? "" : s.substr(minIndex, minLength);
+    }
+
+private:
+    // hashMapT 中每一个 key 在 hashMapS 中的值都大于等于在 hashMapT 中的值，返回 true，否则返回 false
+    bool check(unordered_map <char, int> &hashMapT, unordered_map <char, int> &hashMapS) {
+        for (auto &p: hashMapT) {
+            if (hashMapS[p.first] < p.second) { 
+                return false;
+            }
+        }
+        return true;
+    }
+};
+
 
 ```
