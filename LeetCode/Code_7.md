@@ -643,13 +643,11 @@ private:
 class Solution {
 public:
     int maxCoins(vector<int>& nums) {
-
         /*
             DP
              可将「分治法」中的缓存表作为 DP 表，填表即可。通过从最小子问题开始进行简单尝试，可以发现长度为 2 的子问题的解仅依赖于
             长度为 1 子问题的解；长度为 3 的子问题的解仅依赖于长度为 2 的子问题的解......依次迭代即可得到最终结果
         */
-
         int size = nums.size();
         if (size == 0) return 0;
         int n = size + 2;
@@ -658,11 +656,11 @@ public:
             val[i] = nums[i-1];
         }
         vector<vector<int>> dp(n, vector<int>(n, 0));
-        for (int start = n-3; start >= 0; start--) {        // 开始位置
-            for (int end = start+2; end < n; end++) {       // 结束位置
-                int maxCoin = 0;     
-                for (int k = start+1; k < end; k++) {       // 迭代 start 到 end 之间的所有情况
-                    int sum = dp[start][k] + val[start]*val[k]*val[end] + dp[k][end];
+        for (int start = n-3; start >= 0; start--) {        
+            for (int end = start+2; end < n; end++) {       
+                int maxCoin = 0;                                    // 区间 [start, end] 能获得的最大硬币数
+                for (int i = start+1; i < end; i++) {               // 迭代所有子情况
+                    int sum = dp[start][i] + val[start]*val[i]*val[end] + dp[i][end];
                     maxCoin = max(maxCoin, sum);
                 }
                 dp[start][end] = maxCoin;
