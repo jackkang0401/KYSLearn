@@ -223,8 +223,8 @@ public:
                 dp[i][1][1] = max(dp[i-1][1][1], dp[i-1][0][0]-prices[i]) = max(dp[i-1][1][1], -prices[i])
             
             去除 k 项对应的 1：
-                dp[i][0] = max(dp[i-1][0], dp[i-1][1]+prices[i])
                 dp[i][1] = max(dp[i-1][1], -prices[i])
+                dp[i][0] = max(dp[i-1][0], dp[i-1][1]+prices[i])
         */
         int size = prices.size();
         if (size == 0) return 0;
