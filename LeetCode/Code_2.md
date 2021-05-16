@@ -744,10 +744,10 @@ private:
         bool res = false;
         if (s[i] == p[j] || p[j] == '.') {
             // 如果下一位是 *，可以匹配 0次 或 多(含1)次，否则常规匹配 1 次
-            res = j<n-1 && p[j+1]=='*' ? (dp(s, i, p, j+2, memo) || dp(s, i+1, p, j, memo)) : dp(s, i+1, p, j+1, memo);
+            res = j<n-1 && p[j+1]=='*' ? (dp(s, i, p, j+2, memo) || dp(s, i+1, p, j, memo)) : dp(s, i+1, p, j+1, memo); // 匹配后续字符
         } else {
             // 如果下一位是 *，可以匹配 0 次，否则匹配失败
-            res = j<n-1 && p[j+1]=='*' ? dp(s, i, p, j+2, memo) : false;
+            res = j<n-1 && p[j+1]=='*' ? dp(s, i, p, j+2, memo) : false;                                                // 匹配后续字符
         }
         memo[key] = res;
         return res;
