@@ -533,18 +533,14 @@ public:
 
         unordered_map <char, int> hashMapS;
         while (r < sizeP) {
-            if (hashMapT.find(p[r].first) != hashMapT.end()) {
-                hashMapS[p[r].first]++;
-            }
+            hashMapS[p[r].first]++;                                 // p[r].first 一定在 t 中 
             while (check(hashMapT, hashMapS) && l <= r) {
                 int currentLength = p[r].second - p[l].second + 1;  // 利用下标计算 s 涵盖 t 的长度
                 if (currentLength < minLength) {
                     minLength = currentLength;
                     minIndex = p[l].second;
                 }
-                if (hashMapT.find(p[l].first) != hashMapT.end()) {
-                    --hashMapS[p[l].first];
-                }
+                --hashMapS[p[l].first];
                 l++;                                                // 左边指针后移
             }
             r++;                                                    // 右边指针后移
