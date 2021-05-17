@@ -643,15 +643,17 @@ public:
         for (int i = 3; i <= target; i++) {
             if (i == s) {
                 dp[i] = k++;                                // k 后移（增加一条 A 指令）         
-                s = (1<<k) - 1;
+                s = (1<<k) - 1;                             // s 始终保持 >= i
             } else {
-                // 1.越过 i: 前进 k 个 -> 回退
-                dp[i] = k + 1 + dp[s-i];                    // 此时 k 个指令 A 对应移动距离 s 越过 i 
+                // 1.k 个指令 A 对应移动距离 s 越过 i，所以可以前进 k 个 -> 回退
+                dp[i] = k + 1 + dp[s-i]; 
 
-                // 2.未越过 i: 前进 k-1 个 -> 回退 -> 回退 back 个 -> 前进
-                for (int back = 0; back < (k-1); back++) {  // k-1 个指令 A 一定没越过 i
-                    int distance = i + ((1<<back)-1) - ((1<<(k-1))-1);
-                    dp[i] = min(dp[i], (k-1)+1+back+1+dp[distance]);
+                // 2.k-1 个指令 A 一定没越过 i，所以可以前进 k-1 个 -> 回退 -> 回退 back 个 -> 前进
+                int preK = k-1;
+                int preS = (1<<preK)-1;
+                for (int back = 0; back < preK; back++) { 
+                    int distance = i - preS + (1<<back)-1;
+                    dp[i] = min(dp[i], preK+1+back+1+dp[distance]);
                 }
             }
         }
