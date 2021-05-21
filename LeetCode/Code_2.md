@@ -268,17 +268,17 @@ public:
         
         if (i < 0 || i >= board.size() || j < 0 || j >= board[i].size()) return;
         char c = board[i][j];
-        if ('#' == c || nullptr == node->links[c - 'a']) return; // 1.当前字符已遍历 2.不存在下一个
+        if ('#'==c || nullptr==node->links[c-'a']) return;  // 1.当前字符已遍历 2.不存在下一个
 
-        node = node->links[c - 'a'];
+        node = node->links[c-'a'];
         word.push_back(c);
-        board[i][j] = '#';              // 标记已遍历
+        board[i][j] = '#';                                  // 标记已遍历
         dfs(board, node, i+1, j, word, result);
         dfs(board, node, i-1, j, word, result);
         dfs(board, node, i, j+1, word, result);
         dfs(board, node, i, j-1, word, result);
-        board[i][j] = c;
-        word.pop_back();                // 恢复
+        board[i][j] = c;                                    // 恢复
+        word.pop_back();                
     }
 };
 
