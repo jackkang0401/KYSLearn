@@ -267,6 +267,7 @@ public:
         }
         
         if (i < 0 || i >= board.size() || j < 0 || j >= board[i].size()) return;
+        
         char c = board[i][j];
         if ('#'==c || nullptr==node->links[c-'a']) return;  // 1.当前字符已遍历 2.不存在下一个
 
