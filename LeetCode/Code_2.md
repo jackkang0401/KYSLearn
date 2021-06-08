@@ -776,14 +776,14 @@ public:
             dp[i][j]：表示字符串 p 的前 i 个字符和模式 s 的前 j 个字符是否能匹配
             
             DP 方程：
-                dp[i][j] = dp[i−1][j−1]（s[i] == p[j] || p[j] == '?'）
-                dp[i][j] = dp[i][j−1] || dp[i−1][j] （p[j] == '*'）
+                dp[i][j] = dp[i−1][j−1]（s[i] == p[j] || p[i] == '?'）
+                dp[i][j] = dp[i][j−1] || dp[i−1][j] （p[i] == '*'）
                 dp[i][j] = false (其他情况)
         */
 
         int n = p.size();
         int m = s.size();
-        vector<vector<bool>> dp(n+1, vector<bool>(m+1, false));              // 默认全为 flase
+        vector<vector<bool>> dp(n+1, vector<bool>(m+1, false));         // 默认全为 flase
         dp[0][0] = true;
         for (int i = 1; i <= n; ++i) {
             if (p[i-1] == '*') {
