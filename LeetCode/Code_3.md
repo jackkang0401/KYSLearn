@@ -1091,11 +1091,12 @@ public:
 class Solution {
 public:
     int maxProduct(vector<int>& nums) {
-        /*  
-            maxDP(i)：[0..i](包含 0 和 i)中，以第 i 个数为结尾的乘积最大连续子数组的值
-            minDP(i)：[0..i](包含 0 和 i)中，以第 i 个数为结尾的乘积最小连续子数组的值
+        
+        /*
+            maxDP[i]：以第 i 个数为结尾的乘积最大连续子数组的值
+            minDP[i]：以第 i 个数为结尾的乘积最小连续子数组的值
 
-            maxDP(i) = max(maxDP[i-1]*nums[i], minDP[i-1]*nums[i], nums[i])
+            maxDP[i] = max(maxDP[i-1]*nums[i], minDP[i-1]*nums[i], nums[i])
             minDP[i] = min(minDP[i-1]*nums[i], maxDP[i-1]*nums[i], nums[i])
 
             可以考虑把
@@ -1105,12 +1106,16 @@ public:
             三者取大写入 maxDP(i)，三者取小写入 minDP(i)
         */
 
+        int size = nums.size();
+        if (size <= 0) return 0;
+        int ans = nums[0];
         vector <int> maxDP(nums), minDP(nums);
-        for (int i = 1; i < nums.size(); ++i) {
+        for (int i = 1; i < size; ++i) {
             maxDP[i] = max(maxDP[i-1]*nums[i], max(minDP[i-1]*nums[i], nums[i])); // 取最大
             minDP[i] = min(minDP[i-1]*nums[i], min(maxDP[i-1]*nums[i], nums[i])); // 取最小
+            ans = max(ans, maxDP[i]);
         }
-        return *max_element(maxDP.begin(), maxDP.end());
+        return ans;
     }
 };
 
@@ -1125,9 +1130,11 @@ public:
 class Solution {
 public:
     int maxProduct(vector<int>& nums) {
+        int size = nums.size();
+        if (size <= 0) return 0;
         int maxPre = nums[0], minPre = nums[0]; // 记录上一个最大，最小值
         int ans = nums[0];                      // 记录最大值
-        for (int i = 1, size = nums.size(); i < size; i++) {
+        for (int i = 1; i < size; i++) {
             int mx = maxPre, mn = minPre;
             maxPre = max(mx*nums[i], max(mn*nums[i], nums[i]));
             minPre = min(mn*nums[i], min(mx*nums[i], nums[i]));
