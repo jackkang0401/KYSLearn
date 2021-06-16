@@ -637,13 +637,13 @@ public:
         */
         if (target <= 1) return target;
         vector<int> dp(target+1, INT_MAX);
-        dp[0] = 0; dp[1] = 1; dp[2] = 4;
-        int k = 2;                                          // 记录 A 指令个数
+        dp[0] = 0;
+        int k = 1;                                          // 记录 A 指令个数
         int s = (1<<k) - 1;                                 // 记录 k 个 A 指令到达的位置 s
-        for (int i = 3; i <= target; i++) {
+        for (int i = 1; i <= target; i++) {
             if (i == s) {
                 dp[i] = k++;                                // k 后移（增加一条 A 指令）         
-                s = (1<<k) - 1;                             // s 始终保持 >= i
+                s = (1<<k) - 1;                             // s 后移（s 始终 >= i）
             } else {
                 // 1.k 个指令 A 对应移动距离 s 越过 i，所以可以前进 k 个 -> 回退
                 dp[i] = k + 1 + dp[s-i]; 
