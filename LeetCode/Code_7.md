@@ -688,7 +688,7 @@ public:
             int favoriteType = q[0], favoriteDay = q[1], dailyCap = q[2];
             
             // 当前吃的糖果的数量范围
-            long x1 = favoriteDay + 1;                                  // 上限        
+            long x1 = favoriteDay + 1;                                  // 下限        
             long y1 = (long)(favoriteDay + 1) * dailyCap;               // 上限
 
             // 第 favoriteType 种类型的糖果对应的编号范围
