@@ -666,7 +666,7 @@ public:
 ```
 
 
-## 5.你能在你最喜欢的那天吃到你最喜欢的糖果吗？（Leetcode 1744）
+## 6.你能在你最喜欢的那天吃到你最喜欢的糖果吗？（Leetcode 1744）
 
 
 ```
@@ -701,5 +701,32 @@ public:
     }
 };
 
+
+```
+
+
+## 7.大餐计数（Leetcode 1711）
+
+
+```
+
+class Solution {
+public:
+    int countPairs(vector<int>& deliciousness) {
+        if (deliciousness.size() <=0 ) return 0;
+        int maxVal = *max_element(deliciousness.begin(), deliciousness.end());
+        int maxSum = maxVal * 2;
+        int pairs = 0;
+        unordered_map<int, int> mp;
+        for (auto& val : deliciousness) {
+            for (int sum = 1; sum <= maxSum; sum <<= 1) {
+                int count = mp.count(sum - val) ? mp[sum - val] : 0;
+                pairs = (pairs + count) % 1'000'000'007;
+            }
+            mp[val]++;
+        }
+        return pairs;
+    }
+};
 
 ```
