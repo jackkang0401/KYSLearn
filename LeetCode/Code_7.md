@@ -730,3 +730,78 @@ public:
 };
 
 ```
+
+
+## 8.二叉树中所有距离为 K 的结点（Leetcode 863）
+
+
+```
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+        
+        // 1.前序遍历，生成目标节点的堆栈
+        stack<TreeNode *> stack;
+        stack.push(root);
+        dfs(root, target, stack);
+
+        // 2.对相关节点 dfs，生成包含目标节点的列表
+        vector<int> result;
+        set<int> visited; 
+        int distance = k;
+        while(!stack.empty()) {
+            TreeNode* p = stack.top();
+            stack.pop();
+            //result.push_back(p->val);
+            dfs(p, 0, distance, visited, result);
+            visited.insert(p->val);
+            distance--;
+        }
+        return result;
+    }
+
+    bool dfs(TreeNode* p, TreeNode*& target, stack<TreeNode *>& stack) {
+        if (p) {
+            if (p->val == target->val) {
+                return true;
+            }
+            if(p->left) {
+                stack.push(p->left);
+                if (dfs(p->left, target, stack)) return true;
+                stack.pop();
+            }
+
+            if(p->right) {
+                stack.push(p->right);
+                if (dfs(p->right, target, stack)) return true;
+                stack.pop();
+            }
+        }
+        return false;
+    }
+
+    void dfs(TreeNode* root, int current, int distance, set<int>& visited, vector<int>& result) {
+        if (root == nullptr || visited.find(root->val) != visited.end()) {
+            return;
+        }
+        if(current == distance) {
+            result.push_back(root->val);
+            return;
+        }
+        dfs(root->left, current+1, distance, visited, result);
+        dfs(root->right, current+1, distance, visited, result);
+    }
+};
+
+
+```
