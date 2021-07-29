@@ -671,6 +671,8 @@ public:
 
 ```
 
+// C++
+
 class Solution {
 public:
     vector<bool> canEat(vector<int>& candiesCount, vector<vector<int>>& queries) {
@@ -709,6 +711,7 @@ public:
 
 
 ```
+// C++
 
 class Solution {
 public:
@@ -736,6 +739,7 @@ public:
 
 
 ```
+// C++
 
 /**
  * Definition for a binary tree node.
@@ -803,5 +807,41 @@ public:
     }
 };
 
+
+```
+
+
+## 9.二叉树寻路（Leetcode 1104）
+
+
+```
+// C++
+
+class Solution {
+public:
+    vector<int> pathInZigZagTree(int label) {
+        if (label < 1) return {};
+
+        // 1.计算 k 所在行，起始行为 1
+        int row = 0;                              
+        while (((2<<row) - 1) < label) row++;           
+        row++;
+
+        // 2.计算并生成结果
+        if ((row&1) == 0) label = getReverse(label, row);
+        vector<int> path;
+        while (row > 0) {
+            path.push_back((row&1) == 0 ? getReverse(label, row) : label);
+            row--;
+            label >>= 1;                    // 移到下个位置        
+        }
+        reverse(path.begin(), path.end());
+        return path;
+    }
+
+    int getReverse(int label, int row) {
+        return (1 << row - 1) + (1 << row) - 1 - label;
+    }
+};
 
 ```
