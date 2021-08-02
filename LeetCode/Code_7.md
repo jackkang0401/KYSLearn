@@ -866,26 +866,26 @@ public:
         }
 
         // 2. Dijkstra 算法计算时间
-        vector<int> dist(n, maxValue);
-        dist[k - 1] = 0;
+        vector<int> distance(n, maxValue);
+        distance[k - 1] = 0;
         vector<int> used(n);
         for (int i = 0; i < n; ++i) {
             // 从「未确定节点」中取一个与起点 k 距离最短的点，将它归类为「已确定节点」
             int x = -1;
             for (int y = 0; y < n; ++y) {
-                if (!used[y] && (x == -1 || dist[y] < dist[x])) {
+                if (!used[y] && (x == -1 || distance[y] < distance[x])) {
                     x = y;
                 }
             }
-            // 「更新」从起点 k 到其他所有「未确定节点」的距离
             used[x] = true;
+            // 「更新」从起点 k 到其他所有「未确定节点」的距离
             for (int y = 0; y < n; ++y) {
-                dist[y] = min(dist[y], dist[x] + g[x][y]);
+                distance[y] = min(distance[y], distance[x] + g[x][y]);
             }
         }
 
         // 3. 取出最小值并返回结果
-        int ans = *max_element(dist.begin(), dist.end());
+        int ans = *max_element(distance.begin(), distance.end());
         return ans == maxValue ? -1 : ans;
     }
 };
