@@ -845,3 +845,50 @@ public:
 };
 
 ```
+
+
+## 10.网络延迟时间（Leetcode 743）
+
+```
+
+// C++
+// 1.Dijkstra 算法
+
+class Solution {
+public:
+    int networkDelayTime(vector<vector<int>>& times, int n, int k) {
+        int maxValue = 100 * 100;
+        
+        // 1. 建议不同节点的传递时间的映射关系
+        vector<vector<int>> g(n, vector<int>(n, maxValue));
+        for (auto &t : times) {
+            g[t[0]-1][t[1]-1] = t[2];
+        }
+
+        // 2. Dijkstra 算法计算时间
+        vector<int> dist(n, maxValue);
+        dist[k - 1] = 0;
+        vector<int> used(n);
+        for (int i = 0; i < n; ++i) {
+            // 从「未确定节点」中取一个与起点 k 距离最短的点，将它归类为「已确定节点」
+            int x = -1;
+            for (int y = 0; y < n; ++y) {
+                if (!used[y] && (x == -1 || dist[y] < dist[x])) {
+                    x = y;
+                }
+            }
+            // 「更新」从起点 k 到其他所有「未确定节点」的距离
+            used[x] = true;
+            for (int y = 0; y < n; ++y) {
+                dist[y] = min(dist[y], dist[x] + g[x][y]);
+            }
+        }
+
+        // 3. 取出最小值并返回结果
+        int ans = *max_element(dist.begin(), dist.end());
+        return ans == maxValue ? -1 : ans;
+    }
+};
+
+
+```
