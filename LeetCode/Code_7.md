@@ -754,7 +754,7 @@ class Solution {
 public:
     vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
         
-        // 1.前序遍历，生成目标节点的堆栈
+        // 1.回溯，生成根节点到目标节点路径，保存在堆栈中
         stack<TreeNode *> stack;
         stack.push(root);
         dfs(root, target, stack);
@@ -779,6 +779,7 @@ public:
             if (p->val == target->val) {
                 return true;
             }
+            
             if(p->left) {
                 stack.push(p->left);
                 if (dfs(p->left, target, stack)) return true;
