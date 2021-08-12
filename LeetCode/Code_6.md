@@ -219,8 +219,8 @@ public:
     int maxProfit(vector<int>& prices) {
         /*
             因为 dp[i][0][0] = 0，所以，对于 dp[i][1][0] 和 dp[i][1][1] 状态转移方程如下：
-                dp[i][1][0] = max(dp[i-1][1][0], dp[i-1][1][1]+prices[i])
                 dp[i][1][1] = max(dp[i-1][1][1], dp[i-1][0][0]-prices[i]) = max(dp[i-1][1][1], -prices[i])
+                dp[i][1][0] = max(dp[i-1][1][0], dp[i-1][1][1]+prices[i])
             
             去除 k 项对应的 1：
                 dp[i][1] = max(dp[i-1][1], -prices[i])
