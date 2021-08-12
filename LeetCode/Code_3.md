@@ -840,7 +840,7 @@ public:
         int sSize = s.size();
         int tSize = t.size();
         vector<vector<long>> dp(sSize+1, vector<long>(tSize+1));
-        for (int i = 0; i <= sSize; i++) dp[i][0] = 1;              // t 长度为 0
+        for (int i = 0; i <= sSize; i++) dp[i][0] = 1;              // t 长度为 0 (空字符串是任何字符串的子序列)
         for (int j = 1; j <= tSize; j++) dp[0][j] = 0;              // s 长度为 0    
         for (int i = 1; i <= sSize; i++) {
             for (int j = 1; j <= tSize; j++) {
