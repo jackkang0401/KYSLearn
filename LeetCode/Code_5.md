@@ -304,21 +304,20 @@ public:
 
 
 ```
-
 // C++
-// 自动机
+// 状态机
 
 class Automaton {
 public:
     int sign = 1;
     long ans = 0;
 
-    string get(char c) {
+    string append(char c) {
         state = table[state][get_col(c)];
-        if (state == "in_number") {
+        if (state == "number") {
             ans = ans*10 + c-'0';
             ans = sign == 1 ? min(ans, (long)INT_MAX) : min(ans, -(long)INT_MIN);
-        } else if (state == "signed") {
+        } else if (state == "sign") {
             sign = c == '+' ? 1 : -1;
         }
         return state;
@@ -328,18 +327,10 @@ private:
     // 定义状态
     string state = "start";
     unordered_map<string, vector<string>> table = {
-        {
-            "start", {"start", "signed", "in_number", "end"}
-        },
-        {
-            "signed", {"end", "end", "in_number", "end"}
-        },
-        {
-            "in_number", {"end", "end", "in_number", "end"}
-        },
-        {
-            "end", {"end", "end", "end", "end"}
-        }
+        { "start",  {"start", "sign",  "number",  "end" }},
+        { "sign",   {"end",   "end",   "number",  "end" }},
+        { "number", {"end",   "end",   "number",  "end" }},
+        { "end",    {"end",   "end",   "end",     "end" }},
     };
 
     // 获取对应状态下标
@@ -362,7 +353,7 @@ public:
     int myAtoi(string s) {
         Automaton automaton;
         for (char c : s) {
-          string state = automaton.get(c);
+          string state = automaton.append(c);
           if (state == "end") break;
         }
         return automaton.sign * automaton.ans;
