@@ -860,16 +860,16 @@ public:
     int networkDelayTime(vector<vector<int>>& times, int n, int k) {
         int maxValue = 100 * 100;
         
-        // 1. 建议不同节点的传递时间的映射关系
+        // 1. 建立不同节点的传递时间的映射关系
         vector<vector<int>> g(n, vector<int>(n, maxValue));
         for (auto &t : times) {
             g[t[0]-1][t[1]-1] = t[2];
         }
 
         // 2. Dijkstra 算法计算时间
-        vector<int> dist(n, maxValue);
-        dist[k - 1] = 0;
-        vector<int> used(n);
+        vector<int> dist(n, maxValue);              // 保存到起点的距离
+        dist[k - 1] = 0;            
+        vector<int> used(n);                        // 标题对应点是否为已确定点
         for (int i = 0; i < n; ++i) {
             // 从「未确定节点」中取一个与起点 k 距离最短的点，将它归类为「已确定节点」
             int x = -1;
@@ -905,14 +905,14 @@ public:
     int networkDelayTime(vector<vector<int>>& times, int n, int k) {
         int maxValue = 100 * 100;
         
-        // 1. 建议不同节点的传递时间的映射关系
+        // 1. 建立不同节点的传递时间的映射关系
         vector<vector<pair<int, int>>> g(n);
         for (auto &t : times) {
             g[t[0]-1].emplace_back(t[1]-1, t[2]);   // 目标节点 + 传递时间 
         }
 
         // 2. Dijkstra 算法计算时间
-        vector<int> dist(n, maxValue);
+        vector<int> dist(n, maxValue);              // 保存到起点的距离
         dist[k - 1] = 0;
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> q;
         q.emplace(0, k - 1);                        // 传递时间 + 中间节点                 
