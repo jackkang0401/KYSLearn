@@ -885,7 +885,7 @@ public:
             }
         }
 
-        // 3. 取出最小值并返回结果
+        // 3. 取出最大值并返回结果
         int ans = *max_element(dist.begin(), dist.end());
         return ans == maxValue ? -1 : ans;
     }
@@ -932,7 +932,7 @@ public:
             }
         }
 
-        // 3. 取出最小值并返回结果
+        // 3. 取出最大值并返回结果
         int ans = *max_element(dist.begin(), dist.end());
         return ans == maxValue ? -1 : ans;
     }
