@@ -588,9 +588,9 @@ public:
                      [1,3,1,5]   [1,5,1]   [5,8,1]
 
              其中，左右两端的元素表示不可戳，仅供计分的“虚拟气球”，而且其的值仅与位置有关。这里假设 f(start,end) 表示从第 start 
-            到 end 个气球的最大得分，nums[i] 表示气球上的值，nums[start-1] 和 nums[end+1] 是“虚拟气球”，则有：
+            到 end 个气球的最大得分，nums[i] 表示气球上的值，nums[start] 和 nums[end] 是 “虚拟气球” ，则有：
 
-                f(start,end) = max(f(start,i-1) + nums[start-1]*nums[i]*nums[end+1] + f(i+1,end))
+                f(start,end) = max(f(start,i) + nums[start]*nums[i]*nums[end] + f(i,end))
                 
              其中 i 取值为 [start,end]
         */
