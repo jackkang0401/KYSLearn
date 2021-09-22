@@ -720,13 +720,13 @@ public:
         int maxVal = *max_element(deliciousness.begin(), deliciousness.end());
         int maxSum = maxVal * 2;
         int pairs = 0;
-        unordered_map<int, int> mp;     // 优化查找 + 去重
+        unordered_map<int, int> mp;                                 // 记录便利过程中各个元素的出现次数（优化查找+去重）
         for (auto& val : deliciousness) {
-            for (int sum = 1; sum <= maxSum; sum <<= 1) {
-                int count = mp.count(sum - val) ? mp[sum - val] : 0;
+            for (int sum = 1; sum <= maxSum; sum <<= 1) {           // 遍历各个 2 的幂的值
+                int count = mp.count(sum-val) ? mp[sum-val] : 0;    // 查找与当前元素和等于 2 的幂的元素的个数
                 pairs = (pairs + count) % 1'000'000'007;
             }
-            mp[val]++;
+            mp[val]++;                                              // 更新元素出现次数
         }
         return pairs;
     }
