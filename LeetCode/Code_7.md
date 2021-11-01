@@ -209,8 +209,8 @@ class Solution {
 public:
     int splitArray(vector<int>& nums, int m) {
         /*
-             dp[i][k]：表示将前缀区间 [0,i] 分成 k 段的各自和的最大值的最小值。那么，前缀区间 [0,j]（j<i）
-            被分成 k-1 段各自和的最大值的最小值为 dp[j][k-1]
+             dp[i][j]：表示将前缀区间 [0,i] 分成 j 段的各自和的最大值的最小值。那么，前缀区间 [0,j]（j<i）
+            被分成 j-1 段各自和的最大值的最小值为 dp[j][j-1]
              
              每个分割至少要有 1 个元素
              
@@ -226,10 +226,10 @@ public:
         }
         dp[0][0] = 0;
         for (int i = 1; i <= n; i++) {                  // 当前待分割的数据前缀区间 [0,i] 
-            for (int k = 1; k <= min(i, m); k++) {      // 分割数
-                for (int j = k-1; j < i; j++) {         // 枚举 i 之前各个区间的 k-1 个分割，取最小值 
-                    // sub[i]-sub[k] 为区间 [k+1, i] 的和
-                    dp[i][k] = min(dp[i][k], max(dp[j][k-1], sub[i]-sub[j])); 
+            for (int j = 1; j <= min(i, m); j++) {      // 分割数
+                for (int k = j-1; k < i; k++) {         // 枚举 i 之前各个区间的 j-1 个分割，取最小值 
+                    // sub[i]-sub[j] 为区间 [j+1, i] 的和
+                    dp[i][j] = min(dp[i][j], max(dp[k][j-1], sub[i]-sub[k])); 
                 }
             }
         }
