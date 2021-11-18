@@ -908,26 +908,26 @@ public:
         // 1. 建立不同节点的传递时间的映射关系
         vector<vector<pair<int, int>>> g(n);
         for (auto &t : times) {
-            g[t[0]-1].emplace_back(t[1]-1, t[2]);   // 目标节点 + 传递时间 
+            g[t[0]-1].emplace_back(t[1]-1, t[2]);       // 目标节点 + 传递时间 
         }
 
-        // 2. Dijkstra 算法计算时间
-        vector<int> dist(n, maxValue);              // 保存到起点的距离
+        // 2. Dijkstra 算法计算时间，k(起点)->x->y
+        vector<int> dist(n, maxValue);                  // k(起点) 到各个节点距离 
         dist[k - 1] = 0;
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> q;
-        q.emplace(0, k - 1);                        // 传递时间 + 中间节点                 
+        q.emplace(k - 1, 0);                            // 中间节点 + 传递时间: k(起点)->x 距离                
         while (!q.empty()) {
             auto p = q.top();
             q.pop();
-            int time = p.first, x = p.second;
+            int x = p.first, time = p.second;           
             if (dist[x] < time) {
                 continue;
             }
             for (auto &e : g[x]) {
-                int y = e.first, d = dist[x] + e.second;
+                int y = e.first, d = dist[x] + e.second;// dist[x]: k(起点)->x 距离，e.second: x->y 距离
                 if (d < dist[y]) {
                     dist[y] = d;
-                    q.emplace(d, y);
+                    q.emplace(y, d);
                 }
             }
         }
