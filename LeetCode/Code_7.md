@@ -866,12 +866,12 @@ public:
             g[t[0]-1][t[1]-1] = t[2];
         }
 
-        // 2. Dijkstra 算法计算时间
-        vector<int> dist(n, maxValue);              // 保存到起点的距离
+        // 2. Dijkstra 算法计算时间  k(起点)->x->y
+        vector<int> dist(n, maxValue);              // k(起点) 到各个节点距离 
         dist[k - 1] = 0;            
-        vector<int> used(n);                        // 标题对应点是否为已确定点
+        vector<bool> used(n);                       // 标题对应点是否为已确定点
         for (int i = 0; i < n; ++i) {
-            // 从「未确定节点」中取一个与起点 k 距离最短的点，将它归类为「已确定节点」
+            // 从「未确定节点」中取一个与 k(起点) 距离最短的点，将它归类为「已确定节点」
             int x = -1;
             for (int y = 0; y < n; ++y) {
                 if (!used[y] && (x == -1 || dist[y] < dist[x])) {
@@ -879,9 +879,9 @@ public:
                 }
             }
             used[x] = true;
-            // 「更新」从起点 k 到其他所有「未确定节点」的距离
+            // 「更新」从 k(起点) 到其他所有「未确定节点」的距离
             for (int y = 0; y < n; ++y) {
-                dist[y] = min(dist[y], dist[x] + g[x][y]);
+                dist[y] = min(dist[y], dist[x] + g[x][y]); // dist[x]: k(起点)->x 距离，g[x][y]: x->y 距离
             }
         }
 
