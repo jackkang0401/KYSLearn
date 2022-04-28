@@ -209,8 +209,8 @@ class Solution {
 public:
     int splitArray(vector<int>& nums, int m) {
         /*
-             dp[i][k]：表示将前缀区间 [0,i] 分成 k 段的各自和的最大值的最小值。那么，前缀区间 [0,j]（j<i）
-            被分成 k-1 段各自和的最大值的最小值为 dp[j][k-1]
+             dp[i][j]：表示将前缀区间 [0,i] 分成 j 段的各自和的最大值的最小值。那么，前缀区间 [0,j]（j<i）
+            被分成 j-1 段各自和的最大值的最小值为 dp[j][j-1]
              
              每个分割至少要有 1 个元素
              
@@ -226,10 +226,10 @@ public:
         }
         dp[0][0] = 0;
         for (int i = 1; i <= n; i++) {                  // 当前待分割的数据前缀区间 [0,i] 
-            for (int k = 1; k <= min(i, m); k++) {      // 分割数
-                for (int j = k-1; j < i; j++) {         // 枚举 i 之前各个区间的 k-1 个分割，取最小值 
-                    // sub[i]-sub[k] 为区间 [k+1, i] 的和
-                    dp[i][k] = min(dp[i][k], max(dp[j][k-1], sub[i]-sub[j])); 
+            for (int j = 1; j <= min(i, m); j++) {      // 分割数
+                for (int k = j-1; k < i; k++) {         // 枚举 i 之前各个区间的 j-1 个分割，取最小值 
+                    // sub[i]-sub[j] 为区间 [j+1, i] 的和
+                    dp[i][j] = min(dp[i][j], max(dp[k][j-1], sub[i]-sub[k])); 
                 }
             }
         }
@@ -588,9 +588,9 @@ public:
                      [1,3,1,5]   [1,5,1]   [5,8,1]
 
              其中，左右两端的元素表示不可戳，仅供计分的“虚拟气球”，而且其的值仅与位置有关。这里假设 f(start,end) 表示从第 start 
-            到 end 个气球的最大得分，nums[i] 表示气球上的值，nums[start-1] 和 nums[end+1] 是“虚拟气球”，则有：
+            到 end 个气球的最大得分，nums[i] 表示气球上的值，nums[start] 和 nums[end] 是 “虚拟气球” ，则有：
 
-                f(start,end) = max(f(start,i-1) + nums[start-1]*nums[i]*nums[end+1] + f(i+1,end))
+                f(start,end) = max(f(start,i) + nums[start]*nums[i]*nums[end] + f(i,end))
                 
              其中 i 取值为 [start,end]
         */
@@ -720,13 +720,13 @@ public:
         int maxVal = *max_element(deliciousness.begin(), deliciousness.end());
         int maxSum = maxVal * 2;
         int pairs = 0;
-        unordered_map<int, int> mp;     // 优化查找 + 去重
+        unordered_map<int, int> mp;                                 // 记录便利过程中各个元素的出现次数（优化查找+去重）
         for (auto& val : deliciousness) {
-            for (int sum = 1; sum <= maxSum; sum <<= 1) {
-                int count = mp.count(sum - val) ? mp[sum - val] : 0;
+            for (int sum = 1; sum <= maxSum; sum <<= 1) {           // 遍历各个 2 的幂的值
+                int count = mp.count(sum-val) ? mp[sum-val] : 0;    // 查找与当前元素和等于 2 的幂的元素的个数
                 pairs = (pairs + count) % 1'000'000'007;
             }
-            mp[val]++;
+            mp[val]++;                                              // 更新元素出现次数
         }
         return pairs;
     }
@@ -866,12 +866,12 @@ public:
             g[t[0]-1][t[1]-1] = t[2];
         }
 
-        // 2. Dijkstra 算法计算时间
-        vector<int> dist(n, maxValue);              // 保存到起点的距离
+        // 2. Dijkstra 算法计算时间  k(起点)->x->y
+        vector<int> dist(n, maxValue);              // k(起点) 到各个节点距离 
         dist[k - 1] = 0;            
-        vector<int> used(n);                        // 标题对应点是否为已确定点
+        vector<bool> used(n);                       // 标题对应点是否为已确定点
         for (int i = 0; i < n; ++i) {
-            // 从「未确定节点」中取一个与起点 k 距离最短的点，将它归类为「已确定节点」
+            // 从「未确定节点」中取一个与 k(起点) 距离最短的点，将它归类为「已确定节点」
             int x = -1;
             for (int y = 0; y < n; ++y) {
                 if (!used[y] && (x == -1 || dist[y] < dist[x])) {
@@ -879,9 +879,9 @@ public:
                 }
             }
             used[x] = true;
-            // 「更新」从起点 k 到其他所有「未确定节点」的距离
+            // 「更新」从 k(起点) 到其他所有「未确定节点」的距离
             for (int y = 0; y < n; ++y) {
-                dist[y] = min(dist[y], dist[x] + g[x][y]);
+                dist[y] = min(dist[y], dist[x] + g[x][y]); // dist[x]: k(起点)->x 距离，g[x][y]: x->y 距离
             }
         }
 
@@ -908,26 +908,26 @@ public:
         // 1. 建立不同节点的传递时间的映射关系
         vector<vector<pair<int, int>>> g(n);
         for (auto &t : times) {
-            g[t[0]-1].emplace_back(t[1]-1, t[2]);   // 目标节点 + 传递时间 
+            g[t[0]-1].emplace_back(t[1]-1, t[2]);       // 目标节点 + 传递时间 
         }
 
-        // 2. Dijkstra 算法计算时间
-        vector<int> dist(n, maxValue);              // 保存到起点的距离
+        // 2. Dijkstra 算法计算时间，k(起点)->x->y
+        vector<int> dist(n, maxValue);                  // k(起点) 到各个节点距离 
         dist[k - 1] = 0;
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> q;
-        q.emplace(0, k - 1);                        // 传递时间 + 中间节点                 
+        q.emplace(k - 1, 0);                            // 中间节点 + 传递时间: k(起点)->x 距离                
         while (!q.empty()) {
             auto p = q.top();
             q.pop();
-            int time = p.first, x = p.second;
+            int x = p.first, time = p.second;           
             if (dist[x] < time) {
                 continue;
             }
             for (auto &e : g[x]) {
-                int y = e.first, d = dist[x] + e.second;
+                int y = e.first, d = dist[x] + e.second;// dist[x]: k(起点)->x 距离，e.second: x->y 距离
                 if (d < dist[y]) {
                     dist[y] = d;
-                    q.emplace(d, y);
+                    q.emplace(y, d);
                 }
             }
         }
