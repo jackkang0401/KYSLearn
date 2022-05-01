@@ -775,7 +775,7 @@ public:
             for(int j = 0; j < i; j++){                                     // 遍历之前的所有石头位置
                 int k = stones[i] - stones[j];                              // 计算 j 跳到 i，需要的跳跃距离 k
                 if(k <= i){
-                    dp[i][k] = dp[j][k - 1] || dp[j][k] || dp[j][k + 1];    // 跳到 j 的所有可能跳跃距离为 k-1、k、k+1（看看有没有能通过跳 k-1、k、k+1 距离到达 j 的）
+                    dp[i][k] = dp[j][k - 1] || dp[j][k] || dp[j][k + 1];    // 跳到 j 的所有可能跳跃距离为 k-1、k、k+1
                     if(i == size-1 && dp[i][k]) return true;                // 当前位置是最后的位置，且可跳到
                 }
             }
