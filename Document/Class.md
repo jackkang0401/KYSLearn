@@ -1,6 +1,76 @@
 # Class
 
 
+## 1.
+
+```
+# if __arm64__
+// ARM64 simulators have a larger address space, so use the ARM64e
+// scheme even when simulators build for ARM64-not-e.
+#   if __has_feature(ptrauth_calls) || TARGET_OS_SIMULATOR
+#     define ISA_MASK        0x007ffffffffffff8ULL
+#     define ISA_MAGIC_MASK  0x0000000000000001ULL
+#     define ISA_MAGIC_VALUE 0x0000000000000001ULL
+#     define ISA_HAS_CXX_DTOR_BIT 0
+#     define ISA_BITFIELD                                                      \
+        uintptr_t nonpointer        : 1;                                       \
+        uintptr_t has_assoc         : 1;                                       \
+        uintptr_t weakly_referenced : 1;                                       \
+        uintptr_t shiftcls_and_sig  : 52;                                      \
+        uintptr_t has_sidetable_rc  : 1;                                       \
+        uintptr_t extra_rc          : 8
+#     define RC_ONE   (1ULL<<56)
+#     define RC_HALF  (1ULL<<7)
+#   else
+#     define ISA_MASK        0x0000000ffffffff8ULL
+#     define ISA_MAGIC_MASK  0x000003f000000001ULL
+#     define ISA_MAGIC_VALUE 0x000001a000000001ULL
+#     define ISA_HAS_CXX_DTOR_BIT 1
+#     define ISA_BITFIELD                                                      \
+        uintptr_t nonpointer        : 1;                                       \
+        uintptr_t has_assoc         : 1;                                       \
+        uintptr_t has_cxx_dtor      : 1;                                       \
+        uintptr_t shiftcls          : 33; /*MACH_VM_MAX_ADDRESS 0x1000000000*/ \
+        uintptr_t magic             : 6;                                       \
+        uintptr_t weakly_referenced : 1;                                       \
+        uintptr_t unused            : 1;                                       \
+        uintptr_t has_sidetable_rc  : 1;                                       \
+        uintptr_t extra_rc          : 19
+#     define RC_ONE   (1ULL<<45)
+#     define RC_HALF  (1ULL<<18)
+#   endif
+
+```
+
+```
+union isa_t {
+
+    uintptr_t bits;
+
+private:
+    // Accessing the class requires custom ptrauth operations, so
+    // force clients to go through setClass/getClass by making this
+    // private.
+    Class cls;
+
+public:
+#if defined(ISA_BITFIELD)
+    struct {
+        ISA_BITFIELD;  // defined in isa.h
+    };
+
+    bool isDeallocating() {
+        return extra_rc == 0 && has_sidetable_rc == 0;
+    }
+    void setDeallocating() {
+        extra_rc = 0;
+        has_sidetable_rc = 0;
+    }
+#endif
+    
+}
+```
+
 ## 1. objc_object
 
 
