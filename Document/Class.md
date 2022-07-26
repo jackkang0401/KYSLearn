@@ -109,6 +109,12 @@ public:
     Class getIsa();
 }
 
+static inline bool 
+_objc_isTaggedPointer(const void * _Nullable ptr)
+{
+    return ((uintptr_t)ptr & _OBJC_TAG_MASK) == _OBJC_TAG_MASK; // define _OBJC_TAG_MASK (1UL<<63)
+}
+
 ```
 
 ## 2. protocol_t
