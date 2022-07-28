@@ -32,9 +32,9 @@ void deallocNode(BinaryNode **p){
        / \
       3   4
          / \
-        5   6
+        5   7
          \
-          7
+          6
  int index = 0;
  int array[] = {1,2,3,0,0,4,5,0,6,0,0,7,0,0,0};
  printf("前序序列 123004506007000 创建二叉树");
