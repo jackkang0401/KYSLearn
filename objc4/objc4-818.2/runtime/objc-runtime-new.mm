@@ -1414,18 +1414,18 @@ attachCategories(Class cls, const locstamped_category_t *cats_list, uint32_t cat
 
     for (uint32_t i = 0; i < cats_count; i++) {
         auto& entry = cats_list[i];
-
+        // 添加方法
         method_list_t *mlist = entry.cat->methodsForMeta(isMeta);
         if (mlist) {
-            if (mcount == ATTACH_BUFSIZ) {
+            if (mcount == ATTACH_BUFSIZ) {              // 达到指定大小，再进行写入
                 prepareMethodLists(cls, mlists, mcount, NO, fromBundle, __func__);
                 rwe->methods.attachLists(mlists, mcount);
                 mcount = 0;
             }
-            mlists[ATTACH_BUFSIZ - ++mcount] = mlist;
+            mlists[ATTACH_BUFSIZ - ++mcount] = mlist;   // 优先加载数组后边
             fromBundle |= entry.hi->isBundle();
         }
-
+        // 添加属性
         property_list_t *proplist =
             entry.cat->propertiesForMeta(isMeta, entry.hi);
         if (proplist) {
@@ -1435,7 +1435,7 @@ attachCategories(Class cls, const locstamped_category_t *cats_list, uint32_t cat
             }
             proplists[ATTACH_BUFSIZ - ++propcount] = proplist;
         }
-
+        // 添加协议
         protocol_list_t *protolist = entry.cat->protocolsForMeta(isMeta);
         if (protolist) {
             if (protocount == ATTACH_BUFSIZ) {
